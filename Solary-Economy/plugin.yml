@@ -1,0 +1,6 @@
+name: Solary-Economy
+main: solaryeconomy.SolaryEconomy
+version: 1.0
+author: Sr_Edition
+softdepend: [Vault]
+load: STARTUP
