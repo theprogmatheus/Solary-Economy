@@ -16,6 +16,7 @@ import solaryeconomy.commands.subcommands.SubCmdConverter;
 import solaryeconomy.commands.subcommands.SubCmdCriar;
 import solaryeconomy.commands.subcommands.SubCmdDeletar;
 import solaryeconomy.commands.subcommands.SubCmdHelp;
+import solaryeconomy.commands.subcommands.SubCmdMagnata;
 import solaryeconomy.commands.subcommands.SubCmdPay;
 import solaryeconomy.commands.subcommands.SubCmdReload;
 import solaryeconomy.commands.subcommands.SubCmdRemove;
@@ -41,6 +42,7 @@ public class SolaryCommand extends AbstractCommand {
 		this.subcommands.add(new SubCmdToggle(command));
 		this.subcommands.add(new SubCmdReload(command));
 		this.subcommands.add(new SubCmdConverter(command));
+		this.subcommands.add(new SubCmdMagnata(command));
 	}
 
 	@Override

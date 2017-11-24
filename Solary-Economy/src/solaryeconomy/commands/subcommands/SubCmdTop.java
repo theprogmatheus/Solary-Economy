@@ -34,8 +34,28 @@ public class SubCmdTop extends SubCommand {
 						accountname = Vault.getPrefix(account.getName()).concat(account.getName());
 					}
 				}
-				sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_TOP_FORMAT").replace("{i}", "" + i)
-						.replace("{player}", accountname).replace("{valor}", valor));
+
+				if (i == 1) {
+
+					String display = accountname;
+					boolean use_magnata = SolaryEconomy.config.getYaml().getBoolean("magnata_tag");
+					if (use_magnata) {
+						String magnata_tag = SolaryEconomy.mensagens.get("MAGNATA_TAG");
+						if (magnata_tag == null)
+							magnata_tag = "§a[$]";
+						display = magnata_tag.concat(display);
+						sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_TOP_FORMAT").replace("{i}", "" + i)
+								.replace("{player}", display).replace("{valor}", valor));
+					} else {
+
+						sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_TOP_FORMAT").replace("{i}", "" + i)
+								.replace("{player}", accountname).replace("{valor}", valor));
+					}
+				} else {
+					sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_TOP_FORMAT").replace("{i}", "" + i)
+							.replace("{player}", accountname).replace("{valor}", valor));
+				}
+
 				i++;
 			}
 			sender.sendMessage(" ");

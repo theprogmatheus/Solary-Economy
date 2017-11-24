@@ -54,6 +54,8 @@ public class SubCmdHelp extends SubCommand {
 
 			if (sender.hasPermission("solaryeconomy.commands.reload"))
 				sender.sendMessage("§a/" + command + " reload §8- §7recarregar os arquivos de configs.");
+			if (sender.hasPermission("solaryeconomy.commands.magnata"))
+				sender.sendMessage("§a/" + command + " magnata §8- §7ver o magnata atual do servidor.");
 		} else {
 			sender.sendMessage("§a/" + command + " [jogador]§8- §7ver o saldo atual de um jogador.");
 			sender.sendMessage("§a/" + command + " set [jogador] [valor] §8- §7seta o money de um jogador.");
@@ -65,6 +67,7 @@ public class SubCmdHelp extends SubCommand {
 			sender.sendMessage("§a/" + command + " delete [jogador] [valor] §8- §7deletar uma conta.");
 			sender.sendMessage("§a/" + command + " converter [plugin] §8- §7converter a economia de um plugin.");
 			sender.sendMessage("§a/" + command + " reload §8- §7recarregar os arquivos de configs.");
+			sender.sendMessage("§a/" + command + " magnata §8- §7ver o magnata atual do servidor.");
 		}
 
 		sender.sendMessage(" ");

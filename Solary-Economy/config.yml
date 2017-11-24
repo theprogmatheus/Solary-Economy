@@ -1,7 +1,7 @@
 #########################[ Solary-Economy ]#########################
 ##                                                                ##
 ##                       Autor: Sr_Edition                        ##
-##                         Versão: 1.0                            ##
+##                         Versão: 1.1                            ##
 ##                                                                ##
 ##  encontrou um bug? chame no skype: mateusaguiar-15@hotmail.com ##
 ##                                                                ##
@@ -26,6 +26,7 @@
 #/money toggle - solaryeconomy.commands.toggle
 #/money reload - solaryeconomy.commands.reload
 #/money converter - solaryeconomy.commands.converter
+#/money magnata - solaryeconomy.commands.magnata
 #
 ###################[Comandos]#######################
 
@@ -73,6 +74,7 @@ economy_top:
   prefix: true
   
   #coloque aqui o tamanho máximo do nome da conta que vai aparecer no money top Dica: (use para remover as factions no money top :D)
+  #se o nome da conta for maior que esse valor, ela não aparecerá no money top e nem será dada a tag magnata
   name_size: 20
 
 #configurações gerais da economia do servidor
@@ -83,4 +85,8 @@ currency_name:
   
   #coloque aqui o nome da economia em modo singular ex: coin
   singular: coin
+  
+#coloque true para usar a tag magnata no moneytop/chat (precisa do legendchat para mostrar no chat)
+# use a tag {solary_economy_magnata} no legendchat
+magnata_tag: true
   

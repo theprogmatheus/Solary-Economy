@@ -54,6 +54,14 @@ public class SolaryEconomy extends JavaPlugin implements Listener {
 				if (vault != null) {
 					new VaultEconomy();
 				}
+				Plugin legendchat = Bukkit.getPluginManager().getPlugin("Legendchat");
+				if (legendchat != null) {
+					Class<?> listener_clazz = Class.forName("solaryeconomy.plugin.listener.LegendChatListeners");
+					Object listener = listener_clazz.getConstructor(new Class[0]).newInstance(new Object[0]);
+					Bukkit.getServer().getPluginManager().registerEvents((Listener) listener, instance);
+				}else {
+					System.out.println("NULL!");
+				}
 			} catch (Exception exception) {
 				exception.printStackTrace();
 			}

@@ -1,13 +1,14 @@
 #########################[ Solary-Economy ]#########################
 ##                                                                ##
 ##                       Autor: Sr_Edition                        ##
-##                         Versão: 1.0                            ##
+##                         Versão: 1.1                            ##
 ##                                                                ##
 ##  encontrou um bug? chame no skype: mateusaguiar-15@hotmail.com ##
 ##                                                                ##
 ####################################################################
 
 #configurações de todas as mensagens do Solary-Economy
+
 
 NO_PERMISSION: "&cVocê não tem permissão para isso."
 PLAYER_NOTFOUND: "&cJogador não encontrado em nosso banco de dados."
@@ -30,3 +31,7 @@ MONEY_REMOVE: "&aFoi removido a quantia de {valor} da conta de {player} "
 MONEY_PAY_SENDER: "&aVocê enviou {valor} para {player}"
 MONEY_PAY_RECEIVER: "&aVocê acaba de receber {valor} de {player}"
 MONEY_PAY_ERRO: "&cVocê não pode enviar coins a si mesmo."
+MAGNATA_TAG: "&2[$] "
+MAGNATA_VIEW: "&2[$] &aAtual magnata do servidor: &7{player} &7com a quantia de {valor}"
+MAGNATA_NEW: "&2[$] &aNovo magnata: &7{player} &7com a quantia de {valor}"
+MAGNATA_NOT_FOUND: "&2[$] &cNenhum magnata ainda."

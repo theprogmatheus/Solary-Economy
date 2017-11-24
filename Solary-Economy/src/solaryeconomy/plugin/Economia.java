@@ -4,14 +4,21 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+
 import solaryeconomy.SolaryEconomy;
 import solaryeconomy.database.Database;
 import solaryeconomy.plugin.objetos.Account;
+import solaryeconomy.plugin.vault.Vault;
 import solaryeconomy.util.Config;
 
 public class Economia {
 
 	private List<Account> moneytop;
+	private Account magnata;
 	private Database database;
 	private Config config;
 
@@ -19,6 +26,10 @@ public class Economia {
 		this.database = SolaryEconomy.database;
 		this.config = SolaryEconomy.config;
 		loadMoneyTop();
+	}
+
+	public Account getMagnata() {
+		return magnata;
 	}
 
 	public boolean createAccount(String name, double valor) {
@@ -148,6 +159,11 @@ public class Economia {
 	public List<Account> loadMoneyTop() {
 		if (this.moneytop == null)
 			this.moneytop = new ArrayList<>();
+		String lastmagnata = "";
+		if (this.magnata != null)
+			lastmagnata = this.magnata.getName();
+
+		this.magnata = null;
 
 		this.moneytop.clear();
 		int namesize = this.config.getYaml().getInt("economy_top.name_size");
@@ -160,7 +176,35 @@ public class Economia {
 				String name = result.getString("name");
 				if (name.length() <= namesize) {
 					if (i < max) {
-						this.moneytop.add(new Account(name, result.getDouble("valor")));
+						Account account = new Account(name, result.getDouble("valor"));
+
+						if (this.magnata == null) {
+							this.magnata = account;
+
+							if (!lastmagnata.equals(account.getName())) {
+
+								String accountname = account.getName();
+								String valor = SolaryEconomy.numberFormat(account.getValor());
+								if (SolaryEconomy.config.getYaml().getBoolean("economy_top.prefix")) {
+									Plugin vault = Bukkit.getPluginManager().getPlugin("Vault");
+									if (vault != null) {
+										accountname = Vault.getPrefix(account.getName()).concat(account.getName());
+									}
+								}
+
+								for (World world : Bukkit.getWorlds()) {
+									for (Player player : world.getPlayers()) {
+										player.sendMessage(" ");
+										player.sendMessage(SolaryEconomy.mensagens.get("MAGNATA_NEW")
+												.replace("{player}", accountname).replace("{valor}", valor));
+										player.sendMessage(" ");
+									}
+								}
+
+							}
+						}
+
+						this.moneytop.add(account);
 						i++;
 					}
 				}

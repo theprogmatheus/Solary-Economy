@@ -4,5 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="D:/Java/files/spigot - 1_8_R3.jar"/>
 	<classpathentry kind="lib" path="D:/Java/files/Vault.jar"/>
+	<classpathentry kind="lib" path="D:/Java/files/LegendChat.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

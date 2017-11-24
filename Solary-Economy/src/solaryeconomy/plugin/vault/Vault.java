@@ -20,7 +20,12 @@ public class Vault {
 			if (chatclazz != null) {
 				Chat chat = chatclazz.getProvider();
 				if (chat != null) {
-					prefix = chat.getPlayerPrefix(SolaryEconomy.config.getString("world"), player).replace("&", "§");
+					try {
+						prefix = chat.getPlayerPrefix(SolaryEconomy.config.getString("world"), player).replace("&",
+								"§");
+					} catch (Exception e) {
+						prefix = "";
+					}
 				}
 			}
 

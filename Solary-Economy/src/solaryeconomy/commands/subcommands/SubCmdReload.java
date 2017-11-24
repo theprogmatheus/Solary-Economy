@@ -5,7 +5,6 @@ import org.bukkit.command.CommandSender;
 import solaryeconomy.SolaryEconomy;
 import solaryeconomy.abstracts.SubCommand;
 import solaryeconomy.manager.Mensagens;
-import solaryeconomy.plugin.Economia;
 import solaryeconomy.util.Config;
 
 public class SubCmdReload extends SubCommand {
@@ -17,7 +16,7 @@ public class SubCmdReload extends SubCommand {
 	@Override
 	public void execute(CommandSender sender, String[] args) {
 
-		SolaryEconomy.economia = new Economia();
+		SolaryEconomy.economia.loadMoneyTop();
 		SolaryEconomy.config = new Config(SolaryEconomy.instance, "config.yml");
 		SolaryEconomy.mensagens = new Mensagens(SolaryEconomy.instance);
 		SolaryEconomy.refreshMoneyTop.reload();
