@@ -25,7 +25,7 @@ public class SolaryEconomy extends JavaPlugin implements Listener {
 
 	public static final String PLUGIN_NAME = "Solary-Economy";
 	public static final String AUTHOR = "Sr_Edition";
-	public static final String VERSION = "1.0";
+	public static final String VERSION = "1.1";
 
 	public static String table;
 
