@@ -1,5 +1,5 @@
 name: Solary-Economy
-main: nuvemplugins.Main
+main: nuvemplugins.solaryeconomy.Main
 version: 1.2
 author: Sr_Edition
 website: www.nuvemplugins.com
