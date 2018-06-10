@@ -1,14 +1,19 @@
 #########################[ Solary-Economy ]#########################
 ##                                                                ##
-##                       Autor: Sr_Edition                        ##
-##                         Versão: 1.1                            ##
+##                        Autor: Sr_Edition                       ##
+##                          Versão: 1.2                           ##
+##                    Site: www.nuvemplugins.com                  ##
 ##                                                                ##
-##  encontrou um bug? chame no skype: mateusaguiar-15@hotmail.com ##
+##                   Encontrou algum bug? Reporte!                ##
+##                                                                ##
+##                  Email: mateusaguiar-15@hotmail                ##
+##                Skype: mateusaguiar-15@hotmail.com              ##
+##                     Discord: Sr_Edition#7628                   ##
 ##                                                                ##
 ####################################################################
 
-#configurações de todas as mensagens do Solary-Economy
 
+#configurações de todas as mensagens do Solary-Economy
 
 NO_PERMISSION: "&cVocê não tem permissão para isso."
 PLAYER_NOTFOUND: "&cJogador não encontrado em nosso banco de dados."

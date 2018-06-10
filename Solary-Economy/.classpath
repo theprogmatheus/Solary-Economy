@@ -2,9 +2,8 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="D:/Java/files/spigot - 1_8_R3.jar"/>
 	<classpathentry kind="lib" path="D:/Java/files/Vault.jar"/>
 	<classpathentry kind="lib" path="D:/Java/files/LegendChat.jar"/>
-	<classpathentry kind="lib" path="C:/jars/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar"/>
+	<classpathentry kind="lib" path="D:/Java/Spigot/v1_8_R3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

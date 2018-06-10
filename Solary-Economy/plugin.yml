@@ -1,6 +1,11 @@
 name: Solary-Economy
-main: solaryeconomy.SolaryEconomy
-version: 1.1
+main: nuvemplugins.Main
+version: 1.2
 author: Sr_Edition
+website: www.nuvemplugins.com
 softdepend: [Vault]
 load: STARTUP
+commands:
+  money:
+    description: "Para ver o money atual"
+    aliases: [coin, coins, solaryeconomy]

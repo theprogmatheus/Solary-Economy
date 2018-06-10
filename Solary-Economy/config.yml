@@ -1,13 +1,16 @@
 #########################[ Solary-Economy ]#########################
 ##                                                                ##
-##                       Autor: Sr_Edition                        ##
-##                         Versão: 1.1                            ##
+##                        Autor: Sr_Edition                       ##
+##                          Versão: 1.2                           ##
+##                    Site: www.nuvemplugins.com                  ##
 ##                                                                ##
-##  encontrou um bug? chame no skype: mateusaguiar-15@hotmail.com ##
+##                   Encontrou algum bug? Reporte!                ##
+##                                                                ##
+##                  Email: mateusaguiar-15@hotmail                ##
+##                Skype: mateusaguiar-15@hotmail.com              ##
+##                     Discord: Sr_Edition#7628                   ##
 ##                                                                ##
 ####################################################################
-
-
 
 #Permissões:
 #
@@ -34,7 +37,7 @@
 
 #Configuração do banco de dados
 mysql:
-  #coloque em true para usar o MySQL, caso esteja desativado será usado um cache "database.db"
+  #coloque em true para usar o MySQL, caso esteja desativado será usado SQLite no arquivo "database.db"
   enable: false
   #coloque o endereço do seu banco de dados ex: "localhost" 
   hostname: "localhost"
@@ -55,13 +58,13 @@ mysql:
 #coloque aqui o mundo principal do seu servidor
 world: "world"
 
-#coloque true para usar a API Vault, (é recomendado usar)
+#coloque true para usar a API Vault, (é recomendado usar, para que os demais plugins tenha acesso ao Solary-Economy)
 use_vault: true
 
 #coloque aqui o money que o jogador vai começar quando logar no servidor pela primeira vez
 start_value: 0
   
-#congigurações gerais do money top
+#configurações gerais do money top
 economy_top:
 
   #coloque aqui a quantidade de jogadores que vai aparecer no money top
@@ -75,7 +78,7 @@ economy_top:
   
   #coloque aqui o tamanho máximo do nome da conta que vai aparecer no money top Dica: (use para remover as factions no money top :D)
   #se o nome da conta for maior que esse valor, ela não aparecerá no money top e nem será dada a tag magnata
-  name_size: 20
+  name_size: 16
 
 #configurações gerais da economia do servidor
 currency_name:
