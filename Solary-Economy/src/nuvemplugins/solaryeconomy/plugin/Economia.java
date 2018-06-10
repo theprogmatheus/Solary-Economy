@@ -72,6 +72,7 @@ public class Economia {
 	}
 
 	public boolean setMoney(String name, double valor) {
+		valor = (valor < 0) ? 0.0 : valor;
 		boolean set = false;
 		database.open();
 		try {
