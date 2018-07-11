@@ -49,9 +49,6 @@ public class SubCmdHelp extends SubCommand {
 			if (sender.hasPermission("solaryeconomy.commands.deletar"))
 				sender.sendMessage("§a/" + command + " deletar [nome] [valor] §8- §7deletar uma conta.");
 
-			if (sender.hasPermission("solaryeconomy.commands.converter"))
-				sender.sendMessage("§a/" + command + " converter [essentials] §8- §7converter a economia de um plugin.");
-
 			if (sender.hasPermission("solaryeconomy.commands.reload"))
 				sender.sendMessage("§a/" + command + " reload §8- §7recarregar os arquivos de configs.");
 			if (sender.hasPermission("solaryeconomy.commands.magnata"))

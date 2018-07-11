@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import nuvemplugins.solaryeconomy.abstracts.SubCommand;
 import nuvemplugins.solaryeconomy.app.SolaryEconomy;
 import nuvemplugins.solaryeconomy.commands.subcommands.SubCmdAdd;
-import nuvemplugins.solaryeconomy.commands.subcommands.SubCmdConverter;
 import nuvemplugins.solaryeconomy.commands.subcommands.SubCmdCriar;
 import nuvemplugins.solaryeconomy.commands.subcommands.SubCmdDeletar;
 import nuvemplugins.solaryeconomy.commands.subcommands.SubCmdHelp;
@@ -39,7 +38,6 @@ public class SolaryCommand implements CommandExecutor {
 		this.subcommands.add(new SubCmdPay(command));
 		this.subcommands.add(new SubCmdToggle(command));
 		this.subcommands.add(new SubCmdReload(command));
-		this.subcommands.add(new SubCmdConverter(command));
 		this.subcommands.add(new SubCmdMagnata(command));
 	}
 

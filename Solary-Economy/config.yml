@@ -1,7 +1,7 @@
 #########################[ Solary-Economy ]#########################
 ##                                                                ##
 ##                        Autor: Sr_Edition                       ##
-##                          Versão: 1.2                           ##
+##                          Versão: 1.3                           ##
 ##                    Site: www.nuvemplugins.com                  ##
 ##                                                                ##
 ##                   Encontrou algum bug? Reporte!                ##
@@ -92,4 +92,7 @@ currency_name:
 #coloque true para usar a tag magnata no moneytop/chat (precisa do legendchat para mostrar no chat)
 # use a tag {solary_economy_magnata} no legendchat
 magnata_tag: true
+
+#coloque true se você quer que aparece uma mensagem a todos os jogadores quando o magnata mudar
+magnata_broadcast: true
   
