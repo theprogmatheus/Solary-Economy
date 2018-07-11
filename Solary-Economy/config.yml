@@ -28,7 +28,6 @@
 #/money pay - solaryeconomy.commands.pay
 #/money toggle - solaryeconomy.commands.toggle
 #/money reload - solaryeconomy.commands.reload
-#/money converter - solaryeconomy.commands.converter
 #/money magnata - solaryeconomy.commands.magnata
 #
 ###################[Comandos]#######################
