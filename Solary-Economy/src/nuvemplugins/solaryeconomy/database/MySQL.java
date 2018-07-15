@@ -27,10 +27,13 @@ public class MySQL implements Database {
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver");
-
-			this.connection = DriverManager.getConnection("jdbc:mysql://" + this.hostname + "/" + this.database,
-					this.username, this.password);
-			this.statement = this.connection.createStatement();
+			if (this.connection == null) {
+				this.connection = DriverManager.getConnection("jdbc:mysql://" + this.hostname + "/" + this.database,
+						this.username, this.password);
+			}
+			if (this.statement == null && this.connection != null) {
+				this.statement = this.connection.createStatement();
+			}
 		} catch (Exception exception) {
 			exception.printStackTrace();
 		}
@@ -41,7 +44,14 @@ public class MySQL implements Database {
 	public boolean close() {
 		if (connection()) {
 			try {
-				this.connection.close();
+				if (this.statement != null)
+					this.statement.close();
+				
+				if (this.connection != null)
+					this.connection.close();
+
+				this.statement = null;
+				this.connection = null;
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

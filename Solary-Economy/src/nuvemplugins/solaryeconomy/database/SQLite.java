@@ -27,13 +27,17 @@ public class SQLite implements Database {
 	public boolean open() {
 		try {
 			Class.forName("org.sqlite.JDBC");
-			this.connection = DriverManager
-					.getConnection("jdbc:sqlite:" + this.plugin.getDataFolder().getPath() + "/database.db");
-			this.statement = this.connection.createStatement();
+			if (this.connection == null) {
+				this.connection = DriverManager
+						.getConnection("jdbc:sqlite:" + this.plugin.getDataFolder().getPath() + "/database.db");
+			}
+			if (this.statement == null && this.connection != null) {
+				this.statement = this.connection.createStatement();
+			}
 		} catch (Exception exception) {
 			exception.printStackTrace();
 		}
-		return connection();
+		return this.connection();
 	}
 
 	@Override
@@ -45,7 +49,13 @@ public class SQLite implements Database {
 	public boolean close() {
 		if (connection()) {
 			try {
-				this.connection.close();
+				if (this.statement != null)
+					this.statement.close();
+				if (this.connection != null)
+					this.connection.close();
+
+				this.statement = null;
+				this.connection = null;
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -99,10 +109,10 @@ public class SQLite implements Database {
 			return this.statement.execute(string);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
-		return false;
 	}
-	
+
 	@Override
 	public Statement getStatement() {
 		return this.statement;

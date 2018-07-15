@@ -47,18 +47,17 @@ public class Account {
 
 	public void saveAsync(long delay) {
 		if (this.asyncSaveTask == null) {
-			this.asyncSaveTask = Bukkit.getScheduler().runTaskLaterAsynchronously(SolaryEconomy.instance,
-					new Runnable() {
-						@Override
-						public void run() {
-							try {
-								Account.this.save();
-								Account.this.asyncSaveTask = null;
-							} catch (Exception exception) {
-								exception.printStackTrace();
-							}
-						}
-					}, delay);
+			this.asyncSaveTask = Bukkit.getScheduler().runTaskLater(SolaryEconomy.instance, new Runnable() {
+				@Override
+				public void run() {
+					try {
+						Account.this.save();
+						Account.this.asyncSaveTask = null;
+					} catch (Exception exception) {
+						exception.printStackTrace();
+					}
+				}
+			}, delay);
 		}
 	}
 
