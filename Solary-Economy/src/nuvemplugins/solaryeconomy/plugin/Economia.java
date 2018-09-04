@@ -143,9 +143,10 @@ public class Economia {
 
 		database.open();
 		try {
+			
 
 			ResultSet result = database.query("select * from " + SolaryEconomy.table.concat(" where length(name) <= "
-					+ this.config.getYaml().getInt("economy_top.name_size") + " order by valor desc limit "
+					+ this.config.getYaml().getInt("economy_top.name_size") + " order by cast(valor as decimal) desc limit "
 					+ SolaryEconomy.config.getYaml().getInt("economy_top.size") + ";"));
 
 			while (result.next()) {
