@@ -109,7 +109,7 @@ public class SolaryEconomy implements Listener {
 			}
 			database.open();
 
-			database.execute("create table if not exists " + table + " (name varchar(40), valor double, toggle int);");
+			database.execute("create table if not exists " + table + " (name varchar(40), valor text, toggle int);");
 
 			database.close();
 

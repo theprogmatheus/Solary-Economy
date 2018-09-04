@@ -99,7 +99,8 @@ public class Account {
 		Account account = null;
 		try {
 			String name = result.getString("name");
-			double valor = result.getDouble("valor");
+			String valorString = result.getString("valor");
+			double valor = Double.parseDouble(valorString);
 			boolean toggle = result.getInt("toggle") >= 1 ? true : false;
 			account = new Account(name, valor);
 			account.setToggle(toggle);
