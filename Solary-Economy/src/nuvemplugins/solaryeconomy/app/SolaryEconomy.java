@@ -120,6 +120,7 @@ public class SolaryEconomy implements Listener {
 
 	public static String numberFormat(double valor) {
 		NumberFormat nb = NumberFormat.getNumberInstance(Locale.forLanguageTag("pt-BR"));
+		
 		nb.setMaximumFractionDigits(0);
 		String formated = nb.format(valor);
 		if (valor > 1) {

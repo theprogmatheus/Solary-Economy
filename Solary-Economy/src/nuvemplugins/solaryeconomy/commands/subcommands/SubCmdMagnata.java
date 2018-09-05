@@ -22,7 +22,7 @@ public class SubCmdMagnata extends SubCommand {
 		sender.sendMessage(" ");
 		if (account != null) {
 			String accountname = account.getName();
-			String valor = SolaryEconomy.numberFormat(account.getValor());
+			String valor = SolaryEconomy.numberFormat(account.getValor().doubleValue());
 			if (SolaryEconomy.config.getYaml().getBoolean("economy_top.prefix")) {
 				Plugin vault = Bukkit.getPluginManager().getPlugin("Vault");
 				if (vault != null) {

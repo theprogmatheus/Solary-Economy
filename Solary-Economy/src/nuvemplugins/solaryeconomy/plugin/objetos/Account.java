@@ -1,5 +1,6 @@
 package nuvemplugins.solaryeconomy.plugin.objetos;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 
 import org.bukkit.Bukkit;
@@ -10,13 +11,13 @@ import nuvemplugins.solaryeconomy.database.Database;
 
 public class Account {
 
-	public Account(String nome, double valor) {
+	public Account(String nome, BigDecimal valor) {
 		this.name = nome;
 		this.valor = valor;
 	}
 
 	private String name;
-	private double valor;
+	private BigDecimal valor;
 	private boolean toggle;
 
 	private BukkitTask asyncSaveTask;
@@ -29,11 +30,11 @@ public class Account {
 		this.name = name;
 	}
 
-	public double getValor() {
+	public BigDecimal getValor() {
 		return valor;
 	}
 
-	public void setValor(double valor) {
+	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
 
@@ -68,10 +69,10 @@ public class Account {
 		try {
 			ResultSet result = database.query("select toggle from " + table + " where name='" + this.name + "'");
 			if (result.next()) {
-				database.execute("update " + table + " set valor='" + this.valor + "', toggle='" + (this.toggle ? 1 : 0)
+				database.execute("update " + table + " set valor='" + this.valor.toPlainString() + "', toggle='" + (this.toggle ? 1 : 0)
 						+ "' where name='" + this.name + "'");
 			} else {
-				database.execute("insert into " + table + " values ('" + this.name + "', '" + this.valor + "', '"
+				database.execute("insert into " + table + " values ('" + this.name + "', '" + this.valor.toPlainString() + "', '"
 						+ (this.toggle ? 1 : 0) + "')");
 			}
 		} catch (Exception exception) {
@@ -100,9 +101,8 @@ public class Account {
 		try {
 			String name = result.getString("name");
 			String valorString = result.getString("valor");
-			double valor = Double.parseDouble(valorString);
 			boolean toggle = result.getInt("toggle") >= 1 ? true : false;
-			account = new Account(name, valor);
+			account = new Account(name, new BigDecimal(valorString));
 			account.setToggle(toggle);
 		} catch (Exception exception) {
 			exception.printStackTrace();

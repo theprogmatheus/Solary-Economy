@@ -26,7 +26,7 @@ public class SubCmdTop extends SubCommand {
 			sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_TOP_TITLE"));
 			sender.sendMessage(" ");
 			for (Account account : moneytop) {
-				String valor = SolaryEconomy.numberFormat(account.getValor());
+				String valor = SolaryEconomy.numberFormat(account.getValor().doubleValue());
 				String accountname = account.getName();
 				if (SolaryEconomy.config.getYaml().getBoolean("economy_top.prefix")) {
 					Plugin vault = Bukkit.getPluginManager().getPlugin("Vault");

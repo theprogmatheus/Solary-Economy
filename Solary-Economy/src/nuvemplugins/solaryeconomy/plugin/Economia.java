@@ -1,5 +1,6 @@
 package nuvemplugins.solaryeconomy.plugin;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +33,7 @@ public class Economia {
 
 	public boolean createAccount(String name, double valor) {
 		if (!this.accounts.containsKey(name)) {
-			Account account = new Account(name, valor);
+			Account account = new Account(name, BigDecimal.valueOf(valor));
 			account.save();
 			this.accounts.put(name, account);
 			return true;
@@ -51,8 +52,8 @@ public class Economia {
 
 	public boolean setMoney(String name, double valor) {
 		if (this.accounts.containsKey(name)) {
-			this.accounts.get(name).setValor(valor);
-			this.accounts.get(name).saveAsync(100);
+			this.accounts.get(name).setValor(BigDecimal.valueOf(valor));
+			this.accounts.get(name).saveAsync(20);
 			return true;
 		}
 		return false;
@@ -60,7 +61,7 @@ public class Economia {
 
 	public double getMoney(String name) {
 		if (this.accounts.containsKey(name))
-			return this.accounts.get(name).getValor();
+			return this.accounts.get(name).getValor().doubleValue();
 		return 0;
 	}
 
@@ -143,11 +144,11 @@ public class Economia {
 
 		database.open();
 		try {
-			
 
-			ResultSet result = database.query("select * from " + SolaryEconomy.table.concat(" where length(name) <= "
-					+ this.config.getYaml().getInt("economy_top.name_size") + " order by cast(valor as decimal) desc limit "
-					+ SolaryEconomy.config.getYaml().getInt("economy_top.size") + ";"));
+			ResultSet result = database.query("select * from " + SolaryEconomy.table
+					.concat(" where length(name) <= " + this.config.getYaml().getInt("economy_top.name_size")
+							+ " order by cast(valor as decimal) desc limit "
+							+ SolaryEconomy.config.getYaml().getInt("economy_top.size") + ";"));
 
 			while (result.next()) {
 				try {
@@ -159,7 +160,7 @@ public class Economia {
 							if ((!lastmagnata.equals(account.getName()))
 									&& this.config.getYaml().getBoolean("magnata_broadcast")) {
 								String accountname = account.getName();
-								String valor = SolaryEconomy.numberFormat(account.getValor());
+								String valor = SolaryEconomy.numberFormat(account.getValor().doubleValue());
 								if (SolaryEconomy.config.getYaml().getBoolean("economy_top.prefix")) {
 									Plugin vault = Bukkit.getPluginManager().getPlugin("Vault");
 									if (vault != null) {
