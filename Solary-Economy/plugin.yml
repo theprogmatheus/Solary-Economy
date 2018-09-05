@@ -1,6 +1,6 @@
 name: Solary-Economy
 main: nuvemplugins.solaryeconomy.Main
-version: 1.3
+version: 1.4
 author: Sr_Edition
 website: www.nuvemplugins.com
 softdepend: [Vault]

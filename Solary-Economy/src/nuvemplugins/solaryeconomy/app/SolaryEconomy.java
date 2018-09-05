@@ -2,6 +2,8 @@ package nuvemplugins.solaryeconomy.app;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -28,7 +30,7 @@ public class SolaryEconomy implements Listener {
 
 	public static final String PLUGIN_NAME = "Solary-Economy";
 	public static final String AUTHOR = "Sr_Edition";
-	public static final String VERSION = "1.3";
+	public static final String VERSION = "1.4";
 
 	public static String table;
 
@@ -97,7 +99,6 @@ public class SolaryEconomy implements Listener {
 
 			} else {
 				table = PLUGIN_NAME.toLowerCase().replace("-", "");
-				;
 				database = new SQLite(instance);
 			}
 
@@ -119,7 +120,7 @@ public class SolaryEconomy implements Listener {
 	}
 
 	public static String numberFormat(BigDecimal bigDecimal) {
-		DecimalFormat decimalFormat = new DecimalFormat("#,###");
+		DecimalFormat decimalFormat = new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.GERMAN));
 		String formated = decimalFormat.format(bigDecimal);
 		if (bigDecimal.doubleValue() > 1) {
 			formated += " " + config.getString("currency_name.plural");
