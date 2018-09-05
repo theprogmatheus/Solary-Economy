@@ -13,7 +13,7 @@ public class SubCmdToggle extends SubCommand {
 
 	@Override
 	public void execute(CommandSender sender, String[] args) {
-		String toggle = SolaryEconomy.economia.toggle(sender.getName()) ? "§7OFF" : "§7ON";
+		String toggle = SolaryEconomy.economia.toggle(sender.getName()) ? "OFF" : "ON";
 		sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_TOGGLE").replace("{toggle}", toggle));
 
 	}

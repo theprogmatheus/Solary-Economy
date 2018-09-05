@@ -1,5 +1,6 @@
 package nuvemplugins.solaryeconomy.commands;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,10 +45,10 @@ public class SolaryCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (sender instanceof Player) {
-			if (!SolaryEconomy.economia.hasAccount(sender.getName())) {
+			if (!SolaryEconomy.economia.existsAccount(sender.getName()))
 				SolaryEconomy.economia.createAccount(sender.getName(),
-						SolaryEconomy.config.getYaml().getDouble("start_value"));
-			}
+						new BigDecimal(SolaryEconomy.config.getYaml().getDouble("start_value")));
+
 		}
 		if (args.length >= 1) {
 			String arg = args[0].toLowerCase();
@@ -66,18 +67,18 @@ public class SolaryCommand implements CommandExecutor {
 			}
 
 			if (sender.hasPermission("solaryeconomy.commands.money.other")) {
-				if (SolaryEconomy.economia.hasAccount(args[0])) {
+				if (SolaryEconomy.economia.existsAccount(args[0])) {
 					if (sender.getName().equals(args[0])) {
 						if (sender instanceof Player) {
 							sender.sendMessage(SolaryEconomy.mensagens.get("MONEY").replace("{valor}",
-									SolaryEconomy.numberFormat(SolaryEconomy.economia.getMoney(sender.getName()))));
+									SolaryEconomy.numberFormat(SolaryEconomy.economia.getBalance(sender.getName()))));
 						} else {
 							sender.sendMessage("§a/" + command.getName() + " ajuda §8- §7ver os comandos do plugin.");
 						}
 					} else {
 						sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_OTHER")
 								.replace("{valor}",
-										SolaryEconomy.numberFormat(SolaryEconomy.economia.getMoney(args[0])))
+										SolaryEconomy.numberFormat(SolaryEconomy.economia.getBalance(args[0])))
 								.replace("{player}", args[0]));
 					}
 				} else {
@@ -88,7 +89,7 @@ public class SolaryCommand implements CommandExecutor {
 		} else {
 			if (sender instanceof Player) {
 				sender.sendMessage(SolaryEconomy.mensagens.get("MONEY").replace("{valor}",
-						SolaryEconomy.numberFormat(SolaryEconomy.economia.getMoney(sender.getName()))));
+						SolaryEconomy.numberFormat(SolaryEconomy.economia.getBalance(sender.getName()))));
 			} else {
 				sender.sendMessage("§a/" + command.getName() + " ajuda §8- §7ver os comandos do plugin.");
 			}

@@ -18,11 +18,9 @@ public class SubCmdDeletar extends SubCommand {
 			String nome = args[1];
 			if (SolaryEconomy.economia.deleteAccount(nome)) {
 				sender.sendMessage(SolaryEconomy.mensagens.get("ACCOUNT_DELETE").replace("{nome}", nome));
-
 			} else {
 				sender.sendMessage(SolaryEconomy.mensagens.get("ACCOUNT_NOFOUND").replace("{nome}", nome));
 			}
-
 		} else {
 			sender.sendMessage(getUsage());
 		}

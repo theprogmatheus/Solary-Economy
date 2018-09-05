@@ -13,11 +13,11 @@ public class Account {
 
 	public Account(String nome, BigDecimal valor) {
 		this.name = nome;
-		this.valor = valor;
+		this.balance = valor;
 	}
 
 	private String name;
-	private BigDecimal valor;
+	private BigDecimal balance;
 	private boolean toggle;
 
 	private BukkitTask asyncSaveTask;
@@ -30,12 +30,12 @@ public class Account {
 		this.name = name;
 	}
 
-	public BigDecimal getValor() {
-		return valor;
+	public BigDecimal getBalance() {
+		return balance;
 	}
 
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
+	public void setBalance(BigDecimal valor) {
+		this.balance = valor;
 	}
 
 	public boolean isToggle() {
@@ -69,10 +69,10 @@ public class Account {
 		try {
 			ResultSet result = database.query("select toggle from " + table + " where name='" + this.name + "'");
 			if (result.next()) {
-				database.execute("update " + table + " set valor='" + this.valor.toPlainString() + "', toggle='" + (this.toggle ? 1 : 0)
+				database.execute("update " + table + " set valor='" + this.balance.toPlainString() + "', toggle='" + (this.toggle ? 1 : 0)
 						+ "' where name='" + this.name + "'");
 			} else {
-				database.execute("insert into " + table + " values ('" + this.name + "', '" + this.valor.toPlainString() + "', '"
+				database.execute("insert into " + table + " values ('" + this.name + "', '" + this.balance.toPlainString() + "', '"
 						+ (this.toggle ? 1 : 0) + "')");
 			}
 		} catch (Exception exception) {

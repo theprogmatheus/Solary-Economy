@@ -31,9 +31,9 @@ public class Economia {
 		this.load();
 	}
 
-	public boolean createAccount(String name, double valor) {
+	public boolean createAccount(String name, BigDecimal valor) {
 		if (!this.accounts.containsKey(name)) {
-			Account account = new Account(name, BigDecimal.valueOf(valor));
+			Account account = new Account(name, valor);
 			account.save();
 			this.accounts.put(name, account);
 			return true;
@@ -50,22 +50,50 @@ public class Economia {
 		return false;
 	}
 
-	public boolean setMoney(String name, double valor) {
+	public BigDecimal getBalance(String name) {
+		try {
+			return this.accounts.get(name).getBalance();
+		} catch (Exception exception) {
+			return new BigDecimal(0.0);
+		}
+	}
+
+	public boolean setBalance(String name, BigDecimal valor) {
 		if (this.accounts.containsKey(name)) {
-			this.accounts.get(name).setValor(BigDecimal.valueOf(valor));
+			this.accounts.get(name).setBalance(valor);
 			this.accounts.get(name).saveAsync(20);
 			return true;
 		}
 		return false;
 	}
 
-	public double getMoney(String name) {
-		if (this.accounts.containsKey(name))
-			return this.accounts.get(name).getValor().doubleValue();
-		return 0;
+	public boolean addBalance(String name, BigDecimal valor) {
+		if (this.accounts.containsKey(name)) {
+			this.accounts.get(name).getBalance().add(valor);
+			this.accounts.get(name).saveAsync(20);
+			return true;
+		}
+		return false;
 	}
 
-	public boolean hasAccount(String name) {
+	public boolean substractBalance(String name, BigDecimal valor) {
+		if (this.accounts.containsKey(name)) {
+			this.accounts.get(name).getBalance().subtract(valor);
+			this.accounts.get(name).saveAsync(20);
+			return true;
+		}
+		return false;
+	}
+
+	public boolean hasBalance(String name, BigDecimal balance) {
+		try {
+			return this.accounts.get(name).getBalance().doubleValue() >= balance.doubleValue();
+		} catch (Exception exception) {
+			return false;
+		}
+	}
+
+	public boolean existsAccount(String name) {
 		return this.accounts.containsKey(name);
 	}
 
@@ -86,14 +114,6 @@ public class Economia {
 		if (this.accounts.containsKey(name))
 			return this.accounts.get(name).isToggle();
 		return false;
-	}
-
-	public boolean addMoney(String name, double valor) {
-		return this.setMoney(name, this.getMoney(name) + valor);
-	}
-
-	public boolean takeMoney(String name, double valor) {
-		return this.setMoney(name, ((this.getMoney(name) - valor) < 0 ? 0.0 : this.getMoney(name) - valor));
 	}
 
 	public Map<String, Account> getAccounts() {
@@ -160,7 +180,7 @@ public class Economia {
 							if ((!lastmagnata.equals(account.getName()))
 									&& this.config.getYaml().getBoolean("magnata_broadcast")) {
 								String accountname = account.getName();
-								String valor = SolaryEconomy.numberFormat(account.getValor().doubleValue());
+								String valor = SolaryEconomy.numberFormat(account.getBalance());
 								if (SolaryEconomy.config.getYaml().getBoolean("economy_top.prefix")) {
 									Plugin vault = Bukkit.getPluginManager().getPlugin("Vault");
 									if (vault != null) {

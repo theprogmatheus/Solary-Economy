@@ -1,7 +1,7 @@
 package nuvemplugins.solaryeconomy.app;
 
-import java.text.NumberFormat;
-import java.util.Locale;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -118,12 +118,10 @@ public class SolaryEconomy implements Listener {
 		}
 	}
 
-	public static String numberFormat(double valor) {
-		NumberFormat nb = NumberFormat.getNumberInstance(Locale.forLanguageTag("pt-BR"));
-		
-		nb.setMaximumFractionDigits(0);
-		String formated = nb.format(valor);
-		if (valor > 1) {
+	public static String numberFormat(BigDecimal bigDecimal) {
+		DecimalFormat decimalFormat = new DecimalFormat("#,###");
+		String formated = decimalFormat.format(bigDecimal);
+		if (bigDecimal.doubleValue() > 1) {
 			formated += " " + config.getString("currency_name.plural");
 		} else {
 			formated += " " + config.getString("currency_name.singular");
@@ -134,8 +132,9 @@ public class SolaryEconomy implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
-		if (!economia.hasAccount(event.getPlayer().getName())) {
-			economia.createAccount(event.getPlayer().getName(), config.getYaml().getDouble("start_value"));
+		if (!economia.existsAccount(event.getPlayer().getName())) {
+			economia.createAccount(event.getPlayer().getName(),
+					new BigDecimal(config.getYaml().getDouble("start_value")));
 		}
 	}
 

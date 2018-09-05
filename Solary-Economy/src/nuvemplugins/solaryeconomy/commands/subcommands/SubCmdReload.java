@@ -20,7 +20,8 @@ public class SubCmdReload extends SubCommand {
 		SolaryEconomy.config = new Config(SolaryEconomy.instance, "config.yml");
 		SolaryEconomy.mensagens = new Mensagens(SolaryEconomy.instance);
 		SolaryEconomy.refreshMoneyTop.reload();
-		sender.sendMessage("§aArquivos de configurações recarregados com sucesso.");
+		
+		sender.sendMessage("§eArquivos de configurações recarregados com sucesso.");
 
 	}
 

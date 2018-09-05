@@ -1,5 +1,6 @@
 package nuvemplugins.solaryeconomy.plugin.vault;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -13,27 +14,29 @@ import nuvemplugins.solaryeconomy.app.SolaryEconomy;
 public class VaultEconomy implements Economy {
 
 	public VaultEconomy() {
-		Bukkit.getServer().getServicesManager().register(Economy.class, this, SolaryEconomy.instance, ServicePriority.Highest);
+		Bukkit.getServer().getServicesManager().register(Economy.class, this, SolaryEconomy.instance,
+				ServicePriority.Highest);
 	}
 
 	@Override
 	public boolean createPlayerAccount(String name) {
-		return SolaryEconomy.economia.createAccount(name, 0);
+		return SolaryEconomy.economia.createAccount(name,
+				new BigDecimal(SolaryEconomy.config.getYaml().getDouble("start_value")));
 	}
 
 	@Override
 	public boolean createPlayerAccount(OfflinePlayer player) {
-		return createPlayerAccount(player.getName());
+		return this.createPlayerAccount(player.getName());
 	}
 
 	@Override
 	public boolean createPlayerAccount(String name, String arg1) {
-		return createPlayerAccount(name);
+		return this.createPlayerAccount(name);
 	}
 
 	@Override
 	public boolean createPlayerAccount(OfflinePlayer player, String arg1) {
-		return createPlayerAccount(player.getName());
+		return this.createPlayerAccount(player.getName());
 	}
 
 	@Override
@@ -48,7 +51,7 @@ public class VaultEconomy implements Economy {
 
 	@Override
 	public EconomyResponse depositPlayer(String name, double valor) {
-		if (SolaryEconomy.economia.addMoney(name, valor)) {
+		if (SolaryEconomy.economia.addBalance(name, new BigDecimal(valor))) {
 			return new EconomyResponse(valor, getBalance(name), EconomyResponse.ResponseType.SUCCESS, "");
 		} else {
 			return new EconomyResponse(valor, getBalance(name), EconomyResponse.ResponseType.FAILURE, "");
@@ -57,22 +60,22 @@ public class VaultEconomy implements Economy {
 
 	@Override
 	public EconomyResponse depositPlayer(OfflinePlayer player, double valor) {
-		return depositPlayer(player.getName(), valor);
+		return this.depositPlayer(player.getName(), valor);
 	}
 
 	@Override
 	public EconomyResponse depositPlayer(String name, String arg1, double valor) {
-		return depositPlayer(name, valor);
+		return this.depositPlayer(name, valor);
 	}
 
 	@Override
 	public EconomyResponse depositPlayer(OfflinePlayer player, String arg1, double valor) {
-		return depositPlayer(player.getName(), valor);
+		return this.depositPlayer(player.getName(), valor);
 	}
 
 	@Override
 	public String format(double valor) {
-		return SolaryEconomy.numberFormat(valor);
+		return SolaryEconomy.numberFormat(new BigDecimal(valor));
 	}
 
 	@Override
@@ -82,22 +85,22 @@ public class VaultEconomy implements Economy {
 
 	@Override
 	public double getBalance(String name) {
-		return SolaryEconomy.economia.getMoney(name);
+		return SolaryEconomy.economia.getBalance(name).doubleValue();
 	}
 
 	@Override
 	public double getBalance(OfflinePlayer player) {
-		return getBalance(player.getName());
+		return this.getBalance(player.getName());
 	}
 
 	@Override
 	public double getBalance(String name, String arg1) {
-		return getBalance(name);
+		return this.getBalance(name);
 	}
 
 	@Override
 	public double getBalance(OfflinePlayer player, String arg1) {
-		return getBalance(player.getName());
+		return this.getBalance(player.getName());
 	}
 
 	@Override
@@ -107,42 +110,42 @@ public class VaultEconomy implements Economy {
 
 	@Override
 	public boolean has(String name, double valor) {
-		return (getBalance(name) >= valor);
+		return SolaryEconomy.economia.hasBalance(name, new BigDecimal(valor));
 	}
 
 	@Override
 	public boolean has(OfflinePlayer player, double valor) {
-		return has(player.getName(), valor);
+		return this.has(player.getName(), valor);
 	}
 
 	@Override
 	public boolean has(String name, String arg1, double valor) {
-		return has(name, valor);
+		return this.has(name, valor);
 	}
 
 	@Override
 	public boolean has(OfflinePlayer player, String arg1, double valor) {
-		return has(player.getName(), valor);
+		return this.has(player.getName(), valor);
 	}
 
 	@Override
 	public boolean hasAccount(String name) {
-		return SolaryEconomy.economia.hasAccount(name);
+		return SolaryEconomy.economia.existsAccount(name);
 	}
 
 	@Override
 	public boolean hasAccount(OfflinePlayer player) {
-		return hasAccount(player.getName());
+		return this.hasAccount(player.getName());
 	}
 
 	@Override
 	public boolean hasAccount(String name, String arg1) {
-		return hasAccount(name);
+		return this.hasAccount(name);
 	}
 
 	@Override
 	public boolean hasAccount(OfflinePlayer player, String arg1) {
-		return hasAccount(player.getName());
+		return this.hasAccount(player.getName());
 	}
 
 	@Override
@@ -157,7 +160,7 @@ public class VaultEconomy implements Economy {
 
 	@Override
 	public EconomyResponse withdrawPlayer(String name, double valor) {
-		if (SolaryEconomy.economia.takeMoney(name, valor)) {
+		if (SolaryEconomy.economia.substractBalance(name, new BigDecimal(valor))) {
 			return new EconomyResponse(valor, getBalance(name), EconomyResponse.ResponseType.SUCCESS, "");
 		} else {
 			return new EconomyResponse(valor, getBalance(name), EconomyResponse.ResponseType.FAILURE, "");
@@ -166,17 +169,17 @@ public class VaultEconomy implements Economy {
 
 	@Override
 	public EconomyResponse withdrawPlayer(OfflinePlayer player, double valor) {
-		return withdrawPlayer(player.getName(), valor);
+		return this.withdrawPlayer(player.getName(), valor);
 	}
 
 	@Override
 	public EconomyResponse withdrawPlayer(String name, String arg1, double valor) {
-		return withdrawPlayer(name, valor);
+		return this.withdrawPlayer(name, valor);
 	}
 
 	@Override
 	public EconomyResponse withdrawPlayer(OfflinePlayer player, String arg1, double valor) {
-		return withdrawPlayer(player.getName(), valor);
+		return this.withdrawPlayer(player.getName(), valor);
 	}
 
 	@Override

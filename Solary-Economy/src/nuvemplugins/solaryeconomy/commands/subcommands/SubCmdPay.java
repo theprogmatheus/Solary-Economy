@@ -1,5 +1,7 @@
 package nuvemplugins.solaryeconomy.commands.subcommands;
 
+import java.math.BigDecimal;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -17,22 +19,27 @@ public class SubCmdPay extends SubCommand {
 	public void execute(CommandSender sender, String[] args) {
 		if (args.length >= 3) {
 			String nome = args[1];
-			double valor = this.numbers.parseDouble(args[2]);
-			if (valor < 1) {
+
+			BigDecimal valor = this.numbers.getDecimal(args[2]);
+
+			if (valor.doubleValue() < 1.0) {
 				sender.sendMessage(SolaryEconomy.mensagens.get("NUMBER_NULL"));
 				return;
 			}
 
 			if (!(sender instanceof Player))
 				return;
+
 			if (sender.getName().equalsIgnoreCase(nome)) {
 				sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_PAY_ERRO"));
 				return;
 			}
-			if (SolaryEconomy.economia.getMoney(sender.getName()) >= valor) {
+
+			if (SolaryEconomy.economia.hasBalance(sender.getName(), valor)) {
+
 				if (!SolaryEconomy.economia.isToggle(nome)) {
-					if (SolaryEconomy.economia.addMoney(nome, valor)) {
-						SolaryEconomy.economia.takeMoney(sender.getName(), valor);
+					if (SolaryEconomy.economia.addBalance(nome, valor)) {
+						SolaryEconomy.economia.substractBalance(sender.getName(), valor);
 						sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_PAY_SENDER").replace("{player}", nome)
 								.replace("{valor}", SolaryEconomy.numberFormat(valor)));
 

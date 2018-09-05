@@ -20,7 +20,7 @@ public class SubCmdHelp extends SubCommand {
 
 		if (sender instanceof Player) {
 			sender.sendMessage("§a/" + command + " §8- §7ver seu saldo atual.");
-			if (sender.hasPermission("solaryeconomy.commands.money"))
+			if (sender.hasPermission("solaryeconomy.commands.money.other"))
 				sender.sendMessage("§a/" + command + " [jogador]§8- §7ver o saldo atual de um jogador.");
 
 			if (sender.hasPermission("solaryeconomy.commands.pay"))
