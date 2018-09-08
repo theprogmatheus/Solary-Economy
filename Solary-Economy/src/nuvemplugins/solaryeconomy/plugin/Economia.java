@@ -20,6 +20,14 @@ import nuvemplugins.solaryeconomy.util.Config;
 
 public class Economia {
 
+	public static void main(String[] args) {
+		BigDecimal saldo = new BigDecimal("18");
+
+		saldo = saldo.add(new BigDecimal("300"));
+
+		System.out.println(saldo.toPlainString());
+	}
+
 	private Map<String, Account> accounts;
 	private List<Account> moneytop;
 	private Account magnata;
@@ -68,21 +76,11 @@ public class Economia {
 	}
 
 	public boolean addBalance(String name, BigDecimal valor) {
-		if (this.accounts.containsKey(name)) {
-			this.accounts.get(name).getBalance().add(valor);
-			this.accounts.get(name).saveAsync(20);
-			return true;
-		}
-		return false;
+		return this.setBalance(name, this.getBalance(name).add(valor));
 	}
 
 	public boolean substractBalance(String name, BigDecimal valor) {
-		if (this.accounts.containsKey(name)) {
-			this.accounts.get(name).getBalance().subtract(valor);
-			this.accounts.get(name).saveAsync(20);
-			return true;
-		}
-		return false;
+		return this.setBalance(name, this.getBalance(name).subtract(valor));
 	}
 
 	public boolean hasBalance(String name, BigDecimal balance) {

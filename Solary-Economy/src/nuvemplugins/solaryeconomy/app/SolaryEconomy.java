@@ -120,13 +120,15 @@ public class SolaryEconomy implements Listener {
 	}
 
 	public static String numberFormat(BigDecimal bigDecimal) {
+		String formated = "";
+		double doubleValue = bigDecimal.doubleValue();
 		DecimalFormat decimalFormat = new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.GERMAN));
-		String formated = decimalFormat.format(bigDecimal);
-		if (bigDecimal.doubleValue() > 1) {
-			formated += " " + config.getString("currency_name.plural");
-		} else {
+		formated += decimalFormat.format(bigDecimal);
+		
+		if (doubleValue >= -1 && doubleValue <= 1)
 			formated += " " + config.getString("currency_name.singular");
-		}
+		else
+			formated += " " + config.getString("currency_name.plural");
 
 		return formated;
 	}
