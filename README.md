@@ -1,2 +1,2 @@
-# Solary-Economy
-Um plugin de economia simples e leve para seu servidor spigot 1.8
+# Solary-Economy 1.8.8
+A simple and lightweight money plugin for your spigot server
