@@ -3,6 +3,7 @@ package com.redeskyller.bukkit.solaryeconomy;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.List;
 import java.util.Locale;
 
 import org.bukkit.Bukkit;
@@ -18,6 +19,7 @@ import com.redeskyller.bukkit.solaryeconomy.database.MySQL;
 import com.redeskyller.bukkit.solaryeconomy.database.SQLite;
 import com.redeskyller.bukkit.solaryeconomy.manager.Mensagens;
 import com.redeskyller.bukkit.solaryeconomy.plugin.Economia;
+import com.redeskyller.bukkit.solaryeconomy.plugin.objetos.Account;
 import com.redeskyller.bukkit.solaryeconomy.plugin.objetos.RefreshMoneyTop;
 import com.redeskyller.bukkit.solaryeconomy.plugin.vault.VaultEconomy;
 import com.redeskyller.bukkit.solaryeconomy.util.Config;
@@ -140,6 +142,21 @@ public class SolaryEconomy implements Listener {
 		if (!economia.existsAccount(event.getPlayer().getName()))
 			economia.createAccount(event.getPlayer().getName(),
 					new BigDecimal(config.getYaml().getDouble("start_value")));
+	}
+
+	public static Account getMagnata()
+	{
+		return economia.getMagnata();
+	}
+
+	public static boolean isToggle(String account)
+	{
+		return economia.isToggle(account);
+	}
+
+	public static List<Account> getMoneyTop()
+	{
+		return economia.getMoneyTop();
 	}
 
 }
