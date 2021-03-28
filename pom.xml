@@ -63,6 +63,7 @@
 		</resources>
 
 		<plugins>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -71,6 +72,7 @@
 					<target>${jdkVersion}</target>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
@@ -96,6 +98,18 @@
 					</filters>
 				</configuration>
 			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<outputDirectory>${project.basedir}/builds/${project.version}</outputDirectory>
+					<jarName>${project.name}</jarName>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 </project>
