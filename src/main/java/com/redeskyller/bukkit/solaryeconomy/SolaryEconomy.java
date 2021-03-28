@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.redeskyller.bukkit.solaryeconomy.commands.SolaryCommand;
 import com.redeskyller.bukkit.solaryeconomy.database.Database;
 import com.redeskyller.bukkit.solaryeconomy.database.MySQL;
 import com.redeskyller.bukkit.solaryeconomy.database.SQLite;
@@ -24,34 +25,30 @@ import com.redeskyller.bukkit.solaryeconomy.plugin.objetos.RefreshMoneyTop;
 import com.redeskyller.bukkit.solaryeconomy.plugin.vault.VaultEconomy;
 import com.redeskyller.bukkit.solaryeconomy.util.Config;
 
-public class SolaryEconomy implements Listener {
+public class SolaryEconomy extends JavaPlugin implements Listener {
 
-	public SolaryEconomy(JavaPlugin plugin)
-	{
-		instance = plugin;
-	}
+	private static SolaryEconomy instance;
 
-	public static final String PLUGIN_NAME = "Solary-Economy";
-	public static final String AUTHOR = "Sr_Edition";
-	public static final String VERSION = "1.4";
-
-	public static String table;
-
-	public static JavaPlugin instance;
-	public static Database database;
+	public static Config config;
 	public static Mensagens mensagens;
+
+	public static Database database;
+	public static String tableName;
+
 	public static Economia economia;
 	public static RefreshMoneyTop refreshMoneyTop;
-	public static Config config;
 
+	@Override
 	public void onEnable()
 	{
-		config = new Config(instance, "config.yml");
-		database();
-		mensagens = new Mensagens(instance);
-		economia = new Economia();
+		config = new Config(this, "config.yml");
+
+		setupDatabase();
+
+		mensagens = new Mensagens(this);
+		economia = new Economia().load();
 		refreshMoneyTop = new RefreshMoneyTop();
-		instance.getServer().getPluginManager().registerEvents(this, instance);
+
 		if (config.getYaml().getBoolean("use_vault"))
 			try {
 				Plugin vault = Bukkit.getPluginManager().getPlugin("Vault");
@@ -60,64 +57,44 @@ public class SolaryEconomy implements Listener {
 				Plugin legendchat = Bukkit.getPluginManager().getPlugin("Legendchat");
 				if (legendchat != null) {
 					Class<?> listener_clazz = Class
-							.forName("nuvemplugins.solaryeconomy.plugin.listener.LegendChatListeners");
+							.forName("com.redeskyller.bukkit.solaryeconomy.plugin.LegendChatListeners");
 					Object listener = listener_clazz.getConstructor(new Class[0]).newInstance(new Object[0]);
-					Bukkit.getServer().getPluginManager().registerEvents((Listener) listener, instance);
+					Bukkit.getServer().getPluginManager().registerEvents((Listener) listener, this);
 				}
 			} catch (Exception exception) {
 				exception.printStackTrace();
 			}
 
+		getServer().getPluginManager().registerEvents(this, this);
+
+		getCommand("money").setExecutor(new SolaryCommand("money"));
 	}
 
+	@Override
 	public void onDisable()
 	{
-		if (database != null)
-			if (database.connection())
-				database.close();
-
+		database.endConnection();
 	}
 
-	public void database()
+	private void setupDatabase()
 	{
 		try {
-			FileConfiguration config = instance.getConfig();
-			boolean usemysql = config.getBoolean("mysql.enable");
-			if (usemysql) {
-				String hostname = config.getString("mysql.hostname");
-				String database_name = config.getString("mysql.database");
-				String username = config.getString("mysql.username");
-				String password = config.getString("mysql.password");
-				String table_name = config.getString("mysql.table");
-				int port = config.getInt("mysql.port");
-				MySQL mysql = new MySQL(instance);
-				mysql.setHostname(hostname);
-				mysql.setDatabase(database_name);
-				mysql.setUsername(username);
-				mysql.setPassword(password);
-				mysql.setPort(port);
-				table = table_name;
-				database = mysql;
 
+			FileConfiguration config = getConfig();
+
+			if (config.getBoolean("mysql.enable")) {
+				tableName = config.getString("mysql.table");
+				database = new MySQL(this);
 			} else {
-				table = PLUGIN_NAME.toLowerCase().replace("-", "");
-				database = new SQLite(instance);
+				tableName = ("solaryeconomy");
+				database = new SQLite(this);
 			}
 
-			if (database.open())
-				database.close();
-			else {
-				table = PLUGIN_NAME.toLowerCase().replace("-", "");
-				database = new SQLite(instance);
-			}
-			database.open();
+			database.execute(
+					"CREATE TABLE IF NOT EXISTS " + tableName + " (name varchar(40), valor text, toggle int);");
 
-			database.execute("create table if not exists " + table + " (name varchar(40), valor text, toggle int);");
-
-			database.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 
@@ -142,6 +119,11 @@ public class SolaryEconomy implements Listener {
 		if (!economia.existsAccount(event.getPlayer().getName()))
 			economia.createAccount(event.getPlayer().getName(),
 					new BigDecimal(config.getYaml().getDouble("start_value")));
+	}
+
+	public static SolaryEconomy getInstance()
+	{
+		return instance;
 	}
 
 	public static Account getMagnata()

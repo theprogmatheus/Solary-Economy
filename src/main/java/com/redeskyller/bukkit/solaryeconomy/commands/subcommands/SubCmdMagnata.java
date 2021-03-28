@@ -11,12 +11,14 @@ import com.redeskyller.bukkit.solaryeconomy.plugin.vault.Vault;
 
 public class SubCmdMagnata extends SubCommand {
 
-	public SubCmdMagnata(String command) {
+	public SubCmdMagnata(String command)
+	{
 		super("magnata", "§cUse: /" + command + " magnata", "solaryeconomy.commands.magnata");
 	}
 
 	@Override
-	public void execute(CommandSender sender, String[] args) {
+	public void execute(CommandSender sender, String[] args)
+	{
 
 		Account account = SolaryEconomy.economia.getMagnata();
 		sender.sendMessage(" ");
@@ -25,16 +27,14 @@ public class SubCmdMagnata extends SubCommand {
 			String valor = SolaryEconomy.numberFormat(account.getBalance());
 			if (SolaryEconomy.config.getYaml().getBoolean("economy_top.prefix")) {
 				Plugin vault = Bukkit.getPluginManager().getPlugin("Vault");
-				if (vault != null) {
+				if (vault != null)
 					accountname = Vault.getPrefix(account.getName()).concat(account.getName());
-				}
 			}
 			sender.sendMessage(SolaryEconomy.mensagens.get("MAGNATA_VIEW").replace("{player}", accountname)
 					.replace("{valor}", valor));
 
-		} else {
+		} else
 			sender.sendMessage(SolaryEconomy.mensagens.get("MAGNATA_NOT_FOUND"));
-		}
 
 		sender.sendMessage(" ");
 

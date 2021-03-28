@@ -9,7 +9,8 @@ import org.bukkit.plugin.Plugin;
 
 public class Config {
 
-	public Config(Plugin plugin, String name) {
+	public Config(Plugin plugin, String name)
+	{
 		this.plugin = plugin;
 		this.name = name;
 		reload();
@@ -20,7 +21,8 @@ public class Config {
 	private File file;
 	private YamlConfiguration yaml;
 
-	public void reload() {
+	public void reload()
+	{
 		try {
 			if (this.name.contains("/")) {
 				String[] split = this.name.split("/");
@@ -47,34 +49,39 @@ public class Config {
 		}
 	}
 
-	public void save() {
+	public void save()
+	{
 		try {
-			if (this.yaml != null && this.file != null) {
+			if ((this.yaml != null) && (this.file != null))
 				this.yaml.save(this.file);
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public String getString(String path) {
+	public String getString(String path)
+	{
 		return this.yaml.getString(path).replace("&", "§");
 	}
 
-	public Plugin getPlugin() {
-		return plugin;
+	public Plugin getPlugin()
+	{
+		return this.plugin;
 	}
 
-	public String getName() {
-		return name;
+	public String getName()
+	{
+		return this.name;
 	}
 
-	public File getFile() {
-		return file;
+	public File getFile()
+	{
+		return this.file;
 	}
 
-	public YamlConfiguration getYaml() {
-		return yaml;
+	public YamlConfiguration getYaml()
+	{
+		return this.yaml;
 	}
 
 }

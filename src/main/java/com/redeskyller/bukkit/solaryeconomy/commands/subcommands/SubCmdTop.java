@@ -13,12 +13,14 @@ import com.redeskyller.bukkit.solaryeconomy.plugin.vault.Vault;
 
 public class SubCmdTop extends SubCommand {
 
-	public SubCmdTop(String command) {
+	public SubCmdTop(String command)
+	{
 		super("top", "§cUse: /" + command + " top", "solaryeconomy.commands.top", "rank");
 	}
 
 	@Override
-	public void execute(CommandSender sender, String[] args) {
+	public void execute(CommandSender sender, String[] args)
+	{
 		List<Account> moneytop = SolaryEconomy.economia.getMoneyTop();
 
 		if (!moneytop.isEmpty()) {
@@ -30,9 +32,8 @@ public class SubCmdTop extends SubCommand {
 				String accountname = account.getName();
 				if (SolaryEconomy.config.getYaml().getBoolean("economy_top.prefix")) {
 					Plugin vault = Bukkit.getPluginManager().getPlugin("Vault");
-					if (vault != null) {
+					if (vault != null)
 						accountname = Vault.getPrefix(account.getName()).concat(account.getName());
-					}
 				}
 
 				if (i == 1) {
@@ -46,15 +47,12 @@ public class SubCmdTop extends SubCommand {
 						display = magnata_tag.concat(display);
 						sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_TOP_FORMAT").replace("{i}", "" + i)
 								.replace("{player}", display).replace("{valor}", valor));
-					} else {
-
+					} else
 						sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_TOP_FORMAT").replace("{i}", "" + i)
 								.replace("{player}", accountname).replace("{valor}", valor));
-					}
-				} else {
+				} else
 					sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_TOP_FORMAT").replace("{i}", "" + i)
 							.replace("{player}", accountname).replace("{valor}", valor));
-				}
 
 				i++;
 			}

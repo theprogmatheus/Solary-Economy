@@ -27,7 +27,8 @@ public class SolaryCommand implements CommandExecutor {
 
 	private List<SubCommand> subcommands;
 
-	public SolaryCommand(String command) {
+	public SolaryCommand(String command)
+	{
 		this.subcommands = new ArrayList<SubCommand>();
 		this.subcommands.add(new SubCmdHelp(command));
 		this.subcommands.add(new SubCmdTop(command));
@@ -43,57 +44,45 @@ public class SolaryCommand implements CommandExecutor {
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if (sender instanceof Player) {
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
+	{
+		if (sender instanceof Player)
 			if (!SolaryEconomy.economia.existsAccount(sender.getName()))
 				SolaryEconomy.economia.createAccount(sender.getName(),
 						new BigDecimal(SolaryEconomy.config.getYaml().getDouble("start_value")));
-
-		}
 		if (args.length >= 1) {
 			String arg = args[0].toLowerCase();
-			if (!this.subcommands.isEmpty()) {
-				for (SubCommand subCommand : this.subcommands) {
+			if (!this.subcommands.isEmpty())
+				for (SubCommand subCommand : this.subcommands)
 					if (arg.equalsIgnoreCase(subCommand.getName().toLowerCase())
 							|| subCommand.getAlias().contains(arg)) {
-						if (sender.hasPermission(subCommand.getPermission()) || subCommand.getPermission().isEmpty()) {
+						if (sender.hasPermission(subCommand.getPermission()) || subCommand.getPermission().isEmpty())
 							subCommand.execute(sender, args);
-						} else {
+						else
 							sender.sendMessage(SolaryEconomy.mensagens.get("NO_PERMISSION"));
-						}
 						return false;
 					}
-				}
-			}
 
-			if (sender.hasPermission("solaryeconomy.commands.money.other")) {
+			if (sender.hasPermission("solaryeconomy.commands.money.other"))
 				if (SolaryEconomy.economia.existsAccount(args[0])) {
 					if (sender.getName().equals(args[0])) {
-						if (sender instanceof Player) {
+						if (sender instanceof Player)
 							sender.sendMessage(SolaryEconomy.mensagens.get("MONEY").replace("{valor}",
 									SolaryEconomy.numberFormat(SolaryEconomy.economia.getBalance(sender.getName()))));
-						} else {
+						else
 							sender.sendMessage("§a/" + command.getName() + " ajuda §8- §7ver os comandos do plugin.");
-						}
-					} else {
+					} else
 						sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_OTHER")
 								.replace("{valor}",
 										SolaryEconomy.numberFormat(SolaryEconomy.economia.getBalance(args[0])))
 								.replace("{player}", args[0]));
-					}
-				} else {
+				} else
 					sender.sendMessage(SolaryEconomy.mensagens.get("PLAYER_NOTFOUND").replace("{player}", args[0]));
-				}
-
-			}
-		} else {
-			if (sender instanceof Player) {
-				sender.sendMessage(SolaryEconomy.mensagens.get("MONEY").replace("{valor}",
-						SolaryEconomy.numberFormat(SolaryEconomy.economia.getBalance(sender.getName()))));
-			} else {
-				sender.sendMessage("§a/" + command.getName() + " ajuda §8- §7ver os comandos do plugin.");
-			}
-		}
+		} else if (sender instanceof Player)
+			sender.sendMessage(SolaryEconomy.mensagens.get("MONEY").replace("{valor}",
+					SolaryEconomy.numberFormat(SolaryEconomy.economia.getBalance(sender.getName()))));
+		else
+			sender.sendMessage("§a/" + command.getName() + " ajuda §8- §7ver os comandos do plugin.");
 
 		return false;
 	}

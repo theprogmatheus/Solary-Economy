@@ -9,12 +9,14 @@ import com.redeskyller.bukkit.solaryeconomy.abstracts.SubCommand;
 
 public class SubCmdAdd extends SubCommand {
 
-	public SubCmdAdd(String command) {
+	public SubCmdAdd(String command)
+	{
 		super("add", "§cUse: /" + command + " add [jogador] [valor]", "solaryeconomy.commands.add", "give");
 	}
 
 	@Override
-	public void execute(CommandSender sender, String[] args) {
+	public void execute(CommandSender sender, String[] args)
+	{
 		if (args.length >= 3) {
 
 			String nome = args[1];
@@ -26,16 +28,14 @@ public class SubCmdAdd extends SubCommand {
 				return;
 			}
 
-			if (SolaryEconomy.economia.addBalance(nome, valor)) {
+			if (SolaryEconomy.economia.addBalance(nome, valor))
 				sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_ADD").replace("{player}", nome).replace("{valor}",
 						SolaryEconomy.numberFormat(valor)));
-			} else {
+			else
 				sender.sendMessage(SolaryEconomy.mensagens.get("PLAYER_NOTFOUND").replace("{nome}", nome));
-			}
 
-		} else {
+		} else
 			sender.sendMessage(getUsage());
-		}
 
 	}
 

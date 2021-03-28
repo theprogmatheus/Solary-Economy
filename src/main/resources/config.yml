@@ -1,58 +1,40 @@
 #########################[ Solary-Economy ]#########################
 ##                                                                ##
-##                        Autor: Sr_Edition                       ##
-##                          Versão: 1.4                           ##
-##                    Site: www.nuvemplugins.com                  ##
-##                                                                ##
 ##                   Encontrou algum bug? Reporte!                ##
 ##                                                                ##
-##                  Email: mateusaguiar-15@hotmail                ##
-##                Skype: mateusaguiar-15@hotmail.com              ##
-##                     Discord: Sr_Edition#7628                   ##
+##                  Email: editionsenpai@gmail.com                ##
+##                     Discord: Sr_Edition#4765                   ##
 ##                                                                ##
 ####################################################################
 
-#Permissões:
-#
-###################[Comandos]#######################
-#
-#/money - sem permissão :D
-#/money ajuda - sem permissão :D
-#/money [jogador] - solaryeconomy.commands.money.other
-#/money top - solaryeconomy.commands.top
-#/money criar - solaryeconomy.commands.criar
-#/money deletar - solaryeconomy.commands.deletar
-#/money add - solaryeconomy.commands.add
-#/money remove - solaryeconomy.commands.remove
-#/money set - solaryeconomy.commands.set
-#/money pay - solaryeconomy.commands.pay
-#/money toggle - solaryeconomy.commands.toggle
-#/money reload - solaryeconomy.commands.reload
-#/money magnata - solaryeconomy.commands.magnata
-#
-###################[Comandos]#######################
+
+#/------------------------------------------------------------------/
+#     Autor: ${project.author}
+#     Versão: ${project.version}
+#/------------------------------------------------------------------/
+
 
 
 
 #Configuração do banco de dados
+
 mysql:
-  #coloque em true para usar o MySQL, caso esteja desativado será usado SQLite no arquivo "database.db"
+  #coloque em true para usar o MySQL, caso esteja desativado será usado SQLite no arquivo "storage.db"
   enable: false
-  #coloque o endereço do seu banco de dados ex: "localhost" 
+  #coloque o endereço do seu banco de dados ex: "localhost".
+  #se seu MySQL estiver rodando em uma porta diferente, especifique a porta. ex: "localhost:2789"
   hostname: "localhost"
   #coloque o nome do seu banco de dados ex: "minecraft"
   database: "minecraft"
   #coloque o nome de usuário do seu banco de dados ex: "root"
   username: "root"
   #coloque a senha do seu usuário do seu banco de dados ex: "pass123"
-  password: "pass123"
-  #coloque a porta do endereço do seu banco de dados ex: 3306 (3306 é o valor padrão)
-  port: 3306
+  password: ""
   #coloque o nome da tabela que vai ser usada pelo plugin
   table: "solaryeconomy"
   
   
-#configurações gerais do plugin
+#Configurações gerais do plugin
 
 #coloque aqui o mundo principal do seu servidor
 world: "world"
@@ -94,4 +76,27 @@ magnata_tag: true
 
 #coloque true se você quer que aparece uma mensagem a todos os jogadores quando o magnata mudar
 magnata_broadcast: true
-  
+
+
+
+
+
+#Permissões:
+#
+###################[Comandos]#######################
+#
+#/money - sem permissão :D
+#/money ajuda - sem permissão :D
+#/money [jogador] - solaryeconomy.commands.money.other
+#/money top - solaryeconomy.commands.top
+#/money criar - solaryeconomy.commands.criar
+#/money deletar - solaryeconomy.commands.deletar
+#/money add - solaryeconomy.commands.add
+#/money remove - solaryeconomy.commands.remove
+#/money set - solaryeconomy.commands.set
+#/money pay - solaryeconomy.commands.pay
+#/money toggle - solaryeconomy.commands.toggle
+#/money reload - solaryeconomy.commands.reload
+#/money magnata - solaryeconomy.commands.magnata
+#
+###################[Comandos]#######################  

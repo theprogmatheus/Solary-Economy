@@ -13,7 +13,8 @@ import br.com.devpaulo.legendchat.api.events.ChatMessageEvent;
 public class LegendChatListeners implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR)
-	public void onEnable(ChatMessageEvent event) {
+	public void onEnable(ChatMessageEvent event)
+	{
 		if (event.isCancelled())
 			return;
 
@@ -26,9 +27,8 @@ public class LegendChatListeners implements Listener {
 			Account magnata = SolaryEconomy.economia.getMagnata();
 			Player player = event.getSender();
 
-			if (magnata != null && player != null && player.getName().equals(magnata.getName())) {
+			if ((magnata != null) && (player != null) && player.getName().equals(magnata.getName()))
 				event.setTagValue("solary_economy_magnata", magnata_tag);
-			}
 
 		}
 	}

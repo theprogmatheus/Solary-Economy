@@ -9,12 +9,14 @@ import com.redeskyller.bukkit.solaryeconomy.abstracts.SubCommand;
 
 public class SubCmdCriar extends SubCommand {
 
-	public SubCmdCriar(String command) {
+	public SubCmdCriar(String command)
+	{
 		super("criar", "§cUse: /" + command + " criar [nome] [valor]", "solaryeconomy.commands.criar", "create", "new");
 	}
 
 	@Override
-	public void execute(CommandSender sender, String[] args) {
+	public void execute(CommandSender sender, String[] args)
+	{
 		if (args.length >= 3) {
 			String nome = args[1];
 
@@ -25,16 +27,13 @@ public class SubCmdCriar extends SubCommand {
 				return;
 			}
 
-			if (SolaryEconomy.economia.createAccount(nome, valor)) {
+			if (SolaryEconomy.economia.createAccount(nome, valor))
 				sender.sendMessage(SolaryEconomy.mensagens.get("ACCOUNT_CREATE").replace("{nome}", nome));
-
-			} else {
+			else
 				sender.sendMessage(SolaryEconomy.mensagens.get("ACCOUNT_EXISTS").replace("{nome}", nome));
-			}
 
-		} else {
+		} else
 			sender.sendMessage(getUsage());
-		}
 
 	}
 

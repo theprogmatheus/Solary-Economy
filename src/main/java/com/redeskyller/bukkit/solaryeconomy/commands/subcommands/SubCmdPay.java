@@ -11,12 +11,14 @@ import com.redeskyller.bukkit.solaryeconomy.abstracts.SubCommand;
 
 public class SubCmdPay extends SubCommand {
 
-	public SubCmdPay(String command) {
+	public SubCmdPay(String command)
+	{
 		super("pay", "§cUse: /" + command + " pay [jogador] [valor]", "solaryeconomy.commands.pay", "pagar", "enviar");
 	}
 
 	@Override
-	public void execute(CommandSender sender, String[] args) {
+	public void execute(CommandSender sender, String[] args)
+	{
 		if (args.length >= 3) {
 			String nome = args[1];
 
@@ -44,27 +46,21 @@ public class SubCmdPay extends SubCommand {
 								.replace("{valor}", SolaryEconomy.numberFormat(valor)));
 
 						Player target = Bukkit.getPlayer(nome);
-						if (target != null) {
-							if (sender != target) {
+						if (target != null)
+							if (sender != target)
 								target.sendMessage(SolaryEconomy.mensagens.get("MONEY_PAY_RECEIVER")
 										.replace("{player}", sender.getName())
 										.replace("{valor}", SolaryEconomy.numberFormat(valor)));
-							}
-						}
 
-					} else {
+					} else
 						sender.sendMessage(SolaryEconomy.mensagens.get("PLAYER_NOTFOUND").replace("{nome}", nome));
-					}
-				} else {
+				} else
 					sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_TOGGLED"));
-				}
-			} else {
+			} else
 				sender.sendMessage(SolaryEconomy.mensagens.get("NO_MONEY"));
-			}
 
-		} else {
+		} else
 			sender.sendMessage(getUsage());
-		}
 
 	}
 

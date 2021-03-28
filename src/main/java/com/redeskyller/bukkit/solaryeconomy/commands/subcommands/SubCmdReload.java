@@ -9,18 +9,20 @@ import com.redeskyller.bukkit.solaryeconomy.util.Config;
 
 public class SubCmdReload extends SubCommand {
 
-	public SubCmdReload(String command) {
+	public SubCmdReload(String command)
+	{
 		super("reload", "§cUse: /" + command + " reload", "solaryeconomy.commands.reload", "recarregar");
 	}
 
 	@Override
-	public void execute(CommandSender sender, String[] args) {
+	public void execute(CommandSender sender, String[] args)
+	{
 
 		SolaryEconomy.economia.loadMoneyTop();
-		SolaryEconomy.config = new Config(SolaryEconomy.instance, "config.yml");
-		SolaryEconomy.mensagens = new Mensagens(SolaryEconomy.instance);
+		SolaryEconomy.config = new Config(SolaryEconomy.getInstance(), "config.yml");
+		SolaryEconomy.mensagens = new Mensagens(SolaryEconomy.getInstance());
 		SolaryEconomy.refreshMoneyTop.reload();
-		
+
 		sender.sendMessage("§eArquivos de configurações recarregados com sucesso.");
 
 	}
