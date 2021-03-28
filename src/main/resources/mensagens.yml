@@ -1,0 +1,42 @@
+#########################[ Solary-Economy ]#########################
+##                                                                ##
+##                        Autor: Sr_Edition                       ##
+##                          Versão: 1.4                           ##
+##                    Site: www.nuvemplugins.com                  ##
+##                                                                ##
+##                   Encontrou algum bug? Reporte!                ##
+##                                                                ##
+##                  Email: mateusaguiar-15@hotmail                ##
+##                Skype: mateusaguiar-15@hotmail.com              ##
+##                     Discord: Sr_Edition#7628                   ##
+##                                                                ##
+####################################################################
+
+
+#configurações de todas as mensagens do Solary-Economy
+
+NO_PERMISSION: "&cVocê não tem permissão para isso."
+PLAYER_NOTFOUND: "&cJogador não encontrado em nosso banco de dados."
+MONEY: "&aMoney: {valor}"
+NO_MONEY: "&cVocê não tem money suficiente para isso."
+MONEY_TOGGLE: "&aRecebimento de coins: {toggle}"
+MONEY_TOGGLED: "&cEste jogador está com o recebimento de coins desativado."
+MONEY_OTHER: "&aMoney de {player}: {valor}"
+MONEY_TOP_NULL: "&cNão existe jogadores cadastrados ainda."
+MONEY_TOP_TITLE: "&2Top 10 Mais Ricos &7(Atualizado de 5 em 5 minutos)"
+MONEY_TOP_FORMAT: "&a{i}. &2{player}: &7({valor})"
+NUMBER_NULL: "&cValor incorreto, por favor insira um valor válido."
+ACCOUNT_EXISTS: "&cJá existe uma conta com o nome '{nome}'!"
+ACCOUNT_CREATE: "&aConta '{nome}' criada com sucesso!"
+ACCOUNT_DELETE: "&aConta '{nome}' deletada com sucesso!"
+ACCOUNT_NOFOUND: "&cConta '{nome}' não encontrada em nosso banco de dados."
+MONEY_SET: "&aFoi setado a quantia de {valor} na conta de {player} "
+MONEY_ADD: "&aFoi adicionado a conta de {player} a quantia de {valor}"
+MONEY_REMOVE: "&aFoi removido a quantia de {valor} da conta de {player} "
+MONEY_PAY_SENDER: "&aVocê enviou {valor} para {player}"
+MONEY_PAY_RECEIVER: "&aVocê acaba de receber {valor} de {player}"
+MONEY_PAY_ERRO: "&cVocê não pode enviar coins a si mesmo."
+MAGNATA_TAG: "&2[$] "
+MAGNATA_VIEW: "&2[$] &aAtual magnata do servidor: &7{player} &7com a quantia de {valor}"
+MAGNATA_NEW: "&2[$] &aNovo magnata: &7{player} &7com a quantia de {valor}"
+MAGNATA_NOT_FOUND: "&2[$] &cNenhum magnata ainda."

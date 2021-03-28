@@ -1,0 +1,97 @@
+#########################[ Solary-Economy ]#########################
+##                                                                ##
+##                        Autor: Sr_Edition                       ##
+##                          Versão: 1.4                           ##
+##                    Site: www.nuvemplugins.com                  ##
+##                                                                ##
+##                   Encontrou algum bug? Reporte!                ##
+##                                                                ##
+##                  Email: mateusaguiar-15@hotmail                ##
+##                Skype: mateusaguiar-15@hotmail.com              ##
+##                     Discord: Sr_Edition#7628                   ##
+##                                                                ##
+####################################################################
+
+#Permissões:
+#
+###################[Comandos]#######################
+#
+#/money - sem permissão :D
+#/money ajuda - sem permissão :D
+#/money [jogador] - solaryeconomy.commands.money.other
+#/money top - solaryeconomy.commands.top
+#/money criar - solaryeconomy.commands.criar
+#/money deletar - solaryeconomy.commands.deletar
+#/money add - solaryeconomy.commands.add
+#/money remove - solaryeconomy.commands.remove
+#/money set - solaryeconomy.commands.set
+#/money pay - solaryeconomy.commands.pay
+#/money toggle - solaryeconomy.commands.toggle
+#/money reload - solaryeconomy.commands.reload
+#/money magnata - solaryeconomy.commands.magnata
+#
+###################[Comandos]#######################
+
+
+
+#Configuração do banco de dados
+mysql:
+  #coloque em true para usar o MySQL, caso esteja desativado será usado SQLite no arquivo "database.db"
+  enable: false
+  #coloque o endereço do seu banco de dados ex: "localhost" 
+  hostname: "localhost"
+  #coloque o nome do seu banco de dados ex: "minecraft"
+  database: "minecraft"
+  #coloque o nome de usuário do seu banco de dados ex: "root"
+  username: "root"
+  #coloque a senha do seu usuário do seu banco de dados ex: "pass123"
+  password: "pass123"
+  #coloque a porta do endereço do seu banco de dados ex: 3306 (3306 é o valor padrão)
+  port: 3306
+  #coloque o nome da tabela que vai ser usada pelo plugin
+  table: "solaryeconomy"
+  
+  
+#configurações gerais do plugin
+
+#coloque aqui o mundo principal do seu servidor
+world: "world"
+
+#coloque true para usar a API Vault, (é recomendado usar, para que os demais plugins tenha acesso ao Solary-Economy)
+use_vault: true
+
+#coloque aqui o money que o jogador vai começar quando logar no servidor pela primeira vez
+start_value: 0
+  
+#configurações gerais do money top
+economy_top:
+
+  #coloque aqui a quantidade de jogadores que vai aparecer no money top
+  size: 10
+  
+  #coloque aqui o tempo para ficar atualizando o money top (em segundos) ex: (300 segundos = 5 minutos)
+  refresh_time: 300
+  
+  #coloque em true para usar prefix's no money top (precisa do Vault)
+  prefix: true
+  
+  #coloque aqui o tamanho máximo do nome da conta que vai aparecer no money top Dica: (use para remover as factions no money top :D)
+  #se o nome da conta for maior que esse valor, ela não aparecerá no money top e nem será dada a tag magnata
+  name_size: 16
+
+#configurações gerais da economia do servidor
+currency_name:
+
+  #coloque aqui o nome da economia em modo plural ex: coins
+  plural: coins
+  
+  #coloque aqui o nome da economia em modo singular ex: coin
+  singular: coin
+  
+#coloque true para usar a tag magnata no moneytop/chat (precisa do legendchat para mostrar no chat)
+# use a tag {solary_economy_magnata} no legendchat
+magnata_tag: true
+
+#coloque true se você quer que aparece uma mensagem a todos os jogadores quando o magnata mudar
+magnata_broadcast: true
+  
