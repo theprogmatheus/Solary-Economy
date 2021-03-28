@@ -10,7 +10,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.redeskyller.bukkit.solaryeconomy.SolaryEconomy;
-import com.redeskyller.bukkit.solaryeconomy.abstracts.SubCommand;
 import com.redeskyller.bukkit.solaryeconomy.commands.subcommands.SubCmdAdd;
 import com.redeskyller.bukkit.solaryeconomy.commands.subcommands.SubCmdCriar;
 import com.redeskyller.bukkit.solaryeconomy.commands.subcommands.SubCmdDeletar;
@@ -22,6 +21,7 @@ import com.redeskyller.bukkit.solaryeconomy.commands.subcommands.SubCmdRemove;
 import com.redeskyller.bukkit.solaryeconomy.commands.subcommands.SubCmdSet;
 import com.redeskyller.bukkit.solaryeconomy.commands.subcommands.SubCmdToggle;
 import com.redeskyller.bukkit.solaryeconomy.commands.subcommands.SubCmdTop;
+import com.redeskyller.bukkit.solaryeconomy.commands.subcommands.SubCommand;
 
 public class SolaryCommand implements CommandExecutor {
 
@@ -49,7 +49,7 @@ public class SolaryCommand implements CommandExecutor {
 		if (sender instanceof Player)
 			if (!SolaryEconomy.economia.existsAccount(sender.getName()))
 				SolaryEconomy.economia.createAccount(sender.getName(),
-						new BigDecimal(SolaryEconomy.config.getYaml().getDouble("start_value")));
+						new BigDecimal(SolaryEconomy.config.getDouble("start_value")));
 		if (args.length >= 1) {
 			String arg = args[0].toLowerCase();
 			if (!this.subcommands.isEmpty())
@@ -59,7 +59,7 @@ public class SolaryCommand implements CommandExecutor {
 						if (sender.hasPermission(subCommand.getPermission()) || subCommand.getPermission().isEmpty())
 							subCommand.execute(sender, args);
 						else
-							sender.sendMessage(SolaryEconomy.mensagens.get("NO_PERMISSION"));
+							sender.sendMessage(SolaryEconomy.messages.get("NO_PERMISSION"));
 						return false;
 					}
 
@@ -67,22 +67,22 @@ public class SolaryCommand implements CommandExecutor {
 				if (SolaryEconomy.economia.existsAccount(args[0])) {
 					if (sender.getName().equals(args[0])) {
 						if (sender instanceof Player)
-							sender.sendMessage(SolaryEconomy.mensagens.get("MONEY").replace("{valor}",
+							sender.sendMessage(SolaryEconomy.messages.get("MONEY").replace("{valor}",
 									SolaryEconomy.numberFormat(SolaryEconomy.economia.getBalance(sender.getName()))));
 						else
-							sender.sendMessage("งa/" + command.getName() + " ajuda ง8- ง7ver os comandos do plugin.");
+							sender.sendMessage("ยงa/" + command.getName() + " ajuda ยง8- ยง7ver os comandos do plugin.");
 					} else
-						sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_OTHER")
+						sender.sendMessage(SolaryEconomy.messages.get("MONEY_OTHER")
 								.replace("{valor}",
 										SolaryEconomy.numberFormat(SolaryEconomy.economia.getBalance(args[0])))
 								.replace("{player}", args[0]));
 				} else
-					sender.sendMessage(SolaryEconomy.mensagens.get("PLAYER_NOTFOUND").replace("{player}", args[0]));
+					sender.sendMessage(SolaryEconomy.messages.get("PLAYER_NOTFOUND").replace("{player}", args[0]));
 		} else if (sender instanceof Player)
-			sender.sendMessage(SolaryEconomy.mensagens.get("MONEY").replace("{valor}",
+			sender.sendMessage(SolaryEconomy.messages.get("MONEY").replace("{valor}",
 					SolaryEconomy.numberFormat(SolaryEconomy.economia.getBalance(sender.getName()))));
 		else
-			sender.sendMessage("งa/" + command.getName() + " ajuda ง8- ง7ver os comandos do plugin.");
+			sender.sendMessage("ยงa/" + command.getName() + " ajuda ยง8- ยง7ver os comandos do plugin.");
 
 		return false;
 	}

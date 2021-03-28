@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.redeskyller.bukkit.solaryeconomy</groupId>
 	<artifactId>Solary-Economy</artifactId>
-	<version>1.4.2</version>
+	<version>1.5.1</version>
 	<name>${artifactId}</name>
 	<description>Um sistema de economia para seu servidor Minecraft.</description>
 
@@ -105,8 +105,7 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.3.1</version>
 				<configuration>
-					<outputDirectory>${project.basedir}/builds/${project.version}</outputDirectory>
-					<jarName>${project.name}</jarName>
+					<outputDirectory>${project.basedir}/build</outputDirectory>
 				</configuration>
 			</plugin>
 

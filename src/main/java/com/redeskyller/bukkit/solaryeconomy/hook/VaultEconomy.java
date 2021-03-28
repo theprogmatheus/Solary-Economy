@@ -1,4 +1,4 @@
-package com.redeskyller.bukkit.solaryeconomy.plugin.vault;
+package com.redeskyller.bukkit.solaryeconomy.hook;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,17 +14,25 @@ import net.milkbowl.vault.economy.EconomyResponse;
 
 public class VaultEconomy implements Economy {
 
-	public VaultEconomy()
+	public VaultEconomy register()
 	{
 		Bukkit.getServer().getServicesManager().register(Economy.class, this, SolaryEconomy.getInstance(),
 				ServicePriority.Highest);
+		return this;
+	}
+
+	public VaultEconomy unregister()
+	{
+
+		Bukkit.getServer().getServicesManager().unregister(Economy.class, this);
+		return this;
 	}
 
 	@Override
 	public boolean createPlayerAccount(String name)
 	{
 		return SolaryEconomy.economia.createAccount(name,
-				new BigDecimal(SolaryEconomy.config.getYaml().getDouble("start_value")));
+				new BigDecimal(SolaryEconomy.config.getDouble("start_value")));
 	}
 
 	@Override
@@ -61,9 +69,11 @@ public class VaultEconomy implements Economy {
 	public EconomyResponse depositPlayer(String name, double valor)
 	{
 		if (SolaryEconomy.economia.addBalance(name, new BigDecimal(valor)))
-			return new EconomyResponse(valor, getBalance(name), EconomyResponse.ResponseType.SUCCESS, "");
+			return new EconomyResponse(valor, getBalance(name), EconomyResponse.ResponseType.SUCCESS,
+					"Valor depositado com sucesso.");
 		else
-			return new EconomyResponse(valor, getBalance(name), EconomyResponse.ResponseType.FAILURE, "");
+			return new EconomyResponse(valor, getBalance(name), EconomyResponse.ResponseType.FAILURE,
+					"Não foi possível fazer o depósito.");
 	}
 
 	@Override
@@ -190,9 +200,11 @@ public class VaultEconomy implements Economy {
 	public EconomyResponse withdrawPlayer(String name, double valor)
 	{
 		if (SolaryEconomy.economia.substractBalance(name, new BigDecimal(valor)))
-			return new EconomyResponse(valor, getBalance(name), EconomyResponse.ResponseType.SUCCESS, "");
+			return new EconomyResponse(valor, getBalance(name), EconomyResponse.ResponseType.SUCCESS,
+					"Saque efetuado com sucesso.");
 		else
-			return new EconomyResponse(valor, getBalance(name), EconomyResponse.ResponseType.FAILURE, "");
+			return new EconomyResponse(valor, getBalance(name), EconomyResponse.ResponseType.FAILURE,
+					"Não foi possível efetuar o saque.");
 	}
 
 	@Override

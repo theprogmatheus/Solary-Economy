@@ -1,5 +1,6 @@
 package com.redeskyller.bukkit.solaryeconomy;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -8,9 +9,7 @@ import java.util.Locale;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,19 +17,18 @@ import com.redeskyller.bukkit.solaryeconomy.commands.SolaryCommand;
 import com.redeskyller.bukkit.solaryeconomy.database.Database;
 import com.redeskyller.bukkit.solaryeconomy.database.MySQL;
 import com.redeskyller.bukkit.solaryeconomy.database.SQLite;
-import com.redeskyller.bukkit.solaryeconomy.manager.Mensagens;
-import com.redeskyller.bukkit.solaryeconomy.plugin.Economia;
-import com.redeskyller.bukkit.solaryeconomy.plugin.objetos.Account;
-import com.redeskyller.bukkit.solaryeconomy.plugin.objetos.RefreshMoneyTop;
-import com.redeskyller.bukkit.solaryeconomy.plugin.vault.VaultEconomy;
-import com.redeskyller.bukkit.solaryeconomy.util.Config;
+import com.redeskyller.bukkit.solaryeconomy.hook.VaultEconomy;
+import com.redeskyller.bukkit.solaryeconomy.listeners.EconomyPlayerListener;
+import com.redeskyller.bukkit.solaryeconomy.runnables.RefreshMoneyTop;
+import com.redeskyller.bukkit.solaryeconomy.util.Configuration;
+import com.redeskyller.bukkit.solaryeconomy.util.Messages;
 
-public class SolaryEconomy extends JavaPlugin implements Listener {
+public class SolaryEconomy extends JavaPlugin {
 
 	private static SolaryEconomy instance;
 
-	public static Config config;
-	public static Mensagens mensagens;
+	public static Configuration config;
+	public static Messages messages;
 
 	public static Database database;
 	public static String tableName;
@@ -38,34 +36,25 @@ public class SolaryEconomy extends JavaPlugin implements Listener {
 	public static Economia economia;
 	public static RefreshMoneyTop refreshMoneyTop;
 
+	public static VaultEconomy vaultEconomy;
+
 	@Override
 	public void onEnable()
 	{
-		config = new Config(this, "config.yml");
+		instance = this;
+		
+		config = new Configuration(this, new File(getDataFolder(), "config.yml")).load();
 
 		setupDatabase();
 
-		mensagens = new Mensagens(this);
+		messages = new Messages(this).load();
 		economia = new Economia().load();
-		refreshMoneyTop = new RefreshMoneyTop();
+		refreshMoneyTop = new RefreshMoneyTop().load();
 
-		if (config.getYaml().getBoolean("use_vault"))
-			try {
-				Plugin vault = Bukkit.getPluginManager().getPlugin("Vault");
-				if (vault != null)
-					new VaultEconomy();
-				Plugin legendchat = Bukkit.getPluginManager().getPlugin("Legendchat");
-				if (legendchat != null) {
-					Class<?> listener_clazz = Class
-							.forName("com.redeskyller.bukkit.solaryeconomy.plugin.LegendChatListeners");
-					Object listener = listener_clazz.getConstructor(new Class[0]).newInstance(new Object[0]);
-					Bukkit.getServer().getPluginManager().registerEvents((Listener) listener, this);
-				}
-			} catch (Exception exception) {
-				exception.printStackTrace();
-			}
+		if (config.getBoolean("use_vault"))
+			setupVault();
 
-		getServer().getPluginManager().registerEvents(this, this);
+		getServer().getPluginManager().registerEvents(new EconomyPlayerListener(), getInstance());
 
 		getCommand("money").setExecutor(new SolaryCommand("money"));
 	}
@@ -74,6 +63,8 @@ public class SolaryEconomy extends JavaPlugin implements Listener {
 	public void onDisable()
 	{
 		database.endConnection();
+		if (vaultEconomy != null)
+			vaultEconomy.unregister();
 	}
 
 	private void setupDatabase()
@@ -98,6 +89,27 @@ public class SolaryEconomy extends JavaPlugin implements Listener {
 		}
 	}
 
+	private void setupVault()
+	{
+		try {
+			Plugin vault = Bukkit.getPluginManager().getPlugin("Vault");
+
+			if (vault != null)
+				vaultEconomy = new VaultEconomy().register();
+
+			Plugin legendchat = Bukkit.getPluginManager().getPlugin("Legendchat");
+			if (legendchat != null) {
+				Class<?> listener_clazz = Class
+						.forName("com.redeskyller.bukkit.solaryeconomy.hook.LegendChatListeners");
+				Object listener = listener_clazz.getConstructor(new Class[0]).newInstance(new Object[0]);
+				Bukkit.getServer().getPluginManager().registerEvents((Listener) listener, this);
+			}
+
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+	}
+
 	public static String numberFormat(BigDecimal bigDecimal)
 	{
 		String formated = "";
@@ -113,20 +125,12 @@ public class SolaryEconomy extends JavaPlugin implements Listener {
 		return formated;
 	}
 
-	@EventHandler
-	public void onJoin(PlayerJoinEvent event)
-	{
-		if (!economia.existsAccount(event.getPlayer().getName()))
-			economia.createAccount(event.getPlayer().getName(),
-					new BigDecimal(config.getYaml().getDouble("start_value")));
-	}
-
 	public static SolaryEconomy getInstance()
 	{
 		return instance;
 	}
 
-	public static Account getMagnata()
+	public static RankAccount getMagnata()
 	{
 		return economia.getMagnata();
 	}
@@ -136,7 +140,7 @@ public class SolaryEconomy extends JavaPlugin implements Listener {
 		return economia.isToggle(account);
 	}
 
-	public static List<Account> getMoneyTop()
+	public static List<RankAccount> getMoneyTop()
 	{
 		return economia.getMoneyTop();
 	}

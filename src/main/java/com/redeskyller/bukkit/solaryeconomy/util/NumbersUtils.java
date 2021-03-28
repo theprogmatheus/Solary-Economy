@@ -2,13 +2,9 @@ package com.redeskyller.bukkit.solaryeconomy.util;
 
 import java.math.BigDecimal;
 
-public class Numbers {
+public class NumbersUtils {
 
-	public Numbers()
-	{
-	}
-
-	public BigDecimal getDecimal(String numberString)
+	public BigDecimal parseDecimal(String numberString)
 	{
 		try {
 			return new BigDecimal(numberString);

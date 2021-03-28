@@ -1,11 +1,11 @@
-package com.redeskyller.bukkit.solaryeconomy.abstracts;
+package com.redeskyller.bukkit.solaryeconomy.commands.subcommands;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.command.CommandSender;
 
-import com.redeskyller.bukkit.solaryeconomy.util.Numbers;
+import com.redeskyller.bukkit.solaryeconomy.util.NumbersUtils;
 
 public abstract class SubCommand {
 
@@ -13,7 +13,7 @@ public abstract class SubCommand {
 	private String usage;
 	private String permission;
 	private List<String> alias;
-	public Numbers numbers;
+	public NumbersUtils numbers;
 
 	public SubCommand(String name, String usage, String permission, String... alias)
 	{
@@ -21,7 +21,7 @@ public abstract class SubCommand {
 		this.usage = usage;
 		this.permission = permission;
 		this.alias = Arrays.asList(alias);
-		this.numbers = new Numbers();
+		this.numbers = new NumbersUtils();
 	}
 
 	public String getName()

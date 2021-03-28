@@ -7,13 +7,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.redeskyller.bukkit.solaryeconomy.SolaryEconomy;
-import com.redeskyller.bukkit.solaryeconomy.abstracts.SubCommand;
 
 public class SubCmdPay extends SubCommand {
 
 	public SubCmdPay(String command)
 	{
-		super("pay", "§cUse: /" + command + " pay [jogador] [valor]", "solaryeconomy.commands.pay", "pagar", "enviar");
+		super("pay", "Â§cUse: /" + command + " pay [jogador] [valor]", "solaryeconomy.commands.pay", "pagar", "enviar");
 	}
 
 	@Override
@@ -22,10 +21,10 @@ public class SubCmdPay extends SubCommand {
 		if (args.length >= 3) {
 			String nome = args[1];
 
-			BigDecimal valor = this.numbers.getDecimal(args[2]);
+			BigDecimal valor = this.numbers.parseDecimal(args[2]);
 
 			if (valor.doubleValue() < 1.0) {
-				sender.sendMessage(SolaryEconomy.mensagens.get("NUMBER_NULL"));
+				sender.sendMessage(SolaryEconomy.messages.get("NUMBER_NULL"));
 				return;
 			}
 
@@ -33,7 +32,7 @@ public class SubCmdPay extends SubCommand {
 				return;
 
 			if (sender.getName().equalsIgnoreCase(nome)) {
-				sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_PAY_ERRO"));
+				sender.sendMessage(SolaryEconomy.messages.get("MONEY_PAY_ERRO"));
 				return;
 			}
 
@@ -42,22 +41,22 @@ public class SubCmdPay extends SubCommand {
 				if (!SolaryEconomy.economia.isToggle(nome)) {
 					if (SolaryEconomy.economia.addBalance(nome, valor)) {
 						SolaryEconomy.economia.substractBalance(sender.getName(), valor);
-						sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_PAY_SENDER").replace("{player}", nome)
+						sender.sendMessage(SolaryEconomy.messages.get("MONEY_PAY_SENDER").replace("{player}", nome)
 								.replace("{valor}", SolaryEconomy.numberFormat(valor)));
 
 						Player target = Bukkit.getPlayer(nome);
 						if (target != null)
 							if (sender != target)
-								target.sendMessage(SolaryEconomy.mensagens.get("MONEY_PAY_RECEIVER")
+								target.sendMessage(SolaryEconomy.messages.get("MONEY_PAY_RECEIVER")
 										.replace("{player}", sender.getName())
 										.replace("{valor}", SolaryEconomy.numberFormat(valor)));
 
 					} else
-						sender.sendMessage(SolaryEconomy.mensagens.get("PLAYER_NOTFOUND").replace("{nome}", nome));
+						sender.sendMessage(SolaryEconomy.messages.get("PLAYER_NOTFOUND").replace("{nome}", nome));
 				} else
-					sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_TOGGLED"));
+					sender.sendMessage(SolaryEconomy.messages.get("MONEY_TOGGLED"));
 			} else
-				sender.sendMessage(SolaryEconomy.mensagens.get("NO_MONEY"));
+				sender.sendMessage(SolaryEconomy.messages.get("NO_MONEY"));
 
 		} else
 			sender.sendMessage(getUsage());

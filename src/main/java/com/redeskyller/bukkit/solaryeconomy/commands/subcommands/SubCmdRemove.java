@@ -5,13 +5,12 @@ import java.math.BigDecimal;
 import org.bukkit.command.CommandSender;
 
 import com.redeskyller.bukkit.solaryeconomy.SolaryEconomy;
-import com.redeskyller.bukkit.solaryeconomy.abstracts.SubCommand;
 
 public class SubCmdRemove extends SubCommand {
 
 	public SubCmdRemove(String command)
 	{
-		super("remove", "§cUse: /" + command + " remove [jogador] [valor]", "solaryeconomy.commands.remove", "take");
+		super("remove", "Â§cUse: /" + command + " remove [jogador] [valor]", "solaryeconomy.commands.remove", "take");
 	}
 
 	@Override
@@ -19,18 +18,18 @@ public class SubCmdRemove extends SubCommand {
 	{
 		if (args.length >= 3) {
 			String nome = args[1];
-			BigDecimal valor = this.numbers.getDecimal(args[2]);
+			BigDecimal valor = this.numbers.parseDecimal(args[2]);
 
 			if (valor.doubleValue() <= 0) {
-				sender.sendMessage(SolaryEconomy.mensagens.get("NUMBER_NULL"));
+				sender.sendMessage(SolaryEconomy.messages.get("NUMBER_NULL"));
 				return;
 			}
 
 			if (SolaryEconomy.economia.substractBalance(nome, valor))
-				sender.sendMessage(SolaryEconomy.mensagens.get("MONEY_REMOVE").replace("{player}", nome)
+				sender.sendMessage(SolaryEconomy.messages.get("MONEY_REMOVE").replace("{player}", nome)
 						.replace("{valor}", SolaryEconomy.numberFormat(valor)));
 			else
-				sender.sendMessage(SolaryEconomy.mensagens.get("PLAYER_NOTFOUND").replace("{nome}", nome));
+				sender.sendMessage(SolaryEconomy.messages.get("PLAYER_NOTFOUND").replace("{nome}", nome));
 
 		} else
 			sender.sendMessage(getUsage());
