@@ -115,4 +115,18 @@ public abstract class Database {
 		return null;
 	}
 
+	public void query(String sql, CallBack<ResultSet> callBack)
+	{
+		try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (callBack != null)
+				callBack.call(resultSet);
+
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+	}
+
 }

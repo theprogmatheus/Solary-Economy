@@ -18,6 +18,7 @@ public class RefreshMoneyTop {
 			@Override
 			public void run()
 			{
+				SolaryEconomy.economia.saveAll();
 				SolaryEconomy.economia.loadMoneyTop();
 			}
 		};

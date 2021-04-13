@@ -21,7 +21,7 @@ import com.redeskyller.bukkit.solaryeconomy.hook.VaultChat;
 public class Economia {
 
 	private Map<String, Account> accounts;
-	
+
 	private List<RankAccount> moneytop;
 	private RankAccount magnata;
 
@@ -33,7 +33,7 @@ public class Economia {
 	public boolean createAccount(String name, BigDecimal valor)
 	{
 		if (!existsAccount(name)) {
-			this.accounts.put(name, new Account(name).create(valor));
+			this.accounts.put(name, new Account(name, valor).create());
 			return true;
 		}
 		return false;
@@ -129,7 +129,7 @@ public class Economia {
 	{
 
 		try {
-			ResultSet resultSet = database.query("SELECT name FROM " + tableName);
+			ResultSet resultSet = database.query("SELECT * FROM " + tableName);
 
 			while (resultSet.next())
 				try {
@@ -145,6 +145,17 @@ public class Economia {
 		}
 
 		loadMoneyTop();
+		return this;
+	}
+
+	public Economia saveAll()
+	{
+		SolaryEconomy.getInstance().getLogger().info("Salvando dados de economia....");
+		
+		for (Account account : this.accounts.values()) 
+			account.save();
+
+		SolaryEconomy.getInstance().getLogger().info("Dados salvos com sucesso.");
 		return this;
 	}
 

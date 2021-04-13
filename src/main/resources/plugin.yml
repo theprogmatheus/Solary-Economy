@@ -4,6 +4,7 @@ version: "${project.version}"
 description: "${project.description}"
 author: "${project.author}"
 softdepend: ["Vault", "LegendChat"]
+load: "STARTUP"
 commands:
   money:
     description: "Para ver o saldo atual"

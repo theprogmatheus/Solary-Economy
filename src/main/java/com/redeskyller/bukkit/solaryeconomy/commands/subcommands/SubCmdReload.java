@@ -15,6 +15,7 @@ public class SubCmdReload extends SubCommand {
 	public void execute(CommandSender sender, String[] args)
 	{
 
+		SolaryEconomy.economia.saveAll();
 		SolaryEconomy.economia.loadMoneyTop();
 		SolaryEconomy.config.load();
 		SolaryEconomy.messages.load();

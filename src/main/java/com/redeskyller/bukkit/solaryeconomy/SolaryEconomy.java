@@ -62,6 +62,7 @@ public class SolaryEconomy extends JavaPlugin {
 	@Override
 	public void onDisable()
 	{
+		economia.saveAll();
 		database.endConnection();
 		if (vaultEconomy != null)
 			vaultEconomy.unregister();
