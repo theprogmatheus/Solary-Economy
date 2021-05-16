@@ -3,7 +3,7 @@ main: "${project.mainClass}"
 version: "${project.version}"
 description: "${project.description}"
 author: "${project.author}"
-softdepend: ["Vault", "LegendChat"]
+softdepend: ["Vault", "LegendChat", "PlaceholderAPI"]
 load: "STARTUP"
 commands:
   money:
