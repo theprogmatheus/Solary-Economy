@@ -141,7 +141,14 @@ magnata_broadcast: true
 #/money reload - solaryeconomy.commands.reload
 #/money magnata - solaryeconomy.commands.magnata
 #
-###################[Comandos]#######################
+###################[Comandos]#######################  
+
+###################[Placeholders]#######################
+#
+# %solaryeconomy_balance% - Saldo atual do jogador.
+# %solaryeconomy_balance_formatted% - Saldo atual do jogador formatado.
+#
+###################[Placeholders]#######################
 ```
 
 ## mensagens.yml
