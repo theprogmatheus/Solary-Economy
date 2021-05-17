@@ -2,6 +2,9 @@ package com.redeskyller.bukkit.solaryeconomy;
 
 import java.math.BigDecimal;
 
+import lombok.Data;
+
+@Data
 public class RankAccount {
 
 	private final String name;
@@ -14,25 +17,4 @@ public class RankAccount {
 		this.displayName = name;
 		this.balance = balance;
 	}
-
-	public String getName()
-	{
-		return name;
-	}
-
-	public String getDisplayName()
-	{
-		return displayName;
-	}
-
-	public void setDisplayName(String displayName)
-	{
-		this.displayName = displayName;
-	}
-
-	public BigDecimal getBalance()
-	{
-		return balance;
-	}
-
 }
