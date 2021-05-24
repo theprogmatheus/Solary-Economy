@@ -5,7 +5,6 @@ import org.bukkit.OfflinePlayer;
 import com.redeskyller.bukkit.solaryeconomy.SolaryEconomy;
 import com.redeskyller.bukkit.solaryeconomy.util.NumbersUtils;
 
-import me.clip.placeholderapi.PlaceholderAPI;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 
 public class PlaceholdersHook extends PlaceholderExpansion {
@@ -63,6 +62,6 @@ public class PlaceholdersHook extends PlaceholderExpansion {
 
 	public static void install()
 	{
-		PlaceholderAPI.registerExpansion(getInstance());
+		getInstance().register();
 	}
 }
