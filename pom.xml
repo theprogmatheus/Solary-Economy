@@ -23,8 +23,9 @@
 			<url>https://jitpack.io</url>
 		</repository>
 		<repository>
-			<id>local-repo</id>
-			<url>file://${repoPath}</url>
+			<id>github-theprogmatheus-maven-repository</id>
+			<url>
+				https://raw.githubusercontent.com/theprogmatheus/maven-repository/master/</url>
 		</repository>
 	</repositories>
 
@@ -45,21 +46,21 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.spigotmc</groupId>
+			<groupId>org.github.paperspigot</groupId>
 			<artifactId>PaperSpigot</artifactId>
 			<version>1.8.8-R0.1-SNAPSHOT-latest</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>me.clip</groupId>
+			<groupId>me.clip.placeholderapi</groupId>
 			<artifactId>PlaceholderAPI</artifactId>
-			<version>1.8.8</version>
+			<version>2.9.2</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>br.com.devpaulo</groupId>
+			<groupId>br.com.devpaulo.legendchat</groupId>
 			<artifactId>LegendChat</artifactId>
 			<version>1.1.5</version>
 			<scope>provided</scope>
