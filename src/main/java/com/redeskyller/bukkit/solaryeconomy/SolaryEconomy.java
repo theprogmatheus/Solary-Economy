@@ -8,13 +8,17 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -31,6 +35,7 @@ import com.redeskyller.bukkit.solaryeconomy.hook.VaultEconomy;
 import com.redeskyller.bukkit.solaryeconomy.listeners.EconomyPlayerListener;
 import com.redeskyller.bukkit.solaryeconomy.runnables.RefreshMoneyTop;
 import com.redeskyller.bukkit.solaryeconomy.util.Configuration;
+import com.redeskyller.bukkit.solaryeconomy.util.CurrencyFormatter;
 import com.redeskyller.bukkit.solaryeconomy.util.Messages;
 
 public class SolaryEconomy extends JavaPlugin {
@@ -48,9 +53,10 @@ public class SolaryEconomy extends JavaPlugin {
 
 	public static VaultEconomy vaultEconomy;
 
+	public static CurrencyFormatter currencyFormatter;
+
 	@Override
-	public void onEnable()
-	{
+	public void onEnable() {
 		instance = this;
 
 		config = new Configuration(this, new File(getDataFolder(), "config.yml")).load();
@@ -60,6 +66,8 @@ public class SolaryEconomy extends JavaPlugin {
 		messages = new Messages(this).load();
 		economia = new Economia().load();
 		refreshMoneyTop = new RefreshMoneyTop().load();
+
+		loadCurrencyFormatter();
 
 		if (config.getBoolean("use_vault"))
 			setupVault();
@@ -75,16 +83,14 @@ public class SolaryEconomy extends JavaPlugin {
 	}
 
 	@Override
-	public void onDisable()
-	{
+	public void onDisable() {
 		economia.saveAll();
 		database.endConnection();
 		if (vaultEconomy != null)
 			vaultEconomy.unregister();
 	}
 
-	private void setupDatabase()
-	{
+	private void setupDatabase() {
 		try {
 
 			FileConfiguration config = getConfig();
@@ -105,8 +111,7 @@ public class SolaryEconomy extends JavaPlugin {
 		}
 	}
 
-	private void setupVault()
-	{
+	private void setupVault() {
 		try {
 			Plugin vault = Bukkit.getPluginManager().getPlugin("Vault");
 
@@ -126,38 +131,69 @@ public class SolaryEconomy extends JavaPlugin {
 		}
 	}
 
-	public static String numberFormat(BigDecimal bigDecimal)
-	{
-		String formated = "";
-		double doubleValue = bigDecimal.doubleValue();
-		DecimalFormat decimalFormat = new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.GERMAN));
-		formated += decimalFormat.format(bigDecimal);
+	public CurrencyFormatter loadCurrencyFormatter() {
 
-		if ((doubleValue >= -1) && (doubleValue <= 1))
-			formated += " " + config.getString("currency_name.singular");
-		else
-			formated += " " + config.getString("currency_name.plural");
+		if (config.contains("abbreviations") && (config.getBoolean("abbreviations.enable.messages")
+				|| config.getBoolean("abbreviations.enable.commands"))) {
 
-		return formated;
+			ConfigurationSection dictionarySection = config.getConfigurationSection("abbreviations.dictionary");
+			if (dictionarySection != null) {
+				getLogger().info("Carregando dicionário de abreviações:");
+
+				TreeMap<BigDecimal, String> dictionary = new TreeMap<BigDecimal, String>();
+				Map<String, String> displays = new HashMap<>();
+				for (String key : dictionarySection.getKeys(false)) {
+					ConfigurationSection value = dictionarySection.getConfigurationSection(key);
+					dictionary.put(new BigDecimal(value.getDouble("divider")), key);
+
+					if (value.getString("display") != null && !value.getString("display").isBlank())
+						displays.put(key, value.getString("display"));
+
+					getLogger().info("Carregando abreviação: " + key + ", " + value.getString("display") + ", "
+							+ value.getDouble("divider"));
+
+				}
+
+				currencyFormatter = new CurrencyFormatter(dictionary, displays);
+				getLogger().info("Sistema de abreviações carregado com sucesso.");
+			}
+		}
+
+		return currencyFormatter;
 	}
 
-	public static SolaryEconomy getInstance()
-	{
+	public static String numberFormat(BigDecimal bigDecimal) {
+
+		if (currencyFormatter != null && config.getBoolean("abbreviations.enable.messages")) {
+			return currencyFormatter.abbreviate(bigDecimal);
+		} else {
+			String formated = "";
+			double doubleValue = bigDecimal.doubleValue();
+			DecimalFormat decimalFormat = new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.GERMAN));
+			formated += decimalFormat.format(bigDecimal);
+
+			if ((doubleValue >= -1) && (doubleValue <= 1))
+				formated += " " + config.getString("currency_name.singular");
+			else
+				formated += " " + config.getString("currency_name.plural");
+
+			return formated;
+		}
+	}
+
+	public static SolaryEconomy getInstance() {
 		return instance;
 	}
 
-	public static RankAccount getMagnata()
-	{
+	public static RankAccount getMagnata() {
 		return economia.getMagnata();
 	}
 
-	public static boolean isToggle(String account)
-	{
+	public static boolean isToggle(String account) {
 		return economia.isToggle(account);
 	}
 
-	public static List<RankAccount> getMoneyTop()
-	{
+	public static List<RankAccount> getMoneyTop() {
 		return economia.getMoneyTop();
 	}
 
@@ -169,8 +205,7 @@ public class SolaryEconomy extends JavaPlugin {
 	 * Agradecimentos ao VitorBlog pelo seu tutorial de como fazer as verificações
 	 * de atualizações ;)
 	 */
-	private void checkUpdate()
-	{
+	private void checkUpdate() {
 		CompletableFuture.runAsync(() -> {
 			try {
 				String link = "https://api.github.com/repos/sredition/Solary-Economy/releases/latest";

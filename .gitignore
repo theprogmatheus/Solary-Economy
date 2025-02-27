@@ -1,0 +1,7 @@
+/target/
+/src/main/libs/repo/
+/build/
+/bin/
+/.settings/
+.classpath
+.project

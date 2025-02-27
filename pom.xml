@@ -4,18 +4,17 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.redeskyller.bukkit.solaryeconomy</groupId>
 	<artifactId>Solary-Economy</artifactId>
-	<version>1.5.2</version>
-	<name>${artifactId}</name>
+	<version>1.5.3</version>
+	<name>Solary-Economy</name>
 	<description>Um sistema de economia para seu servidor Minecraft.</description>
-
 
 
 	<properties>
 		<jdkVersion>1.8</jdkVersion>
-		<bukkitVersion>1.8.8-R0.1-SNAPSHOT</bukkitVersion>
 		<project.mainClass>com.redeskyller.bukkit.solaryeconomy.SolaryEconomy</project.mainClass>
 		<project.author>Sr_Edition</project.author>
-		<libDir>${project.basedir}/src/main/lib</libDir>
+		<libsPath>${project.basedir}/src/main/libs</libsPath>
+		<repoPath>${libsPath}/repo</repoPath>
 	</properties>
 
 	<repositories>
@@ -24,27 +23,19 @@
 			<url>https://jitpack.io</url>
 		</repository>
 		<repository>
-			<id>placeholderapi</id>
-			<url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+			<id>local-repo</id>
+			<url>file://${repoPath}</url>
 		</repository>
 	</repositories>
 
 	<dependencies>
-	
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.20</version>
+			<version>1.18.36</version>
 			<scope>provided</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>org.spigotmc</groupId>
-			<artifactId>spigot</artifactId>
-			<version>${bukkitVersion}</version>
-			<scope>provided</scope>
-		</dependency>
-
 
 		<dependency>
 			<groupId>com.github.MilkBowl</groupId>
@@ -54,19 +45,26 @@
 		</dependency>
 
 		<dependency>
-			<groupId>br.com.devpaulo</groupId>
-			<artifactId>Legendchat</artifactId>
-			<version>1.1.5</version>
-			<scope>system</scope>
-			<systemPath>${libDir}/LegendChat.jar</systemPath>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>PaperSpigot</artifactId>
+			<version>1.8.8-R0.1-SNAPSHOT-latest</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>me.clip</groupId>
-			<artifactId>placeholderapi</artifactId>
-			<version>2.10.9</version>
+			<artifactId>PlaceholderAPI</artifactId>
+			<version>1.8.8</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>br.com.devpaulo</groupId>
+			<artifactId>LegendChat</artifactId>
+			<version>1.1.5</version>
+			<scope>provided</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -83,7 +81,72 @@
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.5.2</version>
+				<executions>
+
+					<execution>
+						<id>install-PaperSpigot</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+						<configuration>
+							<file>
+								${libsPath}/PaperSpigot.jar</file>
+							<groupId>org.spigotmc</groupId>
+							<artifactId>PaperSpigot</artifactId>
+							<version>1.8.8-R0.1-SNAPSHOT-latest</version>
+							<packaging>jar</packaging>
+							<generatePom>true</generatePom>
+							<localRepositoryPath>${repoPath}</localRepositoryPath>
+						</configuration>
+					</execution>
+
+
+					<execution>
+						<id>install-PlaceholderAPI</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+						<configuration>
+							<file>
+								${libsPath}/PlaceholderAPI.jar</file>
+							<groupId>me.clip</groupId>
+							<artifactId>PlaceholderAPI</artifactId>
+							<version>1.8.8</version>
+							<packaging>jar</packaging>
+							<generatePom>true</generatePom>
+							<localRepositoryPath> ${repoPath}</localRepositoryPath>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>install-LegendChat</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+						<configuration>
+							<file>
+								${libsPath}/LegendChat.jar</file>
+							<groupId>br.com.devpaulo</groupId>
+							<artifactId>LegendChat</artifactId>
+							<version>1.1.5</version>
+							<packaging>jar</packaging>
+							<generatePom>true</generatePom>
+							<localRepositoryPath> ${repoPath}</localRepositoryPath>
+						</configuration>
+					</execution>
+
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
 				<configuration>
 					<source>${jdkVersion}</source>
 					<target>${jdkVersion}</target>

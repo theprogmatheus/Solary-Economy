@@ -20,8 +20,7 @@ public class PlaceholdersHook extends PlaceholderExpansion {
 	}
 
 	@Override
-	public String onRequest(OfflinePlayer player, String placeholder)
-	{
+	public String onRequest(OfflinePlayer player, String placeholder) {
 
 		switch (placeholder.toLowerCase()) {
 
@@ -29,7 +28,12 @@ public class PlaceholdersHook extends PlaceholderExpansion {
 			return SolaryEconomy.numberFormat(SolaryEconomy.economia.getBalance(player.getName()));
 
 		case "balance_formatted":
-			return NumbersUtils.formatSimple(SolaryEconomy.economia.getBalance(player.getName()).doubleValue());
+			return (SolaryEconomy.currencyFormatter != null
+					&& SolaryEconomy.config.getBoolean("abbreviations.enable.messages"))
+							? SolaryEconomy.currencyFormatter
+									.abbreviate(SolaryEconomy.economia.getBalance(player.getName()))
+							: NumbersUtils
+									.formatSimple(SolaryEconomy.economia.getBalance(player.getName()).doubleValue());
 
 		default:
 			return super.onRequest(player, placeholder);
@@ -38,30 +42,25 @@ public class PlaceholdersHook extends PlaceholderExpansion {
 	}
 
 	@Override
-	public String getAuthor()
-	{
+	public String getAuthor() {
 		return AUTHOR;
 	}
 
 	@Override
-	public String getIdentifier()
-	{
+	public String getIdentifier() {
 		return IDENTIFIER;
 	}
 
 	@Override
-	public String getVersion()
-	{
+	public String getVersion() {
 		return VERSION;
 	}
 
-	public static PlaceholdersHook getInstance()
-	{
+	public static PlaceholdersHook getInstance() {
 		return instance;
 	}
 
-	public static void install()
-	{
+	public static void install() {
 		getInstance().register();
 	}
 }

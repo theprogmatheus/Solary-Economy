@@ -20,6 +20,7 @@ public class SubCmdReload extends SubCommand {
 		SolaryEconomy.config.load();
 		SolaryEconomy.messages.load();
 		SolaryEconomy.refreshMoneyTop.load();
+		SolaryEconomy.getInstance().loadCurrencyFormatter();
 
 		sender.sendMessage("§eArquivos de configurações recarregados com sucesso.");
 
