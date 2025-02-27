@@ -1,6 +1,6 @@
 <img src="https://avatars.githubusercontent.com/u/30272840?s=96&v=4" alt="Sr_Edition" title="Sr_Edition" align="right" height="96" width="96"/>
 
-# Solary-Economy
+# 🎮 Solary-Economy 💸
 ## O Sistema de Economia Definitivo para Seu Servidor Minecraft
 
 [![GitHub All Releases](https://img.shields.io/github/downloads/sredition/Solary-Economy/total.svg?logoColor=fff)](https://github.com/sredition/Solary-Economy/releases/latest)
@@ -65,9 +65,7 @@ Experimente o **Solary-Economy** hoje mesmo e leve a economia do seu servidor pa
 
 ---
 
-Essa descrição é mais detalhada e persuasiva, destacando os recursos e vantagens do plugin de forma clara e atraente. Ela também convence o leitor de que o **Solary-Economy** é a melhor escolha para seu servidor. 😊
-
-## Comandos
+##⚙️ Comandos
 
   - `/money` - Comando para ver seu saldo atual.
   - `/money <player>` - Comando para ver o saldo atual de um jogador.
@@ -83,7 +81,7 @@ Essa descrição é mais detalhada e persuasiva, destacando os recursos e vantag
   - `/money reload` - Comando para recarregar os arquivos de configuração e mensagens.
   - `/money help` - Comando para ver os comandos disponíveis.
 
-## Permissões  
+##🔒 Permissões  
 
   - `solaryeconomy.commands.money.other` - Permissão para usar o comando /money <player>
   - `solaryeconomy.commands.top` - Permissão para usar o comando /money top
@@ -98,7 +96,7 @@ Essa descrição é mais detalhada e persuasiva, destacando os recursos e vantag
   - `solaryeconomy.commands.magnata` - Permissão para usar o comando /money magnata
   
 
-## config.yml
+##📜 config.yml
 
 ```yaml
 #########################[ Solary-Economy ]#########################
@@ -249,7 +247,7 @@ abbreviations:
 
 ```
 
-## mensagens.yml
+##📜 mensagens.yml
 
 ```yaml
 #########################[ Solary-Economy ]#########################
@@ -300,7 +298,7 @@ MAGNATA_NEW: "&2[$] &aNovo magnata: &7{player} &7com a quantia de {valor}"
 MAGNATA_NOT_FOUND: "&2[$] &cNenhum magnata ainda."
 ```
 
-## Como Adicionar Solary-Economy ao Seu Projeto Maven
+##💻 Como Adicionar Solary-Economy ao Seu Projeto Maven
 
 Se você deseja utilizar o Solary-Economy como uma dependência em seu projeto Maven, siga os passos abaixo:
 
