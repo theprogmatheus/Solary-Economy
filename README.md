@@ -1,10 +1,71 @@
 <img src="https://avatars.githubusercontent.com/u/30272840?s=96&v=4" alt="Sr_Edition" title="Sr_Edition" align="right" height="96" width="96"/>
 
 # Solary-Economy
+## O Sistema de Economia Definitivo para Seu Servidor Minecraft
 
 [![GitHub All Releases](https://img.shields.io/github/downloads/sredition/Solary-Economy/total.svg?logoColor=fff)](https://github.com/sredition/Solary-Economy/releases/latest)
 
-Solary-Economy é um plugin leve e completo de economia criado para servidores Minecraft (Spigot) na versão 1.8.
+---
+
+O **Solary-Economy** é um plugin de economia robusto, leve e altamente personalizável, desenvolvido especialmente para servidores Minecraft na versão **1.8**. Ele foi projetado para oferecer uma experiência completa de gerenciamento de economia, desde operações básicas como saldo e transferências até funcionalidades avançadas como rankings, integração com outros plugins e suporte a múltiplos bancos de dados. Se você busca um sistema de economia confiável, eficiente e fácil de usar, o **Solary-Economy** é a escolha ideal.
+
+### Recursos Principais
+
+**1. Gerenciamento Completo de Economia**:
+   - Crie, delete e gerencie contas de jogadores diretamente pelo console ou comandos in-game.
+   - Defina, adicione ou remova saldos de jogadores com comandos simples e intuitivos.
+   - Transfira dinheiro entre jogadores de forma segura e rápida.
+
+**2. Ranking de Jogadores Mais Ricos**:
+   - Exiba um ranking dos jogadores mais ricos do servidor com o comando `/money top`.
+   - Personalize o número de jogadores exibidos e o intervalo de atualização do ranking.
+   - Destaque o **magnata** do servidor (o jogador mais rico) com uma tag personalizada no chat.
+
+**3. Integração com Vault**:
+   - Compatível com a API **Vault**, permitindo que outros plugins interajam diretamente com o **Solary-Economy**.
+   - Oferece suporte a placeholders para exibir saldos e outras informações em plugins de chat ou scoreboards.
+
+**4. Abreviações de Valores**:
+   - Simplifique a exibição de valores grandes (milhares, milhões, bilhões) com abreviações personalizáveis (ex: 1k, 1M, 1B).
+   - Configure o número de casas decimais e os divisores para cada abreviação.
+
+**5. Suporte a Múltiplos Bancos de Dados**:
+   - Escolha entre **SQLite** (padrão) ou **MySQL** para armazenar os dados de economia.
+   - Configure facilmente o banco de dados diretamente no arquivo `config.yml`.
+
+**6. Personalização Total**:
+   - Edite todas as mensagens do plugin no arquivo `mensagens.yml` para adaptar o plugin ao estilo do seu servidor.
+   - Defina o nome da moeda (singular e plural) para criar uma economia única.
+
+**7. Comandos e Permissões**:
+   - Comandos intuitivos como `/money`, `/money pay`, `/money top`, `/money magnata` e muito mais.
+   - Sistema de permissões detalhado para controlar o acesso a cada funcionalidade.
+
+**8. API para Desenvolvedores**:
+   - Integre o **Solary-Economy** em seus próprios plugins com uma API simples e poderosa.
+   - Acesse dados como o magnata atual, o ranking de jogadores mais ricos e o saldo de qualquer jogador.
+
+**9. Leve e Eficiente**:
+   - Desenvolvido para ser leve e de alto desempenho, sem sobrecarregar o servidor.
+   - Ideal para servidores pequenos, médios e grandes.
+
+### Vantagens de Usar o Solary-Economy
+
+- **Facilidade de Uso**: Comandos simples e configuração intuitiva permitem que até mesmo administradores iniciantes configurem o plugin rapidamente.
+- **Personalização**: Adapte o plugin ao tema do seu servidor com nomes de moedas personalizados, mensagens editáveis e muito mais.
+- **Compatibilidade**: Funciona perfeitamente com outros plugins populares como **Vault**, **PlaceholderAPI** e **LegendChat**.
+- **Confiabilidade**: Um sistema de economia estável e testado, garantindo que os dados dos jogadores estejam sempre seguros.
+- **Suporte a Desenvolvedores**: Uma API simples que permitam que desenvolvedores criem integrações personalizadas.
+
+### Por Que Escolher o Solary-Economy?
+
+Se você quer um sistema de economia que combine **facilidade de uso**, **personalização** e **desempenho**, o **Solary-Economy** é a escolha certa. Ele foi projetado para atender às necessidades de servidores de todos os tamanhos, desde pequenas comunidades até grandes redes. Com recursos avançados, integração com outros plugins e suporte a múltiplos bancos de dados, o **Solary-Economy** oferece tudo o que você precisa para gerenciar a economia do seu servidor de forma eficiente e profissional.
+
+Experimente o **Solary-Economy** hoje mesmo e leve a economia do seu servidor para o próximo nível!
+
+---
+
+Essa descrição é mais detalhada e persuasiva, destacando os recursos e vantagens do plugin de forma clara e atraente. Ela também convence o leitor de que o **Solary-Economy** é a melhor escolha para seu servidor. 😊
 
 ## Comandos
 
@@ -239,21 +300,88 @@ MAGNATA_NEW: "&2[$] &aNovo magnata: &7{player} &7com a quantia de {valor}"
 MAGNATA_NOT_FOUND: "&2[$] &cNenhum magnata ainda."
 ```
 
-## API
-Conecte-se ao Solary-Economy usando essa API
+## Como Adicionar Solary-Economy ao Seu Projeto Maven
+
+Se você deseja utilizar o Solary-Economy como uma dependência em seu projeto Maven, siga os passos abaixo:
+
+### 1. Adicionar o Repositório Maven
+
+Adicione a seguinte configuração dentro da tag `<repositories>` no seu `pom.xml`:
+
+```xml
+<repositories>
+    <repository>
+        <id>github-theprogmatheus-maven-repository</id>
+        <url>https://raw.githubusercontent.com/theprogmatheus/maven-repository/master/</url>
+    </repository>
+</repositories>
+```
+
+### 2. Adicionar a Dependência
+
+Em seguida, adicione a dependência do Solary-Economy na seção `<dependencies>` do seu `pom.xml`:
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>com.redeskyller.bukkit.solaryeconomy</groupId>
+        <artifactId>Solary-Economy</artifactId>
+        <version>1.5.3</version>
+        <scope>provided</scope>
+    </dependency>
+</dependencies>
+```
+
+### 3. Utilizando a API do Solary-Economy
+Agora você pode utilizar a API do Solary-Economy em seu projeto. Aqui está um exemplo básico de como acessar o magnata e o ranking de jogadores mais ricos:
 
 ```java
+import com.redeskyller.bukkit.solaryeconomy.SolaryEconomy;
+import com.redeskyller.bukkit.solaryeconomy.manager.Economia;
+import com.redeskyller.bukkit.solaryeconomy.objects.RankAccount;
 
-	public void yourPlugin()
-	{
-		// Pegue o magnata atual do servidor em objeto RankAccount
-		RankAccount magnata = SolaryEconomy.getMagnata();
+import java.util.List;
 
-		// Pegue o ranking de jogadores mais ricos do servidor
-		List<RankAccount> ranking = SolaryEconomy.getMoneyTop();
-		
-		// Pegue o gerenciador de economia
-		Economia economia = SolaryEconomy.getInstance().economia;
-	}
-	
+public class YourPlugin {
+
+    public void yourMethod() {
+        // Pegue o magnata atual do servidor
+        RankAccount magnata = SolaryEconomy.getMagnata();
+        System.out.println("Magnata atual: " + magnata.getName() + " com " + magnata.getBalance());
+
+        // Pegue o ranking de jogadores mais ricos
+        List<RankAccount> ranking = SolaryEconomy.getMoneyTop();
+        for (RankAccount account : ranking) {
+            System.out.println(account.getName() + ": " + account.getBalance());
+        }
+
+        // Acesse o gerenciador de economia
+        Economia economia = SolaryEconomy.economia;
+        // Exemplo: Verificar saldo de um jogador
+        BigDecimal saldo = economia.getBalance("NomeDoJogador");
+        System.out.println("Saldo do jogador: " + saldo);
+    }
+}
 ```
+
+###4. Pronto!
+Agora você pode utilizar todas as funcionalidades do Solary-Economy em seu projeto.
+
+---
+
+## 💙 Sobre o Projeto
+
+O **Solary-Economy** é um projeto **open source** desenvolvido com muito carinho e dedicação para a comunidade Minecraft. Ao longo de mais de **8 anos de existência**, ele tem sido aprimorado graças ao apoio e feedback de inúmeros servidores e jogadores. 
+
+### 🤝 Colaboração é Bem-Vinda!
+Este projeto é mantido pela comunidade e para a comunidade. Se você deseja contribuir, sinta-se à vontade para:
+- Enviar **pull requests** com melhorias ou correções.
+- Reportar **issues** para ajudar a identificar problemas ou sugerir novas funcionalidades.
+- Compartilhar suas ideias e feedback para tornar o **Solary-Economy** ainda melhor.
+
+Toda contribuição, grande ou pequena, é extremamente valiosa e ajuda a manter o projeto vivo e em constante evolução.
+
+### 🙏 Agradecimentos Especiais
+Gostaríamos de agradecer a todos que utilizam e apoiam o **Solary-Economy** há tantos anos. Vocês são a razão pela qual este projeto continua crescendo e se tornando cada vez mais robusto. Obrigado por fazer parte dessa jornada!
+
+Vamos juntos continuar construindo um sistema de economia incrível para servidores Minecraft! 💰
