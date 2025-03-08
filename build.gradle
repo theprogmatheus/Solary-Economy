@@ -12,13 +12,15 @@ repositories {
     mavenCentral()
     maven { url = uri('https://raw.githubusercontent.com/theprogmatheus/maven-repository/master/') }
     maven { url = uri('https://hub.spigotmc.org/nexus/content/repositories/snapshots/') }
-
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
     // Section: compileOnly
-    compileOnly('org.bukkit:bukkit:1.8.8-R0.1-SNAPSHOT')
     compileOnly 'org.projectlombok:lombok:1.18.36'
+    compileOnly('org.bukkit:bukkit:1.8.8-R0.1-SNAPSHOT')
+    compileOnly "com.github.MilkBowl:VaultAPI:1.7.1"
+
 
     // Section: implementation
     implementation 'com.github.theprogmatheus:jgr-uchecker:1.0.0'
@@ -46,12 +48,10 @@ bukkit {
     apiVersion = '1.8'
     depend = ['Vault']
     commands {
-        test {
-            description = 'This is a test command!'
-            aliases = ['t']
-            permission = 'testplugin.test'
-            usage = 'Just run the command!'
-            permissionMessage = 'You may not test this command!'
+        money {
+            description = 'See your current balance'
+            permission = 'solaryeconomy.command.money'
+            permissionMessage = 'You dont have permission to see your current balance'
         }
     }
 }

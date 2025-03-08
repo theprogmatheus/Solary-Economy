@@ -1,41 +1,56 @@
 package com.github.theprogmatheus.mc.solaryeconomy;
 
-import com.github.theprogmatheus.mc.solaryeconomy.command.TestCommand;
+import com.github.theprogmatheus.mc.solaryeconomy.command.MoneyCommand;
 import com.github.theprogmatheus.mc.solaryeconomy.database.DatabaseManager;
-import com.github.theprogmatheus.mc.solaryeconomy.model.Counter;
+import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
+import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankEntity;
+import com.github.theprogmatheus.mc.solaryeconomy.service.EconomyService;
 import com.github.theprogmatheus.util.JGRUChecker;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
 
+@Getter
 public class SolaryEconomy extends JavaPlugin {
 
     @Getter
-    private static DatabaseManager databaseManager;
+    private static SolaryEconomy instance;
 
+    private DatabaseManager databaseManager;
+    private EconomyService economyService;
     private JGRUChecker updateChecker;
+
 
     @Override
     public void onLoad() {
-        // load database and entities
-        databaseManager = new DatabaseManager(this);
-        databaseManager.addEntityClass(Counter.class);
+        // setup instance
+        instance = this;
 
-        // load update checker
-        this.checkNewUpdates();
+        // load database and entities
+        this.databaseManager = new DatabaseManager(this);
+        this.databaseManager.addEntityClass(BankEntity.class);
+        this.databaseManager.addEntityClass(BankAccountEntity.class);
+
+        // load economy service
+        this.economyService = new EconomyService(this);
     }
 
     @Override
     public void onEnable() {
-        databaseManager.startDatabase();
-        getCommand("test").setExecutor(new TestCommand());
+        this.databaseManager.startDatabase();
+        this.economyService.setupEconomyService();
 
+        getCommand("money").setExecutor(new MoneyCommand());
+
+        // check for new updates
+        this.checkNewUpdates();
     }
 
     @Override
     public void onDisable() {
-        databaseManager.shutdownDatabase();
+        this.economyService.shutdownEconomyService();
+        this.databaseManager.shutdownDatabase();
     }
 
 
