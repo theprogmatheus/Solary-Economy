@@ -44,7 +44,7 @@ public class SolaryEconomy extends JavaPlugin {
             this.updateChecker = new JGRUChecker("theprogmatheus", getDescription().getName(), getDescription().getVersion());
 
         this.updateChecker.checkAsync().thenAcceptAsync(release -> {
-            if (this.updateChecker.getCurrentVersion().equals(release.getVersion())) return;
+            if (release == null || this.updateChecker.getCurrentVersion().equals(release.getVersion())) return;
             Logger log = getLogger();
 
             System.out.println(" ");

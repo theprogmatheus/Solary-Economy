@@ -25,6 +25,7 @@ dependencies {
     implementation 'com.github.theprogmatheus.minecraft.utils:itembuilder:1.0'
     implementation 'com.github.theprogmatheus.minecraft.utils:guibuilder:1.0'
     implementation('com.j256.ormlite:ormlite-jdbc:6.1')
+    implementation("com.github.ben-manes.caffeine:caffeine:3.2.0")
 
     // Section: annotationProcessor
     annotationProcessor 'org.projectlombok:lombok:1.18.36'
@@ -59,6 +60,7 @@ shadowJar {
     relocate 'com.github.theprogmatheus.util', 'com.github.theprogmatheus.mc.solaryeconomy.lib'
     relocate 'com.github.theprogmatheus.minecraft.utils', 'com.github.theprogmatheus.mc.solaryeconomy.lib'
     relocate 'com.j256.ormlite', 'com.github.theprogmatheus.mc.solaryeconomy.lib.j256.ormlite'
+    relocate 'com.github.benmanes.caffeine', 'com.github.theprogmatheus.mc.solaryeconomy.lib.benmanes.caffeine'
 }
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
