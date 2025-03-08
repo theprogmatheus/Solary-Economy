@@ -4,8 +4,8 @@
 
 plugins {
     id 'java-library'
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'net.minecrell.plugin-yml.bukkit' version '0.6.0'
+    id("com.gradleup.shadow") version "9.0.0-beta10"
 }
 
 repositories {
@@ -56,10 +56,9 @@ bukkit {
 }
 
 shadowJar {
-    // está dando erro: Unsupported class file major version 65
-    relocate 'com.github.theprogmatheus.util', 'com.github.theprogmatheus.mc.solaryeconomy.util'
-    relocate 'com.github.theprogmatheus.minecraft.utils', 'com.github.theprogmatheus.mc.solaryeconomy.util'
-    relocate 'com.j256.ormlite', 'com.github.theprogmatheus.mc.solaryeconomy.lib.com.j256.ormlite'
+    relocate 'com.github.theprogmatheus.util', 'com.github.theprogmatheus.mc.solaryeconomy.lib'
+    relocate 'com.github.theprogmatheus.minecraft.utils', 'com.github.theprogmatheus.mc.solaryeconomy.lib'
+    relocate 'com.j256.ormlite', 'com.github.theprogmatheus.mc.solaryeconomy.lib.j256.ormlite'
 }
 
 
