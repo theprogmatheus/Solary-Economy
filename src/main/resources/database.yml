@@ -1,0 +1,5 @@
+type: "sqlite" #mysql, sqlite, mariadb (default is sqlite)
+host: "localhost"
+db: "solaryeconomy"
+username: ""
+password: ""

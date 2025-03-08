@@ -1,8 +1,8 @@
 package com.github.theprogmatheus.mc.solaryeconomy.command;
 
 import com.github.theprogmatheus.mc.solaryeconomy.SolaryEconomy;
-import com.github.theprogmatheus.mc.solaryeconomy.database.DatabaseManager;
 import com.github.theprogmatheus.mc.solaryeconomy.model.Counter;
+import com.j256.ormlite.dao.Dao;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,15 +14,15 @@ public class TestCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
         String userId = (sender instanceof Player) ? ((Player) sender).getUniqueId().toString() : sender.getName();
-        DatabaseManager db = SolaryEconomy.getDatabaseManager();
+        Dao<Counter, String> dao = SolaryEconomy.getDatabaseManager().getEntityDao(Counter.class, String.class);
+
         try {
-            Counter counter = db.getCountersDao().queryForId(userId);
+            Counter counter = dao.queryForId(userId);
             if (counter == null) counter = new Counter(userId, 0);
 
             counter.increment();
 
-            db.getCountersDao().createOrUpdate(counter);
-
+            dao.createOrUpdate(counter);
             sender.sendMessage("§aContador incrementado: " + counter.getCount());
 
         } catch (SQLException e) {
