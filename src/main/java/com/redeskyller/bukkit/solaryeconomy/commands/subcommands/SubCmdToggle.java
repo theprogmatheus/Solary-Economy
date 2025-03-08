@@ -3,7 +3,7 @@ package com.redeskyller.bukkit.solaryeconomy.commands.subcommands;
 import org.bukkit.command.CommandSender;
 
 import com.redeskyller.bukkit.solaryeconomy.SolaryEconomy;
-
+@Deprecated
 public class SubCmdToggle extends SubCommand {
 
 	public SubCmdToggle(String command)

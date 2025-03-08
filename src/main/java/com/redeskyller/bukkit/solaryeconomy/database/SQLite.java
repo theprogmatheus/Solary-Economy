@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 import org.bukkit.plugin.java.JavaPlugin;
-
+@Deprecated
 public class SQLite extends Database {
 
 	private final JavaPlugin plugin;

@@ -9,7 +9,7 @@ import org.bukkit.plugin.Plugin;
 import com.redeskyller.bukkit.solaryeconomy.RankAccount;
 import com.redeskyller.bukkit.solaryeconomy.SolaryEconomy;
 import com.redeskyller.bukkit.solaryeconomy.hook.VaultChat;
-
+@Deprecated
 public class SubCmdTop extends SubCommand {
 
 	public SubCmdTop(String command)

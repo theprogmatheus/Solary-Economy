@@ -6,7 +6,7 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 
 import com.redeskyller.bukkit.solaryeconomy.util.NumbersUtils;
-
+@Deprecated
 public abstract class SubCommand {
 
 	private String name;

@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 
 import com.redeskyller.bukkit.solaryeconomy.SolaryEconomy;
 
+@Deprecated
 public class NumbersUtils {
 
 	public static final String[] SUFFIXS = new String[] { "", "K", "M", "B", "T", "Q", "QQ", "S", "SS", "OC", "N", "D",

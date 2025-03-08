@@ -7,7 +7,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import com.redeskyller.bukkit.solaryeconomy.SolaryEconomy;
 
 import net.milkbowl.vault.chat.Chat;
-
+@Deprecated
 public class VaultChat {
 
 	public static String getPrefix(String playerName)

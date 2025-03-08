@@ -4,41 +4,63 @@
 
 plugins {
     id 'java-library'
-    id 'maven-publish'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'net.minecrell.plugin-yml.bukkit' version '0.6.0'
 }
 
 repositories {
-    mavenLocal()
-    maven {
-        url = uri('https://jitpack.io')
-    }
+    mavenCentral()
+    maven { url = uri('https://raw.githubusercontent.com/theprogmatheus/maven-repository/master/') }
+    maven { url = uri('https://hub.spigotmc.org/nexus/content/repositories/snapshots/') }
 
-    maven {
-        url = uri('https://raw.githubusercontent.com/theprogmatheus/maven-repository/master/')
-    }
-
-    maven {
-        url = uri('https://repo.maven.apache.org/maven2/')
-    }
 }
 
 dependencies {
-    compileOnly libs.org.projectlombok.lombok
-    compileOnly libs.com.github.milkbowl.vaultapi
-    compileOnly libs.org.github.paperspigot.paperspigot
-    compileOnly libs.me.clip.placeholderapi.placeholderapi
-    compileOnly libs.br.com.devpaulo.legendchat.legendchat
+    // Section: compileOnly
+    compileOnly('org.bukkit:bukkit:1.8.8-R0.1-SNAPSHOT')
+    compileOnly 'org.projectlombok:lombok:1.18.36'
+
+    // Section: implementation
+    implementation 'com.github.theprogmatheus:jgr-uchecker:1.0.0'
+    implementation 'com.github.theprogmatheus.minecraft.utils:itembuilder:1.0'
+    implementation 'com.github.theprogmatheus.minecraft.utils:guibuilder:1.0'
+    implementation('com.j256.ormlite:ormlite-jdbc:6.1')
+
+    // Section: annotationProcessor
+    annotationProcessor 'org.projectlombok:lombok:1.18.36'
 }
 
 group = 'com.redeskyller.bukkit.solaryeconomy'
-version = '1.5.3'
-description = 'Solary-Economy'
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+version = '2.0.0-alpha'
+description = 'An economy plugin for Bukkit server'
+java.sourceCompatibility = JavaVersion.VERSION_11
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from(components.java)
+bukkit {
+    name = 'Solary-Economy'
+    main = 'com.github.theprogmatheus.mc.solaryeconomy.SolaryEconomy'
+    version = project.version
+    description = project.description
+    authors = ['Sr_Edition', 'theprogmatheus']
+    website = 'https://github.com/theprogmatheus/Solary-Economy'
+    apiVersion = '1.8'
+    depend = ['Vault']
+    commands {
+        test {
+            description = 'This is a test command!'
+            aliases = ['t']
+            permission = 'testplugin.test'
+            usage = 'Just run the command!'
+            permissionMessage = 'You may not test this command!'
         }
     }
 }
+
+shadowJar {
+    // está dando erro: Unsupported class file major version 65
+    relocate 'com.github.theprogmatheus.util', 'com.github.theprogmatheus.mc.solaryeconomy.util'
+    relocate 'com.github.theprogmatheus.minecraft.utils', 'com.github.theprogmatheus.mc.solaryeconomy.util'
+    relocate 'com.j256.ormlite', 'com.github.theprogmatheus.mc.solaryeconomy.lib.com.j256.ormlite'
+}
+
+
+tasks.build.dependsOn('shadowJar')

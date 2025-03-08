@@ -6,6 +6,7 @@ import static com.redeskyller.bukkit.solaryeconomy.SolaryEconomy.tableName;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 
+@Deprecated
 public class Account {
 
 	private final String name;

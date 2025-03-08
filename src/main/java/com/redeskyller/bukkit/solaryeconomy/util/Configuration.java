@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-
+@Deprecated
 public class Configuration extends YamlConfiguration {
 
 	private final JavaPlugin plugin;

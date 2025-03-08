@@ -22,7 +22,7 @@ import com.redeskyller.bukkit.solaryeconomy.commands.subcommands.SubCmdSet;
 import com.redeskyller.bukkit.solaryeconomy.commands.subcommands.SubCmdToggle;
 import com.redeskyller.bukkit.solaryeconomy.commands.subcommands.SubCmdTop;
 import com.redeskyller.bukkit.solaryeconomy.commands.subcommands.SubCommand;
-
+@Deprecated
 public class SolaryCommand implements CommandExecutor {
 
 	private List<SubCommand> subcommands;

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import lombok.Data;
 
+@Deprecated
 @Data
 public class RankAccount {
 

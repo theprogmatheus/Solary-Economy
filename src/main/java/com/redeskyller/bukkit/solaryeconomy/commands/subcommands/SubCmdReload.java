@@ -3,7 +3,7 @@ package com.redeskyller.bukkit.solaryeconomy.commands.subcommands;
 import org.bukkit.command.CommandSender;
 
 import com.redeskyller.bukkit.solaryeconomy.SolaryEconomy;
-
+@Deprecated
 public class SubCmdReload extends SubCommand {
 
 	public SubCmdReload(String command)

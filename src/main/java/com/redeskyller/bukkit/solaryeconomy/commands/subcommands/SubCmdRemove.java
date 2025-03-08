@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import org.bukkit.command.CommandSender;
 
 import com.redeskyller.bukkit.solaryeconomy.SolaryEconomy;
-
+@Deprecated
 public class SubCmdRemove extends SubCommand {
 
 	public SubCmdRemove(String command)

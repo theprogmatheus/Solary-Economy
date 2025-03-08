@@ -2,7 +2,7 @@ package com.redeskyller.bukkit.solaryeconomy.commands.subcommands;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
+@Deprecated
 public class SubCmdHelp extends SubCommand {
 
 	private String command;

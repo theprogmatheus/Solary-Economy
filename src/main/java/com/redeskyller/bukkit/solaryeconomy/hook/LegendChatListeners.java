@@ -9,7 +9,7 @@ import com.redeskyller.bukkit.solaryeconomy.RankAccount;
 import com.redeskyller.bukkit.solaryeconomy.SolaryEconomy;
 
 import br.com.devpaulo.legendchat.api.events.ChatMessageEvent;
-
+@Deprecated
 public class LegendChatListeners implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR)

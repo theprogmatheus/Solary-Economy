@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-
+@Deprecated
 public class EconomyPlayerListener implements Listener {
 
 	@EventHandler
