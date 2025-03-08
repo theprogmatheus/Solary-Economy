@@ -60,6 +60,11 @@ shadowJar {
     relocate 'com.github.theprogmatheus.minecraft.utils', 'com.github.theprogmatheus.mc.solaryeconomy.lib'
     relocate 'com.j256.ormlite', 'com.github.theprogmatheus.mc.solaryeconomy.lib.j256.ormlite'
 }
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
 
-
+tasks.withType(Jar).configureEach {
+    manifest.attributes('Charset': 'UTF-8')
+}
 tasks.build.dependsOn('shadowJar')
