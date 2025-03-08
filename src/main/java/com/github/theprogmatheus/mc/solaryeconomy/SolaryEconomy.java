@@ -18,8 +18,9 @@ public class SolaryEconomy extends JavaPlugin {
     private static SolaryEconomy instance;
 
     private DatabaseManager databaseManager;
-    private EconomyService economyService;
     private JGRUChecker updateChecker;
+
+    private EconomyService economyService;
 
 
     @Override
@@ -32,14 +33,13 @@ public class SolaryEconomy extends JavaPlugin {
         this.databaseManager.addEntityClass(BankEntity.class);
         this.databaseManager.addEntityClass(BankAccountEntity.class);
 
-        // load economy service
-        this.economyService = new EconomyService(this);
+        this.economyService = new EconomyService();
     }
 
     @Override
     public void onEnable() {
         this.databaseManager.startDatabase();
-        this.economyService.setupEconomyService();
+        this.economyService.startup();
 
         getCommand("money").setExecutor(new MoneyCommand());
 
@@ -49,7 +49,7 @@ public class SolaryEconomy extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.economyService.shutdownEconomyService();
+        this.economyService.shutdown();
         this.databaseManager.shutdownDatabase();
     }
 

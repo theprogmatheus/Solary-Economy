@@ -12,20 +12,21 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@DatabaseTable(tableName = "seco_bank_account")
+@DatabaseTable(tableName = "seco_bank_accounts")
 public class BankAccountEntity {
 
     @DatabaseField(generatedId = true)
     private long id;
 
-    @DatabaseField
-    private String bank;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "bank_id")
+    private BankEntity bank;
 
-    @DatabaseField
-    private String owner;
+    @DatabaseField(columnName = "owner_id")
+    private String ownerId;
+
+    @DatabaseField(columnName = "owner_name")
+    private String ownerName;
 
     @DatabaseField
     private double balance;
-
-
 }
