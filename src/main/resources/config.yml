@@ -1,0 +1,66 @@
+#########################[ Solary-Economy ]#########################
+##                                                                ##
+##                 Encontrou algum bug? Reporte!                  ##
+##                                                                ##
+##                Email: theprog.matheus@gmail.com                ##
+##                     Discord: sr_edition                        ##
+##                                                                ##
+####################################################################
+
+
+
+#/------------------------------------------------------------------/
+#     Autor: Sr_Edition (theprogmatheus)
+#     Versão: 2.0.0
+#/------------------------------------------------------------------/
+
+
+#Configurações do banco de dados
+database:
+
+  #Aqui você define o tipo do banco de dados.
+  #Valor padrão: SQLite
+  #Tipos suportados: (SQLite, MySQL, MariaDB, PostgreSQL)
+  #------------------------------------------------------------------
+  #  OBS: Se você escolher SQLite como tipo do banco de dados
+  #  Os campos: address, username e password não serão usados.
+  #------------------------------------------------------------------
+  type: "SQLite"
+  
+  #Aqui você define o endereço do banco de dados.
+  address: "localhost"
+  
+  #Aqui você define o nome do banco de dados que você vai usar.
+  #O SQLite usa isso para definir o nome do arquivo.db
+  database: "storage.sqlite"
+  
+  #Aqui você define o nome de usuário do banco de dados.
+  username: "yourUsername"
+  
+  #Aqui você define a senha do banco de dados.
+  password: "yourPassword"  
+  
+#Configurações do cache
+cache:
+
+  #Aqui você define as configurações do cache de contas dos jogadores.
+  accounts:
+  
+    #Aqui você define o máximo de contas que podem estar carregadas no cache.
+    #Você pode definir com base na quantidade média de jogadores online do seu servidor
+    #usando a seguinte fórmula: (X = M*2,5) onde X é o max_size, e M é a média de jogadores online.
+    #Para um servidor que tenha em média 120 jogadores online por dia, podemos definir da seguinte forma:
+    #(max_size = 120*2,5 = 300)
+    max_size: 300
+    
+    #Aqui você define o tempo para esse cache expirar desde seu último uso. (em segundos)
+    expire: 300
+    
+    #Aqui você define o delay de salvamento automático dos dados do cache. (em segundos)
+    auto_flush_delay: 1800
+    
+#Aqui você define a linguagem das mensagens que será usada no servidor.
+#Línguas disponíveis: (enUS, ptBR)
+#Será gerado um arquivo com o nome lang-<yourLang>.yml, exemplo: lang-enUS.yml.
+#Você pode alterar as mensagens conforme necessidade.
+lang: "ptBR"
