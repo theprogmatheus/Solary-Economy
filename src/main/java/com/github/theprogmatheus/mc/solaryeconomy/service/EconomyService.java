@@ -40,7 +40,7 @@ public class EconomyService implements Service {
     }
 
     public BankEntity getBank(String bankId) {
-        return this.cache.banks.get(bankId);
+        return this.cache.banks.get(bankId).join();
     }
 
     public BankAccountEntity getAccount(String accountId) {
@@ -48,7 +48,7 @@ public class EconomyService implements Service {
     }
 
     public BankAccountEntity getAccount(long bankId, String accountId) {
-        return this.cache.accounts.get(new BankAccountKey(bankId, accountId));
+        return this.cache.accounts.get(new BankAccountKey(bankId, accountId)).join();
     }
 
     public BigDecimal getBalance(String accountId) {
