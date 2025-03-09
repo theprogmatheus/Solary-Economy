@@ -6,6 +6,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.concurrent.CompletableFuture;
+
 public class PlayerJoinListener implements Listener {
 
 
@@ -14,6 +16,6 @@ public class PlayerJoinListener implements Listener {
         Player player = event.getPlayer();
         if (player == null) return;
 
-        SolaryEconomy.getInstance().getEconomyService().checkAccount(player.getName().toLowerCase(), player.getName());
+        CompletableFuture.runAsync(() -> SolaryEconomy.getInstance().getEconomyService().checkAccount(player.getName().toLowerCase(), player.getName()));
     }
 }

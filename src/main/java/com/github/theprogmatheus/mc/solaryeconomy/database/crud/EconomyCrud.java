@@ -1,4 +1,4 @@
-package com.github.theprogmatheus.mc.solaryeconomy.service;
+package com.github.theprogmatheus.mc.solaryeconomy.database.crud;
 
 import com.github.theprogmatheus.mc.solaryeconomy.SolaryEconomy;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
@@ -12,22 +12,16 @@ import java.util.Optional;
 
 
 @Getter
-public class EconomyCRUDService implements Service {
+public class EconomyCrud {
 
-    private Dao<BankEntity, Long> bankDao;
-    private Dao<BankAccountEntity, Long> bankAccountDao;
+    private final Dao<BankEntity, Long> bankDao;
+    private final Dao<BankAccountEntity, Long> bankAccountDao;
 
-    @Override
-    public void startup() {
+    public EconomyCrud() {
         this.bankDao = SolaryEconomy.getInstance().getDatabaseManager().getEntityDao(BankEntity.class, Long.class);
         this.bankAccountDao = SolaryEconomy.getInstance().getDatabaseManager().getEntityDao(BankAccountEntity.class, Long.class);
     }
 
-    @Override
-    public void shutdown() {
-        this.bankDao = null;
-        this.bankAccountDao = null;
-    }
 
     public boolean createBank(String nameId, String founder) {
         if (existsBank(nameId))
@@ -73,6 +67,13 @@ public class EconomyCRUDService implements Service {
         }
     }
 
+    public boolean existsBank(long bankId) {
+        try {
+            return this.bankDao.idExists(bankId);
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to check if Bank exists. bankId: " + bankId, e);
+        }
+    }
 
     public boolean existsBank(String nameId) {
         try {
