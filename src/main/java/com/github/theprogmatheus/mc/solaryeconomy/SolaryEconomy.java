@@ -35,13 +35,14 @@ public class SolaryEconomy extends JavaPlugin {
         this.databaseManager.addEntityClass(BankEntity.class);
         this.databaseManager.addEntityClass(BankAccountEntity.class);
 
+        // database startup must to be the first instruction
+        this.databaseManager.startDatabase();
+
         this.economyService = new EconomyService(this);
     }
 
     @Override
     public void onEnable() {
-        // database startup must to be the first instruction
-        this.databaseManager.startDatabase();
         this.economyService.startup();
 
         getCommand("money").setExecutor(new MainCommand());

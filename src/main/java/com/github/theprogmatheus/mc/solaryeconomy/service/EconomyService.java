@@ -27,7 +27,7 @@ public class EconomyService implements Service {
     public EconomyService(JavaPlugin plugin) {
         this.plugin = plugin;
         this.crud = new EconomyCrud();
-        this.accountCache = new BankAccountCache(this.crud, 500, Duration.ofMinutes(5), Duration.ofMinutes(1));
+        this.accountCache = new BankAccountCache(this.crud, 10, Duration.ofMinutes(1), Duration.ofMinutes(5));
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.github.theprogmatheus.mc.solaryeconomy.cache;
 import com.github.benmanes.caffeine.cache.AsyncLoadingCache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.RemovalCause;
-import com.github.theprogmatheus.mc.solaryeconomy.SolaryEconomy;
 import com.github.theprogmatheus.mc.solaryeconomy.database.crud.EconomyCrud;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
 import com.github.theprogmatheus.mc.solaryeconomy.service.Service;
@@ -70,7 +69,6 @@ public class BankAccountCache implements Service {
     }
 
     public void flush() {
-        SolaryEconomy.getInstance().getLogger().info("flush: Salvando todas as contas: " + this.accounts.asMap().size());
         this.accounts.asMap().values().forEach(future -> future.whenComplete((account, t) -> this.crud.updateBankAccount(account)));
     }
 
