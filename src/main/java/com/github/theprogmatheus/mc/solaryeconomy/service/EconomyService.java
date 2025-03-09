@@ -4,7 +4,7 @@ import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEnt
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankEntity;
 import lombok.Getter;
 
-import java.util.Optional;
+import java.math.BigDecimal;
 
 @Getter
 public class EconomyService implements Service {
@@ -33,23 +33,13 @@ public class EconomyService implements Service {
         this.crud = null;
     }
 
-    public void checkAccount(String nameId, String name) {
-        if (!this.crud.existsBankAccount(this.defaultBankId, nameId))
-            this.crud.createBankAccount(this.defaultBankId, nameId, name, 0);
+    public BankAccountEntity getAccount(String accountId) {
+        return this.crud.readBankAccount(this.defaultBankId, accountId).orElse(null);
     }
 
-    public double getBalance(String name) {
-        return this.crud.readBankAccount(this.defaultBankId, name).map(BankAccountEntity::getBalance).orElse(0.0);
-    }
-
-    public boolean deposit(String name, double value) {
-        Optional<BankAccountEntity> optionalAccount = this.crud.readBankAccount(this.defaultBankId, name);
-        if (optionalAccount.isPresent()) {
-            BankAccountEntity account = optionalAccount.get();
-            account.setBalance(account.getBalance() + value);
-            return this.crud.updateBankAccount(account);
-        }
-        return false;
+    public void checkAccount(String accountId, String name) {
+        if (!this.crud.existsBankAccount(this.defaultBankId, accountId))
+            this.crud.createBankAccount(this.defaultBankId, accountId, name, new BigDecimal(0));
     }
 
 

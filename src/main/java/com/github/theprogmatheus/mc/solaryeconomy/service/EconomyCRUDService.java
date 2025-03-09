@@ -6,6 +6,7 @@ import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankEntity;
 import com.j256.ormlite.dao.Dao;
 import lombok.Getter;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -84,7 +85,7 @@ public class EconomyCRUDService implements Service {
     // BANK ACCOUNTS
 
 
-    public boolean createBankAccount(long bankId, String ownerId, String ownerName, double initialBalance) {
+    public boolean createBankAccount(long bankId, String ownerId, String ownerName, BigDecimal initialBalance) {
         if (existsBankAccount(bankId, ownerId))
             throw new RuntimeException("An BankAccount already exists for the data provided. bankId: " + bankId + ", ownerId: " + ownerId);
         try {

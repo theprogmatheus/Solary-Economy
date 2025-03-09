@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,5 +30,5 @@ public class BankAccountEntity {
     private String ownerName;
 
     @DatabaseField
-    private double balance;
+    private BigDecimal balance;
 }

@@ -1,12 +1,14 @@
 package com.github.theprogmatheus.mc.solaryeconomy;
 
-import com.github.theprogmatheus.mc.solaryeconomy.command.MoneyCommand;
+import com.github.theprogmatheus.mc.solaryeconomy.command.MainCommand;
 import com.github.theprogmatheus.mc.solaryeconomy.database.DatabaseManager;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankEntity;
+import com.github.theprogmatheus.mc.solaryeconomy.listener.PlayerJoinListener;
 import com.github.theprogmatheus.mc.solaryeconomy.service.EconomyService;
 import com.github.theprogmatheus.util.JGRUChecker;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
@@ -41,7 +43,8 @@ public class SolaryEconomy extends JavaPlugin {
         this.databaseManager.startDatabase();
         this.economyService.startup();
 
-        getCommand("money").setExecutor(new MoneyCommand());
+        getCommand("money").setExecutor(new MainCommand());
+        Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
 
         // check for new updates
         this.checkNewUpdates();
