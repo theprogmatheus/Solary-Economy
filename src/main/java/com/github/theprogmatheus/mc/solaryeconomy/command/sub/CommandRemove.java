@@ -1,6 +1,5 @@
 package com.github.theprogmatheus.mc.solaryeconomy.command.sub;
 
-import com.github.theprogmatheus.mc.solaryeconomy.command.SubCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 

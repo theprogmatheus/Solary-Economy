@@ -34,7 +34,7 @@ public class EconomyService implements Service {
 
     @Override
     public void shutdown() {
-        this.crud = null;
+        this.cache.flushAccounts(); // persist in db
     }
 
 
@@ -47,9 +47,18 @@ public class EconomyService implements Service {
         return this.cache.banks.get(bankId).join();
     }
 
-    public BankAccountEntity getAccount(String accountId) {
+
+    public BankAccountEntity getDefaultAccountOrCreateIfNotExists(Player player) {
+        BankAccountEntity account = getDefaultAccount(player.getName().toLowerCase());
+        if (account != null) return account;
+        this.crud.createBankAccount(DEFAULT_BANK_ID, player.getName().toLowerCase(), player.getName(), new BigDecimal(0));
+        return getDefaultAccount(player.getName().toLowerCase());
+    }
+
+    public BankAccountEntity getDefaultAccount(String accountId) {
         return this.getAccount(DEFAULT_BANK_ID, accountId);
     }
+
 
     public BankAccountEntity getAccount(long bankId, String accountId) {
         return this.cache.accounts.get(new BankAccountKey(bankId, accountId)).join();

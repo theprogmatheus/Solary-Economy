@@ -40,6 +40,7 @@ public class SolaryEconomy extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // database startup must to be the first instruction
         this.databaseManager.startDatabase();
         this.economyService.startup();
 
@@ -53,6 +54,8 @@ public class SolaryEconomy extends JavaPlugin {
     @Override
     public void onDisable() {
         this.economyService.shutdown();
+
+        // database shutdown must be the last instruction
         this.databaseManager.shutdownDatabase();
     }
 

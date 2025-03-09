@@ -4,7 +4,9 @@ import com.github.theprogmatheus.mc.solaryeconomy.SolaryEconomy;
 import com.github.theprogmatheus.mc.solaryeconomy.command.sub.CommandAdd;
 import com.github.theprogmatheus.mc.solaryeconomy.command.sub.CommandRemove;
 import com.github.theprogmatheus.mc.solaryeconomy.command.sub.CommandSet;
+import com.github.theprogmatheus.mc.solaryeconomy.command.sub.SubCommand;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
+import com.github.theprogmatheus.mc.solaryeconomy.service.EconomyService;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,7 +20,11 @@ public class MainCommand implements CommandExecutor {
 
     public MainCommand() {
         this.registerSubCommands(new CommandSet(), new CommandAdd(), new CommandRemove());
+        this.economyService = SolaryEconomy.getInstance().getEconomyService();
     }
+
+    private final EconomyService economyService;
+
 
     public void registerSubCommands(SubCommand... subCommands) {
         this.subCommands = subCommands;
@@ -29,13 +35,11 @@ public class MainCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (args.length == 0) {
+            if (!(sender instanceof Player)) return false;
 
-            if (sender instanceof Player) {
-                BankAccountEntity account = SolaryEconomy.getInstance().getEconomyService().getAccount(sender.getName().toLowerCase());
-                sender.sendMessage("§aSaldo: " + account.getBalance().toPlainString());
-            } else {
-                sender.sendMessage("§cNão é possível executar isso no console.");
-            }
+            BankAccountEntity account = this.economyService.getDefaultAccountOrCreateIfNotExists((Player) sender);
+
+            sender.sendMessage("§aSaldo: " + account.getBalance().toPlainString());
             return false;
         }
 

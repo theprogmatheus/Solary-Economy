@@ -1,4 +1,4 @@
-package com.github.theprogmatheus.mc.solaryeconomy.command;
+package com.github.theprogmatheus.mc.solaryeconomy.command.sub;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

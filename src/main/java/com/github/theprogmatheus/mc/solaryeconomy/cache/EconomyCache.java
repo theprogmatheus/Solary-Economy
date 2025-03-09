@@ -2,7 +2,6 @@ package com.github.theprogmatheus.mc.solaryeconomy.cache;
 
 import com.github.benmanes.caffeine.cache.AsyncLoadingCache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import com.github.benmanes.caffeine.cache.LoadingCache;
 import com.github.theprogmatheus.mc.solaryeconomy.database.crud.EconomyCrud;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankEntity;
@@ -38,6 +37,7 @@ public class EconomyCache {
                 .maximumSize(maximumSize)
                 .expireAfterAccess(expireAfterAccess)
                 .removalListener((key, value, cause) -> {
+                    System.out.println("Cache removed removalListener: " + value);
                     if (value != null)
                         CompletableFuture.runAsync(() -> this.crud.updateBankAccount((BankAccountEntity) value));
                 })
@@ -45,4 +45,18 @@ public class EconomyCache {
     }
 
 
+    public boolean putAccount(BankAccountEntity account) {
+        if (account == null || account.getOwnerId() == null || account.getBank() == null) return false;
+        this.accounts.put(new BankAccountKey(account.getBank().getId(), account.getOwnerId()), CompletableFuture.completedFuture(account));
+        return true;
+    }
+
+
+    public void flushAccountsAsync() {
+        this.accounts.asMap().values().forEach(af -> af.whenCompleteAsync((account, t) -> this.crud.updateBankAccount(account)));
+    }
+
+    public void flushAccounts() {
+        this.accounts.asMap().values().forEach(af -> af.whenComplete((account, t) -> this.crud.updateBankAccount(account)));
+    }
 }
