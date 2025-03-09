@@ -6,9 +6,13 @@ import com.github.theprogmatheus.mc.solaryeconomy.database.crud.EconomyCrud;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankEntity;
 import lombok.Getter;
+import org.bukkit.entity.Player;
 
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 public class EconomyService implements Service {
@@ -83,9 +87,22 @@ public class EconomyService implements Service {
     }
 
 
-    public void checkAccount(String accountId, String name) {
-        if (!this.crud.existsBankAccount(DEFAULT_BANK_ID, accountId))
-            this.crud.createBankAccount(DEFAULT_BANK_ID, accountId, name, new BigDecimal(0));
+    public void checkDefaultAccountAsync(Player player) {
+        CompletableFuture.runAsync(() -> this.checkDefaultAccount(player.getName().toLowerCase(), player.getName()));
+    }
+
+    private final Map<String, Object> checkDefaultAccountLocks = new ConcurrentHashMap<>();
+
+    private void checkDefaultAccount(String accountId, String name) {
+        Object lock = this.checkDefaultAccountLocks.computeIfAbsent(accountId, k -> new Object());
+        synchronized (lock) {
+            try {
+                if (!this.crud.existsBankAccount(DEFAULT_BANK_ID, accountId))
+                    this.crud.createBankAccount(DEFAULT_BANK_ID, accountId, name, new BigDecimal(0));
+            } finally {
+                this.checkDefaultAccountLocks.remove(accountId);
+            }
+        }
     }
 
 

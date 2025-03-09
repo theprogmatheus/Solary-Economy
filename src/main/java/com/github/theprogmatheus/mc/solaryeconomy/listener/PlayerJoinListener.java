@@ -14,8 +14,7 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (player == null) return;
-
-        CompletableFuture.runAsync(() -> SolaryEconomy.getInstance().getEconomyService().checkAccount(player.getName().toLowerCase(), player.getName()));
+        if (player != null)
+            SolaryEconomy.getInstance().getEconomyService().checkDefaultAccountAsync(player);
     }
 }
