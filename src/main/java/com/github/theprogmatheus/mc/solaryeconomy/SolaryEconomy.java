@@ -35,7 +35,7 @@ public class SolaryEconomy extends JavaPlugin {
         this.databaseManager.addEntityClass(BankEntity.class);
         this.databaseManager.addEntityClass(BankAccountEntity.class);
 
-        this.economyService = new EconomyService();
+        this.economyService = new EconomyService(this);
     }
 
     @Override

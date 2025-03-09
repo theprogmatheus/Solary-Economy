@@ -1,14 +1,12 @@
 package com.github.theprogmatheus.mc.solaryeconomy.command.sub;
 
 import com.github.theprogmatheus.mc.solaryeconomy.SolaryEconomy;
-import com.github.theprogmatheus.mc.solaryeconomy.cache.BankAccountKey;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
 import com.github.theprogmatheus.mc.solaryeconomy.service.EconomyService;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import java.math.BigDecimal;
-import java.util.concurrent.CompletableFuture;
 
 public class CommandSet extends SubCommand {
 
@@ -42,7 +40,8 @@ public class CommandSet extends SubCommand {
             }
             account.setBalance(value);
 
-            this.economyService.getCache().putAccount(account);
+            // save account
+            this.economyService.getAccountCache().put(account);
 
             sender.sendMessage("§aValor de " + account.getOwnerName() + " foi definido para " + value.toPlainString());
         }

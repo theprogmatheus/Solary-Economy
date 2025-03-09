@@ -1,12 +1,11 @@
 package com.github.theprogmatheus.mc.solaryeconomy.service;
 
-import com.github.theprogmatheus.mc.solaryeconomy.cache.BankAccountKey;
-import com.github.theprogmatheus.mc.solaryeconomy.cache.EconomyCache;
+import com.github.theprogmatheus.mc.solaryeconomy.cache.BankAccountCache;
 import com.github.theprogmatheus.mc.solaryeconomy.database.crud.EconomyCrud;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
-import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankEntity;
 import lombok.Getter;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.math.BigDecimal;
 import java.time.Duration;
@@ -21,30 +20,30 @@ public class EconomyService implements Service {
     public static final String DEFAULT_BANK_OWNER = "server";
     public static final long DEFAULT_BANK_ID = 1L;
 
-    private EconomyCrud crud;
-    private EconomyCache cache;
+    private final JavaPlugin plugin;
+    private final EconomyCrud crud;
+    private final BankAccountCache accountCache;
+
+    public EconomyService(JavaPlugin plugin) {
+        this.plugin = plugin;
+        this.crud = new EconomyCrud();
+        this.accountCache = new BankAccountCache(this.crud, 500, Duration.ofMinutes(5), Duration.ofMinutes(1));
+    }
 
     @Override
     public void startup() {
-        this.crud = new EconomyCrud();
-
         this.setupDefaultBank();
-        this.cache = new EconomyCache(this.crud, 1_000, Duration.ofMinutes(10));
+        this.accountCache.startup();
     }
 
     @Override
     public void shutdown() {
-        this.cache.flushAccounts(); // persist in db
+        this.accountCache.shutdown();
     }
-
 
     public void setupDefaultBank() {
         if (!this.crud.existsBank(DEFAULT_BANK_ID))
             this.crud.createBank(DEFAULT_BANK_NAME, DEFAULT_BANK_OWNER);
-    }
-
-    public BankEntity getBank(String bankId) {
-        return this.cache.banks.get(bankId).join();
     }
 
 
@@ -56,12 +55,7 @@ public class EconomyService implements Service {
     }
 
     public BankAccountEntity getDefaultAccount(String accountId) {
-        return this.getAccount(DEFAULT_BANK_ID, accountId);
-    }
-
-
-    public BankAccountEntity getAccount(long bankId, String accountId) {
-        return this.cache.accounts.get(new BankAccountKey(bankId, accountId)).join();
+        return this.accountCache.getAccount(DEFAULT_BANK_ID, accountId);
     }
 
     public BigDecimal getBalance(String accountId) {
@@ -69,7 +63,7 @@ public class EconomyService implements Service {
     }
 
     public BigDecimal getBalance(long bankId, String accountId) {
-        BankAccountEntity account = getAccount(bankId, accountId);
+        BankAccountEntity account = this.accountCache.getAccount(bankId, accountId);
         return account != null ? account.getBalance() : new BigDecimal(0);
     }
 
@@ -78,10 +72,10 @@ public class EconomyService implements Service {
     }
 
     public BigDecimal withdraw(long bankId, String accountId, BigDecimal value) {
-        BankAccountEntity account = getAccount(bankId, accountId);
+        BankAccountEntity account = this.accountCache.getAccount(bankId, accountId);
         if (account == null) return new BigDecimal(0);
         account.setBalance(account.getBalance().subtract(value));
-        return account.getBalance();
+        return this.accountCache.put(account).getBalance();
     }
 
     public BigDecimal deposit(String accountId, BigDecimal value) {
@@ -89,10 +83,10 @@ public class EconomyService implements Service {
     }
 
     public BigDecimal deposit(long bankId, String accountId, BigDecimal value) {
-        BankAccountEntity account = getAccount(bankId, accountId);
+        BankAccountEntity account = this.accountCache.getAccount(bankId, accountId);
         if (account == null) return new BigDecimal(0);
         account.setBalance(account.getBalance().add(value));
-        return account.getBalance();
+        return this.accountCache.put(account).getBalance();
     }
 
 
