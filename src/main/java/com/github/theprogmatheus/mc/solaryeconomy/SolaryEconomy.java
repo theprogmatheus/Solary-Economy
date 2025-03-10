@@ -5,7 +5,9 @@ import com.github.theprogmatheus.mc.solaryeconomy.database.DatabaseManager;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankEntity;
 import com.github.theprogmatheus.mc.solaryeconomy.listener.PlayerJoinListener;
+import com.github.theprogmatheus.mc.solaryeconomy.service.ConfigurationService;
 import com.github.theprogmatheus.mc.solaryeconomy.service.EconomyService;
+import com.github.theprogmatheus.mc.solaryeconomy.service.Service;
 import com.github.theprogmatheus.util.JGRUChecker;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -22,6 +24,8 @@ public class SolaryEconomy extends JavaPlugin {
     private DatabaseManager databaseManager;
     private JGRUChecker updateChecker;
 
+    private Service[] services;
+    private ConfigurationService configurationService;
     private EconomyService economyService;
 
 
@@ -38,12 +42,21 @@ public class SolaryEconomy extends JavaPlugin {
         // database startup must to be the first instruction
         this.databaseManager.startDatabase();
 
-        this.economyService = new EconomyService(this);
+
+        // load services
+        this.services = new Service[]{
+                this.configurationService = new ConfigurationService(this),
+                this.economyService = new EconomyService(this)
+        };
     }
 
     @Override
     public void onEnable() {
-        this.economyService.startup();
+
+        // startup services
+        for (Service service : this.services) {
+            service.startup();
+        }
 
         getCommand("money").setExecutor(new MainCommand());
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
@@ -54,7 +67,12 @@ public class SolaryEconomy extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.economyService.shutdown();
+
+        // shutdown services
+        for (Service service : this.services) {
+            service.shutdown();
+        }
+
 
         // database shutdown must be the last instruction
         this.databaseManager.shutdownDatabase();
