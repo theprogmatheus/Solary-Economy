@@ -18,8 +18,8 @@ public class EconomyCrud {
     private final Dao<BankAccountEntity, Long> bankAccountDao;
 
     public EconomyCrud() {
-        this.bankDao = SolaryEconomy.getInstance().getDatabaseManager().getEntityDao(BankEntity.class, Long.class);
-        this.bankAccountDao = SolaryEconomy.getInstance().getDatabaseManager().getEntityDao(BankAccountEntity.class, Long.class);
+        this.bankDao = SolaryEconomy.getInstance().getDatabaseService().getDatabaseManager().getEntityDao(BankEntity.class, Long.class);
+        this.bankAccountDao = SolaryEconomy.getInstance().getDatabaseService().getDatabaseManager().getEntityDao(BankAccountEntity.class, Long.class);
     }
 
 

@@ -1,11 +1,9 @@
 package com.github.theprogmatheus.mc.solaryeconomy;
 
 import com.github.theprogmatheus.mc.solaryeconomy.command.MainCommand;
-import com.github.theprogmatheus.mc.solaryeconomy.database.DatabaseManager;
-import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
-import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankEntity;
 import com.github.theprogmatheus.mc.solaryeconomy.listener.PlayerJoinListener;
 import com.github.theprogmatheus.mc.solaryeconomy.service.ConfigurationService;
+import com.github.theprogmatheus.mc.solaryeconomy.service.DatabaseService;
 import com.github.theprogmatheus.mc.solaryeconomy.service.EconomyService;
 import com.github.theprogmatheus.mc.solaryeconomy.service.Service;
 import com.github.theprogmatheus.util.JGRUChecker;
@@ -13,6 +11,8 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.logging.Logger;
 
 @Getter
@@ -21,11 +21,12 @@ public class SolaryEconomy extends JavaPlugin {
     @Getter
     private static SolaryEconomy instance;
 
-    private DatabaseManager databaseManager;
     private JGRUChecker updateChecker;
 
-    private Service[] services;
+    private final Deque<Service> services = new ArrayDeque<>();
+
     private ConfigurationService configurationService;
+    private DatabaseService databaseService;
     private EconomyService economyService;
 
 
@@ -34,20 +35,10 @@ public class SolaryEconomy extends JavaPlugin {
         // setup instance
         instance = this;
 
-        // load database and entities
-        this.databaseManager = new DatabaseManager(this);
-        this.databaseManager.addEntityClass(BankEntity.class);
-        this.databaseManager.addEntityClass(BankAccountEntity.class);
-
-        // database startup must to be the first instruction
-        this.databaseManager.startDatabase();
-
-
         // load services
-        this.services = new Service[]{
-                this.configurationService = new ConfigurationService(this),
-                this.economyService = new EconomyService(this)
-        };
+        this.services.add(this.configurationService = new ConfigurationService(this));
+        this.services.add(this.databaseService = new DatabaseService(this));
+        this.services.add(this.economyService = new EconomyService(this));
     }
 
     @Override
@@ -69,13 +60,9 @@ public class SolaryEconomy extends JavaPlugin {
     public void onDisable() {
 
         // shutdown services
-        for (Service service : this.services) {
-            service.shutdown();
+        while (!this.services.isEmpty()) {
+            this.services.removeLast().shutdown();
         }
-
-
-        // database shutdown must be the last instruction
-        this.databaseManager.shutdownDatabase();
     }
 
 

@@ -21,17 +21,18 @@ public class EconomyService implements Service {
     public static final long DEFAULT_BANK_ID = 1L;
 
     private final JavaPlugin plugin;
-    private final EconomyCrud crud;
-    private final BankAccountCache accountCache;
+
+    private EconomyCrud crud;
+    private BankAccountCache accountCache;
 
     public EconomyService(JavaPlugin plugin) {
         this.plugin = plugin;
-        this.crud = new EconomyCrud();
-        this.accountCache = new BankAccountCache(this.crud, 10, Duration.ofMinutes(1), Duration.ofMinutes(5));
     }
 
     @Override
     public void startup() {
+        this.crud = new EconomyCrud();
+        this.accountCache = new BankAccountCache(this.crud, 10, Duration.ofMinutes(1), Duration.ofMinutes(5));
         this.setupDefaultBank();
         this.accountCache.startup();
     }
