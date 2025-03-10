@@ -2,10 +2,7 @@ package com.github.theprogmatheus.mc.solaryeconomy;
 
 import com.github.theprogmatheus.mc.solaryeconomy.command.MainCommand;
 import com.github.theprogmatheus.mc.solaryeconomy.listener.PlayerJoinListener;
-import com.github.theprogmatheus.mc.solaryeconomy.service.ConfigurationService;
-import com.github.theprogmatheus.mc.solaryeconomy.service.DatabaseService;
-import com.github.theprogmatheus.mc.solaryeconomy.service.EconomyService;
-import com.github.theprogmatheus.mc.solaryeconomy.service.Service;
+import com.github.theprogmatheus.mc.solaryeconomy.service.*;
 import com.github.theprogmatheus.util.JGRUChecker;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -28,6 +25,7 @@ public class SolaryEconomy extends JavaPlugin {
     private ConfigurationService configurationService;
     private DatabaseService databaseService;
     private EconomyService economyService;
+    private CommandService commandService;
 
 
     @Override
@@ -39,6 +37,7 @@ public class SolaryEconomy extends JavaPlugin {
         this.services.add(this.configurationService = new ConfigurationService(this));
         this.services.add(this.databaseService = new DatabaseService(this));
         this.services.add(this.economyService = new EconomyService(this));
+        this.services.add(this.commandService = new CommandService(this));
     }
 
     @Override
@@ -49,7 +48,6 @@ public class SolaryEconomy extends JavaPlugin {
             service.startup();
         }
 
-        getCommand("money").setExecutor(new MainCommand());
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
 
         // check for new updates
