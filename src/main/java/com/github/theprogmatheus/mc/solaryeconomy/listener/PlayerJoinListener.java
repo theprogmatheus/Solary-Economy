@@ -15,6 +15,6 @@ public class PlayerJoinListener implements Listener {
     void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (player != null)
-            SolaryEconomy.getInstance().getEconomyService().checkDefaultAccountAsync(player);
+            SolaryEconomy.getInstance().getEconomyService().createDefaultAccountIfNotExistsAsync(player);
     }
 }

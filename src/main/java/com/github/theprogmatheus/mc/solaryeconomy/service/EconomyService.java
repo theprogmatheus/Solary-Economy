@@ -22,7 +22,7 @@ public class EconomyService implements Service {
 
     private final JavaPlugin plugin;
 
-    private EconomyCrud crud;
+    private EconomyCrud economyCrud;
     private BankAccountCache accountCache;
 
     public EconomyService(JavaPlugin plugin) {
@@ -31,8 +31,8 @@ public class EconomyService implements Service {
 
     @Override
     public void startup() {
-        this.crud = new EconomyCrud();
-        this.accountCache = new BankAccountCache(this.crud, 10, Duration.ofMinutes(1), Duration.ofMinutes(5));
+        this.economyCrud = new EconomyCrud();
+        this.accountCache = new BankAccountCache(this.economyCrud, 10, Duration.ofMinutes(1), Duration.ofMinutes(5));
         this.setupDefaultBank();
         this.accountCache.startup();
     }
@@ -42,16 +42,16 @@ public class EconomyService implements Service {
         this.accountCache.shutdown();
     }
 
-    public void setupDefaultBank() {
-        if (!this.crud.existsBank(DEFAULT_BANK_ID))
-            this.crud.createBank(DEFAULT_BANK_NAME, DEFAULT_BANK_OWNER);
+    private void setupDefaultBank() {
+        if (!this.economyCrud.existsBank(DEFAULT_BANK_ID))
+            this.economyCrud.createBank(DEFAULT_BANK_NAME, DEFAULT_BANK_OWNER);
     }
 
 
     public BankAccountEntity getDefaultAccountOrCreateIfNotExists(Player player) {
         BankAccountEntity account = getDefaultAccount(player.getName().toLowerCase());
         if (account != null) return account;
-        this.crud.createBankAccount(DEFAULT_BANK_ID, player.getName().toLowerCase(), player.getName(), new BigDecimal(0));
+        this.economyCrud.createBankAccount(DEFAULT_BANK_ID, player.getName().toLowerCase(), player.getName(), new BigDecimal(0));
         return getDefaultAccount(player.getName().toLowerCase());
     }
 
@@ -59,55 +59,23 @@ public class EconomyService implements Service {
         return this.accountCache.getAccount(DEFAULT_BANK_ID, accountId);
     }
 
-    public BigDecimal getBalance(String accountId) {
-        return getBalance(DEFAULT_BANK_ID, accountId);
-    }
 
-    public BigDecimal getBalance(long bankId, String accountId) {
-        BankAccountEntity account = this.accountCache.getAccount(bankId, accountId);
-        return account != null ? account.getBalance() : new BigDecimal(0);
-    }
-
-    public BigDecimal withdraw(String accountId, BigDecimal value) {
-        return withdraw(DEFAULT_BANK_ID, accountId, value);
-    }
-
-    public BigDecimal withdraw(long bankId, String accountId, BigDecimal value) {
-        BankAccountEntity account = this.accountCache.getAccount(bankId, accountId);
-        if (account == null) return new BigDecimal(0);
-        account.setBalance(account.getBalance().subtract(value));
-        return this.accountCache.put(account).getBalance();
-    }
-
-    public BigDecimal deposit(String accountId, BigDecimal value) {
-        return deposit(DEFAULT_BANK_ID, accountId, value);
-    }
-
-    public BigDecimal deposit(long bankId, String accountId, BigDecimal value) {
-        BankAccountEntity account = this.accountCache.getAccount(bankId, accountId);
-        if (account == null) return new BigDecimal(0);
-        account.setBalance(account.getBalance().add(value));
-        return this.accountCache.put(account).getBalance();
-    }
-
-
-    public void checkDefaultAccountAsync(Player player) {
-        CompletableFuture.runAsync(() -> this.checkDefaultAccount(player.getName().toLowerCase(), player.getName()));
+    public void createDefaultAccountIfNotExistsAsync(Player player) {
+        CompletableFuture.runAsync(() -> this.createDefaultAccountIfNotExists(player.getName().toLowerCase(), player.getName()));
     }
 
     private final Map<String, Object> checkDefaultAccountLocks = new ConcurrentHashMap<>();
 
-    private void checkDefaultAccount(String accountId, String name) {
+    private void createDefaultAccountIfNotExists(String accountId, String name) {
         Object lock = this.checkDefaultAccountLocks.computeIfAbsent(accountId, k -> new Object());
         synchronized (lock) {
             try {
-                if (!this.crud.existsBankAccount(DEFAULT_BANK_ID, accountId))
-                    this.crud.createBankAccount(DEFAULT_BANK_ID, accountId, name, new BigDecimal(0));
+                if (!this.economyCrud.existsBankAccount(DEFAULT_BANK_ID, accountId))
+                    this.economyCrud.createBankAccount(DEFAULT_BANK_ID, accountId, name, new BigDecimal(0));
             } finally {
                 this.checkDefaultAccountLocks.remove(accountId);
             }
         }
     }
-
 
 }
