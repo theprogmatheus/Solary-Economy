@@ -7,9 +7,8 @@ import lombok.Setter;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
@@ -43,7 +42,7 @@ public class Config extends YamlConfiguration {
 
     public Config load() {
         try {
-            this.load(this.file);
+            this.load(new InputStreamReader(new FileInputStream(this.file), StandardCharsets.UTF_8));
             if (this.loadCallback != null)
                 this.loadCallback.accept(this);
         } catch (Exception e) {
