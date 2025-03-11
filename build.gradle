@@ -47,6 +47,7 @@ bukkit {
     website = 'https://github.com/theprogmatheus/Solary-Economy'
     apiVersion = '1.8'
     depend = ['Vault']
+    load = 'STARTUP'
     commands {
         money {
             description = 'See your current balance'

@@ -1,21 +1,32 @@
 package com.github.theprogmatheus.mc.solaryeconomy.hook;
 
-import net.milkbowl.vault.economy.Economy;
+import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
+import com.github.theprogmatheus.mc.solaryeconomy.service.EconomyService;
+import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.plugin.java.JavaPlugin;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-public class VaultEconomyHook implements Economy {
+public class VaultEconomyHook extends AbstractEconomy {
+
+    private final JavaPlugin plugin;
+    private final EconomyService economyService;
+
+    public VaultEconomyHook(JavaPlugin plugin, EconomyService economyService) {
+        this.plugin = plugin;
+        this.economyService = economyService;
+    }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return this.plugin.isEnabled();
     }
 
     @Override
     public String getName() {
-        return "";
+        return this.plugin.getName();
     }
 
     @Override
@@ -35,166 +46,115 @@ public class VaultEconomyHook implements Economy {
 
     @Override
     public String currencyNamePlural() {
-        return "";
+        return "coins";
     }
 
     @Override
     public String currencyNameSingular() {
-        return "";
+        return "coin";
     }
 
     @Override
-    public boolean hasAccount(String s) {
-        return false;
+    public boolean hasAccount(String accountId) {
+        return this.economyService.getDefaultAccount(accountId.toLowerCase()) != null;
     }
 
     @Override
-    public boolean hasAccount(OfflinePlayer offlinePlayer) {
-        return false;
+    public boolean hasAccount(String accountId, String world) {
+        return this.hasAccount(accountId);
     }
 
     @Override
-    public boolean hasAccount(String s, String s1) {
-        return false;
+    public double getBalance(String accountId) {
+        BankAccountEntity account = this.economyService.getDefaultAccount(accountId.toLowerCase());
+        if (account == null) return 0;
+        return account.getBalance().doubleValue();
     }
 
     @Override
-    public boolean hasAccount(OfflinePlayer offlinePlayer, String s) {
-        return false;
+    public double getBalance(String accountId, String world) {
+        return getBalance(accountId);
     }
 
     @Override
-    public double getBalance(String s) {
-        return 0;
+    public boolean has(String accountId, double value) {
+        return getBalance(accountId) >= value;
     }
 
     @Override
-    public double getBalance(OfflinePlayer offlinePlayer) {
-        return 0;
+    public boolean has(String accountId, String world, double value) {
+        return has(accountId, value);
     }
 
     @Override
-    public double getBalance(String s, String s1) {
-        return 0;
+    public EconomyResponse withdrawPlayer(String accountId, double value) {
+        BankAccountEntity account = this.economyService.getDefaultAccount(accountId.toLowerCase());
+        if (account == null)
+            return new EconomyResponse(value, 0, EconomyResponse.ResponseType.FAILURE, "account not found");
+
+        account.setBalance(account.getBalance().subtract(new BigDecimal(value)));
+
+        return new EconomyResponse(value, account.getBalance().doubleValue(), EconomyResponse.ResponseType.SUCCESS, "withdraw success");
     }
 
     @Override
-    public double getBalance(OfflinePlayer offlinePlayer, String s) {
-        return 0;
+    public EconomyResponse withdrawPlayer(String accountId, String world, double value) {
+        return withdrawPlayer(accountId, value);
     }
 
     @Override
-    public boolean has(String s, double v) {
-        return false;
+    public EconomyResponse depositPlayer(String accountId, double value) {
+        BankAccountEntity account = this.economyService.getDefaultAccount(accountId.toLowerCase());
+        if (account == null)
+            return new EconomyResponse(value, 0, EconomyResponse.ResponseType.FAILURE, "account not found");
+
+        account.setBalance(account.getBalance().add(new BigDecimal(value)));
+
+        return new EconomyResponse(value, account.getBalance().doubleValue(), EconomyResponse.ResponseType.SUCCESS, "deposit success");
     }
 
     @Override
-    public boolean has(OfflinePlayer offlinePlayer, double v) {
-        return false;
+    public EconomyResponse depositPlayer(String accountId, String world, double value) {
+        return depositPlayer(accountId, value);
     }
 
     @Override
-    public boolean has(String s, String s1, double v) {
-        return false;
-    }
-
-    @Override
-    public boolean has(OfflinePlayer offlinePlayer, String s, double v) {
-        return false;
-    }
-
-    @Override
-    public EconomyResponse withdrawPlayer(String s, double v) {
+    public EconomyResponse createBank(String bankId, String world) {
         return null;
     }
 
     @Override
-    public EconomyResponse withdrawPlayer(OfflinePlayer offlinePlayer, double v) {
+    public EconomyResponse deleteBank(String bankId) {
         return null;
     }
 
     @Override
-    public EconomyResponse withdrawPlayer(String s, String s1, double v) {
+    public EconomyResponse bankBalance(String bankId) {
         return null;
     }
 
     @Override
-    public EconomyResponse withdrawPlayer(OfflinePlayer offlinePlayer, String s, double v) {
+    public EconomyResponse bankHas(String bankId, double value) {
         return null;
     }
 
     @Override
-    public EconomyResponse depositPlayer(String s, double v) {
+    public EconomyResponse bankWithdraw(String bankId, double value) {
         return null;
     }
 
     @Override
-    public EconomyResponse depositPlayer(OfflinePlayer offlinePlayer, double v) {
+    public EconomyResponse bankDeposit(String bankId, double value) {
         return null;
     }
 
     @Override
-    public EconomyResponse depositPlayer(String s, String s1, double v) {
+    public EconomyResponse isBankOwner(String bankId, String world) {
         return null;
     }
 
     @Override
-    public EconomyResponse depositPlayer(OfflinePlayer offlinePlayer, String s, double v) {
-        return null;
-    }
-
-    @Override
-    public EconomyResponse createBank(String s, String s1) {
-        return null;
-    }
-
-    @Override
-    public EconomyResponse createBank(String s, OfflinePlayer offlinePlayer) {
-        return null;
-    }
-
-    @Override
-    public EconomyResponse deleteBank(String s) {
-        return null;
-    }
-
-    @Override
-    public EconomyResponse bankBalance(String s) {
-        return null;
-    }
-
-    @Override
-    public EconomyResponse bankHas(String s, double v) {
-        return null;
-    }
-
-    @Override
-    public EconomyResponse bankWithdraw(String s, double v) {
-        return null;
-    }
-
-    @Override
-    public EconomyResponse bankDeposit(String s, double v) {
-        return null;
-    }
-
-    @Override
-    public EconomyResponse isBankOwner(String s, String s1) {
-        return null;
-    }
-
-    @Override
-    public EconomyResponse isBankOwner(String s, OfflinePlayer offlinePlayer) {
-        return null;
-    }
-
-    @Override
-    public EconomyResponse isBankMember(String s, String s1) {
-        return null;
-    }
-
-    @Override
-    public EconomyResponse isBankMember(String s, OfflinePlayer offlinePlayer) {
+    public EconomyResponse isBankMember(String bankId, String world) {
         return null;
     }
 
@@ -204,22 +164,12 @@ public class VaultEconomyHook implements Economy {
     }
 
     @Override
-    public boolean createPlayerAccount(String s) {
-        return false;
+    public boolean createPlayerAccount(String accountId) {
+        return this.economyService.createDefaultAccountIfNotExists(accountId.toLowerCase(), accountId);
     }
 
     @Override
-    public boolean createPlayerAccount(OfflinePlayer offlinePlayer) {
-        return false;
-    }
-
-    @Override
-    public boolean createPlayerAccount(String s, String s1) {
-        return false;
-    }
-
-    @Override
-    public boolean createPlayerAccount(OfflinePlayer offlinePlayer, String s) {
-        return false;
+    public boolean createPlayerAccount(String accountId, String world) {
+        return createPlayerAccount(accountId);
     }
 }

@@ -66,16 +66,17 @@ public class EconomyService implements Service {
 
     private final Map<String, Object> checkDefaultAccountLocks = new ConcurrentHashMap<>();
 
-    private void createDefaultAccountIfNotExists(String accountId, String name) {
+    public boolean createDefaultAccountIfNotExists(String accountId, String name) {
         Object lock = this.checkDefaultAccountLocks.computeIfAbsent(accountId, k -> new Object());
         synchronized (lock) {
             try {
                 if (!this.economyCrud.existsBankAccount(DEFAULT_BANK_ID, accountId))
-                    this.economyCrud.createBankAccount(DEFAULT_BANK_ID, accountId, name, new BigDecimal(0));
+                    return this.economyCrud.createBankAccount(DEFAULT_BANK_ID, accountId, name, new BigDecimal(0));
             } finally {
                 this.checkDefaultAccountLocks.remove(accountId);
             }
         }
+        return false;
     }
 
 }

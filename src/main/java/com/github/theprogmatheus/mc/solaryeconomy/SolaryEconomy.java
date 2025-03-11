@@ -30,6 +30,7 @@ public class SolaryEconomy extends JavaPlugin {
     private EconomyService economyService;
     private CommandService commandService;
     private ListenerService listenerService;
+    private HookLoaderService hookLoaderService;
     private UpdaterService updaterService;
 
     /*
@@ -42,6 +43,7 @@ public class SolaryEconomy extends JavaPlugin {
         this.services.add(this.economyService = new EconomyService(this));
         this.services.add(this.commandService = new CommandService(this));
         this.services.add(this.listenerService = new ListenerService(this));
+        this.services.add(this.hookLoaderService = new HookLoaderService(this));
         this.services.add(this.updaterService = new UpdaterService(this));
     }
 
