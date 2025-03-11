@@ -1,0 +1,20 @@
+#########################[ Solary-Economy ]#########################
+##                                                                ##
+##               Vous avez trouvé un bug ? Signalez-le !          ##
+##                                                                ##
+##                Email : theprog.matheus@gmail.com               ##
+##                     Discord : sr_edition                       ##
+##                                                                ##
+####################################################################
+
+
+#/------------------------------------------------------------------/
+#     Auteur : Sr_Edition (theprogmatheus)
+#     Version : 2.0.0
+#/------------------------------------------------------------------/
+
+NO_PERMISSION: "&cVous n'avez pas la permission de faire cela."
+ACCOUNT_NOT_FOUND: "&cImpossible de trouver \"{0}\", est-ce le bon compte ?"
+VALUE_CANT_BE_NEGATIVE: "&cLa valeur ne peut pas être négative."
+INVALID_VALUE: "&cLa valeur que vous avez entrée \"{0}\" est invalide."
+BALANCE_SET_SUCCESS: "&aVous avez défini avec succès le solde de {0} à {1}."

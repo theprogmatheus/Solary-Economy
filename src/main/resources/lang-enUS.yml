@@ -1,6 +1,6 @@
 #########################[ Solary-Economy ]#########################
 ##                                                                ##
-##                 Encontrou algum bug? Reporte!                  ##
+##                   Found a bug? Report it!                      ##
 ##                                                                ##
 ##                Email: theprog.matheus@gmail.com                ##
 ##                     Discord: sr_edition                        ##
@@ -8,14 +8,13 @@
 ####################################################################
 
 
-
 #/------------------------------------------------------------------/
-#     Autor: Sr_Edition (theprogmatheus)
-#     Versão: 2.0.0
+#     Author: Sr_Edition (theprogmatheus)
+#     Version: 2.0.0
 #/------------------------------------------------------------------/
 
-NO_PERMISSION: "&cVocê não tem permissão para isso."
-ACCOUNT_NOT_FOUND: "&cNão foi possível encontrar \"{0}\", essa é realmente a conta certa?"
-VALUE_CANT_BE_NEGATIVE: "&cO valor não pode ser negativo."
-INVALID_VALUE: "&cO valor que você inseriu \"{0}\" é inválido."
-BALANCE_SET_SUCCESS: "&aVocê definiu o saldo de {0} para {1} com sucesso."
+NO_PERMISSION: "&cYou do not have permission to do that."
+ACCOUNT_NOT_FOUND: "&cCould not find \"{0}\", is this the correct account?"
+VALUE_CANT_BE_NEGATIVE: "&cThe value cannot be negative."
+INVALID_VALUE: "&cThe value you entered \"{0}\" is invalid."
+BALANCE_SET_SUCCESS: "&aYou successfully set the balance of {0} to {1}."

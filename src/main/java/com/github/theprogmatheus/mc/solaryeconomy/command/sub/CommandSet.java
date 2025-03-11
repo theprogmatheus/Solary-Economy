@@ -1,12 +1,14 @@
 package com.github.theprogmatheus.mc.solaryeconomy.command.sub;
 
 import com.github.theprogmatheus.mc.solaryeconomy.SolaryEconomy;
+import com.github.theprogmatheus.mc.solaryeconomy.config.Lang;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
 import com.github.theprogmatheus.mc.solaryeconomy.service.EconomyService;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 
 public class CommandSet extends SubCommand {
 
@@ -25,7 +27,7 @@ public class CommandSet extends SubCommand {
 
             BankAccountEntity account = this.economyService.getDefaultAccount(accountId);
             if (account == null) {
-                sender.sendMessage("§cConta não encontrada.");
+                sender.sendMessage(MessageFormat.format(Lang.ACCOUNT_NOT_FOUND, accountId));
                 return false;
             }
 
@@ -33,9 +35,9 @@ public class CommandSet extends SubCommand {
             try {
                 value = new BigDecimal(args[1]);
                 if (value.doubleValue() < 0)
-                    throw new RuntimeException("Value cant be negative number");
+                    throw new RuntimeException(MessageFormat.format(Lang.VALUE_CANT_BE_NEGATIVE, value));
             } catch (Exception e) {
-                sender.sendMessage("§cNúmero inválido: " + e.getMessage());
+                sender.sendMessage(MessageFormat.format(Lang.INVALID_VALUE, args[1], e.getMessage()));
                 return false;
             }
             account.setBalance(value);
@@ -43,7 +45,7 @@ public class CommandSet extends SubCommand {
             // save account
             this.economyService.getAccountCache().put(account);
 
-            sender.sendMessage("§aValor de " + account.getOwnerName() + " foi definido para " + value.toPlainString());
+            sender.sendMessage(MessageFormat.format(Lang.BALANCE_SET_SUCCESS, account.getOwnerName(), account.getBalance().toPlainString()));
         }
         return false;
     }
