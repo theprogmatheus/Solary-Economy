@@ -47,6 +47,9 @@ public class EconomyService implements Service {
             this.economyCrud.createBank(DEFAULT_BANK_NAME, DEFAULT_BANK_OWNER);
     }
 
+    public BankAccountEntity saveInCache(BankAccountEntity account) {
+        return this.accountCache.put(account);
+    }
 
     public BankAccountEntity getDefaultAccountOrCreateIfNotExists(Player player) {
         BankAccountEntity account = getDefaultAccount(player.getName().toLowerCase());
