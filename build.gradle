@@ -48,12 +48,24 @@ bukkit {
     apiVersion = '1.8'
     depend = ['Vault']
     load = 'STARTUP'
+
     commands {
-        money {
-            description = 'See your current balance'
-            permission = 'solaryeconomy.command.money'
-            permissionMessage = 'You dont have permission to see your current balance'
+        register("seco") {
+            description = 'See the plugin info'
         }
+        register("add") {
+            description = 'Add balance in account'
+        }
+        register("remove") {
+            description = 'Remove balance from account'
+        }
+        register("set") {
+            description = 'Set new account balance'
+        }
+        register("balance") {
+            description = 'See current account balance'
+        }
+
     }
 }
 

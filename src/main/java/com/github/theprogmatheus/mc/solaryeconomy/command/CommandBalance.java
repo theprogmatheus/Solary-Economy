@@ -12,7 +12,7 @@ public class CommandBalance extends AbstractCommandExecutor {
     private final EconomyService economyService;
 
     public CommandBalance() {
-        super(new String[]{"balance"}, "balance", "balance <player>");
+        super(new String[]{"balance", "money", "bal", "coins"}, "balance", "balance <player>");
         this.economyService = SolaryEconomy.getInstance().getEconomyService();
     }
 
