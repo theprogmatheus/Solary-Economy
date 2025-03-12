@@ -26,12 +26,12 @@ public class CommandAdd extends AbstractCommandExecutor {
             BankAccountEntity account = this.economyService.getDefaultAccount(InputParse.parseAccountId(args[0]));
             if (account == null) {
                 sender.sendMessage("§aA conta que você informou, não existe.");
-                return false;
+                return true;
             }
             BigDecimal value = InputParse.parseBigDecimal(args[1]);
             if (value == null || value.doubleValue() <= 0) {
                 sender.sendMessage("§cValor inválido.");
-                return false;
+                return true;
             }
 
             account.setBalance(account.getBalance().add(value));
