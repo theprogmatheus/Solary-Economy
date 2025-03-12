@@ -1,6 +1,6 @@
 package com.github.theprogmatheus.mc.solaryeconomy.service;
 
-import com.github.theprogmatheus.mc.solaryeconomy.command.MainCommand;
+import com.github.theprogmatheus.mc.solaryeconomy.command.CommandSeco;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,7 +15,7 @@ public class CommandService implements Service {
 
     @Override
     public void startup() {
-        this.plugin.getCommand("money").setExecutor(new MainCommand());
+        this.plugin.getCommand("money").setExecutor(new CommandSeco());
     }
 
     @Override

@@ -10,11 +10,11 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 
-public class MainCommand implements CommandExecutor {
+public class CommandSeco implements CommandExecutor {
 
     private AbstractCommandExecutor[] subCommands;
 
-    public MainCommand() {
+    public CommandSeco() {
         this.registerSubCommands(new CommandSet(), new CommandAdd(), new CommandRemove());
         this.economyService = SolaryEconomy.getInstance().getEconomyService();
     }
