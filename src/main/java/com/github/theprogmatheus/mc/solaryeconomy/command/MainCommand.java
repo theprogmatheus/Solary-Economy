@@ -1,10 +1,6 @@
 package com.github.theprogmatheus.mc.solaryeconomy.command;
 
 import com.github.theprogmatheus.mc.solaryeconomy.SolaryEconomy;
-import com.github.theprogmatheus.mc.solaryeconomy.command.sub.CommandAdd;
-import com.github.theprogmatheus.mc.solaryeconomy.command.sub.CommandRemove;
-import com.github.theprogmatheus.mc.solaryeconomy.command.sub.CommandSet;
-import com.github.theprogmatheus.mc.solaryeconomy.command.sub.SubCommand;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
 import com.github.theprogmatheus.mc.solaryeconomy.service.EconomyService;
 import org.bukkit.command.Command;
@@ -16,7 +12,7 @@ import java.util.Arrays;
 
 public class MainCommand implements CommandExecutor {
 
-    private SubCommand[] subCommands;
+    private AbstractCommandExecutor[] subCommands;
 
     public MainCommand() {
         this.registerSubCommands(new CommandSet(), new CommandAdd(), new CommandRemove());
@@ -26,7 +22,7 @@ public class MainCommand implements CommandExecutor {
     private final EconomyService economyService;
 
 
-    public void registerSubCommands(SubCommand... subCommands) {
+    public void registerSubCommands(AbstractCommandExecutor... subCommands) {
         this.subCommands = subCommands;
     }
 
@@ -43,7 +39,7 @@ public class MainCommand implements CommandExecutor {
             return false;
         }
 
-        for (SubCommand subCommand : this.subCommands) {
+        for (AbstractCommandExecutor subCommand : this.subCommands) {
             for (String alias : subCommand.getCommands()) {
                 if (!args[0].equalsIgnoreCase(alias)) continue;
                 return subCommand.onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));

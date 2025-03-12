@@ -1,4 +1,4 @@
-package com.github.theprogmatheus.mc.solaryeconomy.command.sub;
+package com.github.theprogmatheus.mc.solaryeconomy.command;
 
 import com.github.theprogmatheus.mc.solaryeconomy.SolaryEconomy;
 import com.github.theprogmatheus.mc.solaryeconomy.config.Lang;
@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
 
-public class CommandSet extends SubCommand {
+public class CommandSet extends AbstractCommandExecutor {
 
     public CommandSet() {
         super(new String[]{"set"}, "set", "set <player> <newBalance>");

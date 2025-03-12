@@ -1,4 +1,4 @@
-package com.github.theprogmatheus.mc.solaryeconomy.command.sub;
+package com.github.theprogmatheus.mc.solaryeconomy.command;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 
 @Getter
 @AllArgsConstructor
-public abstract class SubCommand implements CommandExecutor {
+public abstract class AbstractCommandExecutor implements CommandExecutor {
 
     private String[] commands;
     private String permission;

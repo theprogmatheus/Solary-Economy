@@ -1,9 +1,9 @@
-package com.github.theprogmatheus.mc.solaryeconomy.command.sub;
+package com.github.theprogmatheus.mc.solaryeconomy.command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class CommandAdd extends SubCommand {
+public class CommandAdd extends AbstractCommandExecutor {
 
     public CommandAdd() {
         super(new String[]{"add"}, "add", "add <player> <value>");

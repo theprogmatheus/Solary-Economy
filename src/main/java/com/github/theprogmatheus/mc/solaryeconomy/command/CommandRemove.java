@@ -1,9 +1,9 @@
-package com.github.theprogmatheus.mc.solaryeconomy.command.sub;
+package com.github.theprogmatheus.mc.solaryeconomy.command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class CommandRemove extends SubCommand {
+public class CommandRemove extends AbstractCommandExecutor {
 
     public CommandRemove() {
         super(new String[]{"remove"}, "remove", "remove <player> <value>");
