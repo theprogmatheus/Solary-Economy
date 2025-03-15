@@ -80,14 +80,14 @@ public class DatabaseManager {
     }
 
     public ConnectionSource getConnectionSource() throws SQLException {
-        switch (Env.DATABASE_TYPE) {
-            case "SQLite":
+        switch (Env.DATABASE_TYPE.toLowerCase()) {
+            case "sqlite":
                 return sqliteConnectionSource(Env.DATABASE_NAME);
-            case "MySQL":
+            case "mysql":
                 return mysqlConnectionSource(Env.DATABASE_ADDRESS, Env.DATABASE_NAME, Env.DATABASE_USERNAME, Env.DATABASE_PASSWORD);
-            case "MariaDB":
+            case "mariadb":
                 return mariadbConnectionSource(Env.DATABASE_ADDRESS, Env.DATABASE_NAME, Env.DATABASE_USERNAME, Env.DATABASE_PASSWORD);
-            case "PostgreSQL":
+            case "postgresql":
                 return postgresqlConnectionSource(Env.DATABASE_ADDRESS, Env.DATABASE_NAME, Env.DATABASE_USERNAME, Env.DATABASE_PASSWORD);
             default:
                 return sqliteConnectionSource("storage.sqlite");
