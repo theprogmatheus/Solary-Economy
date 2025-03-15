@@ -15,7 +15,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@DatabaseTable(tableName = "seco_banks")
+@DatabaseTable(tableName = "banks")
 public class BankEntity {
 
     public static final transient String DEFAULT_BANK_NAME = "default";

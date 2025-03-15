@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@DatabaseTable(tableName = "seco_bank_accounts")
+@DatabaseTable(tableName = "bank_accounts")
 public class BankAccountEntity {
 
     @DatabaseField(generatedId = true)
