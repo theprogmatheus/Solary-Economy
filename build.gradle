@@ -49,6 +49,7 @@ bukkit {
     depend = ['Vault']
     load = 'STARTUP'
 
+    /*
     commands {
         register("seco") {
             description = 'See the plugin info'
@@ -66,7 +67,7 @@ bukkit {
             description = 'See current account balance'
         }
 
-    }
+    }*/
 }
 
 shadowJar {
