@@ -19,7 +19,7 @@ public class CommandSeco extends AbstractCommand {
         sender.sendMessage("§6Running §f" + plugin.getName() + "§6 on §f" + plugin.getDescription().getVersion() + "§6 version");
         sender.sendMessage("§6Authors: §f" + Arrays.toString(plugin.getDescription().getAuthors().toArray()));
         sender.sendMessage(" ");
-        return false;
+        return true;
     }
 
 
