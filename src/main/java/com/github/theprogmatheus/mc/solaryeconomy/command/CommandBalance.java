@@ -20,7 +20,8 @@ public class CommandBalance extends AbstractCommand {
         setChildren(new AbstractCommand[]{
                 new CommandSet(),
                 new CommandAdd(),
-                new CommandRemove()
+                new CommandRemove(),
+                new CommandPay()
         });
     }
 
