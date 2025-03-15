@@ -1,6 +1,7 @@
 package com.github.theprogmatheus.mc.solaryeconomy.command;
 
 import com.github.theprogmatheus.mc.solaryeconomy.SolaryEconomy;
+import com.github.theprogmatheus.mc.solaryeconomy.config.Lang;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
@@ -9,9 +10,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
 import java.lang.reflect.Field;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -38,7 +39,6 @@ public abstract class AbstractCommand extends BukkitCommand implements CommandEx
 
         super.setDescription(description);
         super.setPermission(permission);
-        super.setPermissionMessage("§cVocê não tem permissão para isso.");
         super.setUsage(usage);
         if (commands.length > 1)
             super.setAliases(new ArrayList<>(Arrays.asList(Arrays.copyOfRange(commands, 1, commands.length))));
@@ -70,8 +70,7 @@ public abstract class AbstractCommand extends BukkitCommand implements CommandEx
 
     private boolean checkPermission(CommandSender sender) {
         if (getPermission() == null || getPermission().isEmpty() || sender.hasPermission(getPermission())) return true;
-
-        String message = getPermissionMessage();
+        String message = getPermissionMessage() != null ? getPermissionMessage() : MessageFormat.format(Lang.COMMAND_NO_PERMISSION, getUsage(), getPermission());
         if (message != null && !message.isEmpty())
             sender.sendMessage(getPermissionMessage());
         return false;
