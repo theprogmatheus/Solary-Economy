@@ -1,6 +1,5 @@
 package com.github.theprogmatheus.mc.solaryeconomy.task;
 
-import com.github.theprogmatheus.mc.solaryeconomy.SolaryEconomy;
 import com.github.theprogmatheus.mc.solaryeconomy.config.Config;
 import com.github.theprogmatheus.mc.solaryeconomy.config.Env;
 import com.github.theprogmatheus.mc.solaryeconomy.exception.ConfigurationLoadException;
@@ -23,9 +22,6 @@ public class EnvLoaderTask implements Consumer<Config> {
                 throw new ConfigurationLoadException("Cant set config env class field value: " + field.getName() + "=" + value, e);
             }
         }
-
-
-        SolaryEconomy.getInstance().getLogger().info("Env loaded: " + Env.class);
     }
 
     private Object getConfigValue(ConfigurationSection section, String path) {
