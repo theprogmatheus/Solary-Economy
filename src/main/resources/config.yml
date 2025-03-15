@@ -5,6 +5,8 @@
 ##                Email: theprog.matheus@gmail.com                ##
 ##                     Discord: sr_edition                        ##
 ##                                                                ##
+##          https://github.com/theprogmatheus/Solary-Economy      ##
+##                                                                ##
 ####################################################################
 
 
@@ -67,3 +69,51 @@ cache:
 #Será gerado um arquivo com o nome lang-<yourLang>.yml, exemplo: lang-enUS.yml.
 #Você pode alterar as mensagens conforme necessidade.
 lang: "ptBR"
+
+#Aqui você configura a economia do servidor.
+economy:
+
+  #Define o valor que o jogador inicia ao entrar pela primeira vez.
+  start_value: 30
+  
+  #Define as configurações do rank de saldos (baltop/money top)
+  rank:
+  
+    #Define o limite do rank. (top 10 mais ricos)
+    size: 10
+    
+    #Define um tempo para a atualização do rank. (em segundos)
+    update_delay: 600
+    
+    #Define se você deseja usar prefix na exibição do rank.
+    use_prefix: true
+    
+    #Configure o tamanho máximo do nome para ser exibido no rank.
+    #Se o nome do jogador/conta ultrapassar o tamanho máximo, não irá aparecer no rank.
+    max_name_size: 16
+    
+  #Define o nome da moeda, sua versão no singular e no plural.
+  currency:
+    singular: "coin"
+    plural: "coins"
+    
+  #Aqui você define as configurações relacionadas ao magnata (Jogador/Conta mais rico(a) do servidor)
+  tycoon:
+    #Aqui você define se a tag será exibida no chat e no rank.
+    #Você pode customizar a tag no arquivo de mensagens.
+    #Você deve usar a tag {seco_tycoon} no seu plugin de chat.
+    tag: true
+    
+    #Aqui você define se o servidor irá anunciar sempre que houver um novo magnata.
+    broadcast: true
+    
+    
+    
+###############################[ Placeholders ]#################################
+##                                                                            ##
+##                 %seco_balance% - Saldo atual do jogador.                   ##
+##          %seco_balance_formatted% - Saldo atual do jogador formatado.      ##
+##                 %seco_tycoon% - Magnata atual do servidor                  ##
+##                    %seco_tycoon_tag% - Tag do magnata                      ##
+##                                                                            ##
+################################################################################

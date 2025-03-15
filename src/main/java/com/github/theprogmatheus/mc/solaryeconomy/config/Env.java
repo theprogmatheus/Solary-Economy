@@ -24,4 +24,18 @@ public class Env {
      * Lang config
      */
     public static String LANG;
+
+    /*
+     * Economy config
+     */
+    public static String ECONOMY_CURRENCY_SINGULAR;
+    public static String ECONOMY_CURRENCY_PLURAL;
+    public static double ECONOMY_START_VALUE;
+    public static int ECONOMY_RANK_SIZE;
+    public static long ECONOMY_RANK_UPDATE_DELAY;
+    public static boolean ECONOMY_RANK_USE_PREFIX;
+    public static int ECONOMY_RANK_MAX_NAME_SIZE;
+    public static boolean ECONOMY_TYCOON_TAG;
+    public static boolean ECONOMY_TYCOON_BROADCAST;
+
 }
