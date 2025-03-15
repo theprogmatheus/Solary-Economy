@@ -22,8 +22,8 @@ database:
   #Valor padrão: SQLite
   #Tipos suportados: (SQLite, MySQL, MariaDB, PostgreSQL)
   #------------------------------------------------------------------
-  #  OBS: Se você escolher SQLite como tipo do banco de dados
-  #  Os campos: address, username e password não serão usados.
+  #  OBS: Para bancos de dados MySQL de versões mais recentes
+  #  Recomenda-se configurar aqui como MariaDB
   #------------------------------------------------------------------
   type: "SQLite"
   
