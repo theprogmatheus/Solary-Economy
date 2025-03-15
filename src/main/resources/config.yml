@@ -38,7 +38,10 @@ database:
   username: "yourUsername"
   
   #Aqui você define a senha do banco de dados.
-  password: "yourPassword"  
+  password: "yourPassword"
+  
+  #Aqui você define um prefix para as tabelas criadas pelo plugin.
+  table_prefix: "seco"
   
 #Configurações do cache
 cache:
