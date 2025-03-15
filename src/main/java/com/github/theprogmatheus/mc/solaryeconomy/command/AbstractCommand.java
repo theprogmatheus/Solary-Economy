@@ -62,7 +62,12 @@ public abstract class AbstractCommand extends BukkitCommand implements CommandEx
 
         if (!checkPermission(sender)) return true;
 
-        return onCommand(sender, this, commandLabel, args);
+        boolean executed = onCommand(sender, this, commandLabel, args);
+
+        if (!executed)
+            sender.sendMessage(getUsage());
+
+        return executed;
     }
 
     @Override
