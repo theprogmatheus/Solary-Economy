@@ -44,6 +44,7 @@ public class CommandSet extends AbstractCommand {
             account = this.economyService.saveInCache(account);
 
             sender.sendMessage(MessageFormat.format(Lang.BALANCE_SET_SUCCESS, value.toPlainString(), account.getOwnerName()));
+            return true;
         }
 
         return false;
