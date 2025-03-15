@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 
 import java.math.BigDecimal;
 
-public class CommandRemove extends AbstractCommandExecutor {
+public class CommandRemove extends AbstractCommand {
 
     private final EconomyService economyService;
 

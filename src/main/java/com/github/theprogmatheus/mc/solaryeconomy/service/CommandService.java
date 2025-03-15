@@ -22,11 +22,11 @@ public class CommandService implements Service {
 
     @Override
     public void startup() {
-        this.commandSeco = AbstractCommandExecutor.register(new CommandSeco());
-        this.commandBalance = AbstractCommandExecutor.register(new CommandBalance());
-        this.commandSet = AbstractCommandExecutor.register(new CommandSet());
-        this.commandAdd = AbstractCommandExecutor.register(new CommandAdd());
-        this.commandRemove = AbstractCommandExecutor.register(new CommandRemove());
+        this.commandSeco = AbstractCommand.register(new CommandSeco());
+        this.commandBalance = AbstractCommand.register(new CommandBalance());
+        this.commandSet = AbstractCommand.register(new CommandSet());
+        this.commandAdd = AbstractCommand.register(new CommandAdd());
+        this.commandRemove = AbstractCommand.register(new CommandRemove());
     }
 
     @Override

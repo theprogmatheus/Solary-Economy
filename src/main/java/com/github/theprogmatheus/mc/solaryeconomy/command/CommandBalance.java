@@ -7,7 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class CommandBalance extends AbstractCommandExecutor {
+public class CommandBalance extends AbstractCommand {
 
     private final EconomyService economyService;
 

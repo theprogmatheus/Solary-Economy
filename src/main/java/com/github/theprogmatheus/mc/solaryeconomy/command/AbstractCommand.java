@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @Getter
-public abstract class AbstractCommandExecutor extends BukkitCommand implements CommandExecutor, TabCompleter {
+public abstract class AbstractCommand extends BukkitCommand implements CommandExecutor, TabCompleter {
 
     private static final CommandMap commandMap;
 
@@ -30,7 +30,7 @@ public abstract class AbstractCommandExecutor extends BukkitCommand implements C
 
     private final String[] commands;
 
-    protected AbstractCommandExecutor(String[] commands, String permission, String usage) {
+    protected AbstractCommand(String[] commands, String permission, String usage) {
         super(commands[0]);
 
         this.commands = commands;
@@ -51,7 +51,7 @@ public abstract class AbstractCommandExecutor extends BukkitCommand implements C
         return List.of();
     }
 
-    public static <C extends AbstractCommandExecutor> C register(C command) {
+    public static <C extends AbstractCommand> C register(C command) {
         if (command == null) return null;
         commandMap.register(SolaryEconomy.getInstance().getName().toLowerCase(), command);
         return command;

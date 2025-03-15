@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;
 
-public class CommandSeco extends AbstractCommandExecutor {
+public class CommandSeco extends AbstractCommand {
 
     public CommandSeco() {
         super(new String[]{"seco", "solaryeconomy"}, "solaryeconomy", "seco");
