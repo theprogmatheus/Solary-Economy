@@ -15,4 +15,5 @@ public class Lang {
     public static String ACCOUNT_NOT_FOUND;
     public static String BALANCE_SET_SUCCESS;
     public static String BALANCE_ADD_SUCCESS;
+    public static String BALANCE_REMOVE_SUCCESS;
 }

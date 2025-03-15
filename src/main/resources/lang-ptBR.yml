@@ -22,5 +22,6 @@ VALUE_CANT_BE_NEGATIVE: "&cO valor não pode ser negativo." # {0} value
 ACCOUNT_NOT_FOUND: "&cNão foi possível encontrar \"{0}\", essa é realmente a conta certa?" # {0} account name
 BALANCE_SET_SUCCESS: "&aVocê definiu o saldo de {0} para {1} com sucesso." # {0} = account name, {1} value
 BALANCE_ADD_SUCCESS: "&aVocê adicionou {0} ao saldo de {1}" # {0} value, {1} account name
+BALANCE_REMOVE_SUCCESS: "&aVocê removeu {0} do saldo de {1}" # {0} value, {1} account name
 CURRENT_SELF_BALANCE: "&aSaldo: {0}" # {0} current player balance
 CURRENT_PLAYER_BALANCE: "&aSaldo de {1}: {0}" # {0} current player balance, {1} player name
