@@ -2,6 +2,7 @@ package com.github.theprogmatheus.mc.solaryeconomy.service;
 
 import com.github.theprogmatheus.mc.solaryeconomy.config.Config;
 import com.github.theprogmatheus.mc.solaryeconomy.config.LangConfiguration;
+import com.github.theprogmatheus.mc.solaryeconomy.task.EnvLoaderTask;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -24,7 +25,7 @@ public class ConfigurationService implements Service {
 
     @Override
     public void startup() {
-        this.defaultConfig = new Config(plugin, new File(plugin.getDataFolder(), "config.yml")).createDefaultConfigFileIfNotExists().load();
+        this.defaultConfig = new Config(plugin, new File(plugin.getDataFolder(), "config.yml"), new EnvLoaderTask()).createDefaultConfigFileIfNotExists().load();
         try {
             this.langConfig = new LangConfiguration(this.plugin, this.defaultConfig.getString("lang"));
             this.langConfig.createDefaultConfigFileIfNotExists().load();

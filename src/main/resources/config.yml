@@ -32,7 +32,7 @@ database:
   
   #Aqui você define o nome do banco de dados que você vai usar.
   #O SQLite usa isso para definir o nome do arquivo.db
-  database: "storage.sqlite"
+  name: "storage.sqlite"
   
   #Aqui você define o nome de usuário do banco de dados.
   username: "yourUsername"

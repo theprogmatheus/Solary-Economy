@@ -5,7 +5,7 @@ public class Env {
     /*
      * Database config
      */
-    public static String DATABASE_TYE;
+    public static String DATABASE_TYPE;
     public static String DATABASE_ADDRESS;
     public static String DATABASE_NAME;
     public static String DATABASE_USERNAME;
