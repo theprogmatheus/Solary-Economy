@@ -9,11 +9,14 @@ import com.j256.ormlite.jdbc.db.MysqlDatabaseType;
 import com.j256.ormlite.jdbc.db.PostgresDatabaseType;
 import com.j256.ormlite.jdbc.db.SqliteDatabaseType;
 import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Proxy;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +36,7 @@ public class DatabaseManager {
 
     public <M> void addEntityClass(Class<M> entityClass) {
         this.entities.put(entityClass, null);
+        this.setNewTableName(entityClass);
     }
 
     public <M, I> Dao<M, I> getEntityDao(Class<M> entityClass, Class<I> idClass) {
@@ -62,6 +66,21 @@ public class DatabaseManager {
             this.connectionSource = null;
         } catch (Exception e) {
             throw new RuntimeException("Unable to shutdown database.", e);
+        }
+    }
+
+    private void setNewTableName(Class<?> entityClass) {
+        DatabaseTable annotation = entityClass.getAnnotation(DatabaseTable.class);
+        if (annotation != null) {
+            try {
+                Field field = Proxy.getInvocationHandler(annotation).getClass().getDeclaredField("memberValues");
+                field.setAccessible(true);
+                Map<String, Object> memberValues = (Map<String, Object>) field.get(Proxy.getInvocationHandler(annotation));
+                String currentName = (String) memberValues.get("tableName");
+                memberValues.put("tableName", (Env.DATABASE_TABLE_PREFIX != null ? Env.DATABASE_TABLE_PREFIX : "").concat(currentName));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
