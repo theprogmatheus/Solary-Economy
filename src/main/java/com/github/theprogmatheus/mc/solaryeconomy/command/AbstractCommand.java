@@ -43,12 +43,23 @@ public abstract class AbstractCommand extends BukkitCommand implements CommandEx
 
     @Override
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
-        return onCommand(sender, this, commandLabel, args);
+        if (checkPermission(sender))
+            return onCommand(sender, this, commandLabel, args);
+        return true;
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         return List.of();
+    }
+
+    private boolean checkPermission(CommandSender sender) {
+        if (getPermission() == null || getPermission().isEmpty() || sender.hasPermission(getPermission())) return true;
+
+        String message = getPermissionMessage();
+        if (message != null && !message.isEmpty())
+            sender.sendMessage(getPermissionMessage());
+        return false;
     }
 
     public static <C extends AbstractCommand> C register(C command) {
