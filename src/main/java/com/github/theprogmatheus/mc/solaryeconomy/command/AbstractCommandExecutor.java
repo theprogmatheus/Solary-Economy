@@ -10,23 +10,32 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
 
 
 @Getter
 public abstract class AbstractCommandExecutor extends BukkitCommand implements CommandExecutor, TabCompleter {
 
+    private static final CommandMap commandMap;
 
-    private String[] commands;
-    private String permission;
-    private String usage;
+    static {
+        try {
+            Field field = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+            field.setAccessible(true);
+            commandMap = (CommandMap) field.get(Bukkit.getServer());
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private final String[] commands;
 
     protected AbstractCommandExecutor(String[] commands, String permission, String usage) {
         super(commands[0]);
 
         this.commands = commands;
-        super.setUsage(this.usage = usage);
-        super.setPermission(this.permission = permission);
+        super.setUsage(usage);
+        super.setPermission(permission);
         super.setPermissionMessage("§cVocê não tem permissão para isso.");
         if (commands.length > 1)
             super.setAliases(new ArrayList<>(Arrays.asList(Arrays.copyOfRange(commands, 1, commands.length))));
@@ -44,20 +53,7 @@ public abstract class AbstractCommandExecutor extends BukkitCommand implements C
 
     public static <C extends AbstractCommandExecutor> C register(C command) {
         if (command == null) return null;
-        CommandMap commandMap;
-        try {
-            Field field = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-            field.setAccessible(true);
-            commandMap = (CommandMap) field.get(Bukkit.getServer());
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        }
-
-        Logger log = SolaryEconomy.getInstance().getLogger();
-
-        log.info("Register command: " + command.getLabel() + " with usage: " + command.getUsage() + " with description: " + command.getDescription() + " with aliases: " + command.getAliases());
-
-        commandMap.register("solaryeconomy", command);
+        commandMap.register(SolaryEconomy.getInstance().getName().toLowerCase(), command);
         return command;
     }
 }
