@@ -58,7 +58,6 @@ public abstract class AbstractCommand extends BukkitCommand implements CommandEx
                     }
                 }
             }
-            return true;
         }
 
         if (!checkPermission(sender)) return true;
