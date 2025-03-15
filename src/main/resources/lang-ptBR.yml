@@ -17,10 +17,10 @@
 COMMAND_USAGE_FORMAT: "&cUse: {0}" # {0} command usage
 COMMAND_NO_PERMISSION: "&cVocê não tem permissão para executar esse comando." # {0} command usage, {1} command permission node
 DEFAULT_NO_PERMISSION: "&cVocê não tem permissão para isso."
-INVALID_INPUT_VALUE: "&cO valor que você inseriu \"{0}\" é inválido." # {0} input value
+INVALID_INPUT_VALUE: "&cO valor que você inseriu {0} é inválido." # {0} input value
 VALUE_CANT_BE_NEGATIVE: "&cO valor não pode ser negativo." # {0} value
 
-ACCOUNT_NOT_FOUND: "&cNão foi possível encontrar \"{0}\", essa é realmente a conta certa?" # {0} account name
+ACCOUNT_NOT_FOUND: "&cNão encontramos nenhuma conta com o nome de {0}." # {0} account name
 BALANCE_SET_SUCCESS: "&aVocê definiu o saldo de {0} para {1} com sucesso." # {0} = value, {1} account name
 BALANCE_ADD_SUCCESS: "&aVocê adicionou {0} ao saldo de {1}" # {0} value, {1} account name
 BALANCE_REMOVE_SUCCESS: "&aVocê removeu {0} do saldo de {1}" # {0} value, {1} account name

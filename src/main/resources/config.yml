@@ -41,7 +41,7 @@ database:
   password: "yourPassword"
   
   #Aqui você define um prefix para as tabelas criadas pelo plugin.
-  table_prefix: "seco"
+  table_prefix: "seco_"
   
 #Configurações do cache
 cache:
