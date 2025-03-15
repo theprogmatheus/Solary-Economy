@@ -17,6 +17,11 @@ public class CommandBalance extends AbstractCommand {
     public CommandBalance() {
         super(new String[]{"balance", "bal", "money"}, "Check players balance", "balance", "balance <player>");
         this.economyService = SolaryEconomy.getInstance().getEconomyService();
+        setChildren(new AbstractCommand[]{
+                new CommandSet(),
+                new CommandAdd(),
+                new CommandRemove()
+        });
     }
 
     @Override
