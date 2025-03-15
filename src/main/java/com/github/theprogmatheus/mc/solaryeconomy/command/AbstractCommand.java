@@ -3,6 +3,7 @@ package com.github.theprogmatheus.mc.solaryeconomy.command;
 import com.github.theprogmatheus.mc.solaryeconomy.SolaryEconomy;
 import com.github.theprogmatheus.mc.solaryeconomy.config.Lang;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.command.defaults.BukkitCommand;
@@ -16,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Getter
+@Setter
 public abstract class AbstractCommand extends BukkitCommand implements CommandExecutor, TabCompleter {
 
     private static final CommandMap commandMap;
@@ -31,6 +33,7 @@ public abstract class AbstractCommand extends BukkitCommand implements CommandEx
     }
 
     private final String[] commands;
+    private AbstractCommand[] children;
 
     protected AbstractCommand(String[] commands, String description, String permission, String usage) {
         super(commands[0]);
@@ -46,9 +49,21 @@ public abstract class AbstractCommand extends BukkitCommand implements CommandEx
 
     @Override
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
-        if (checkPermission(sender))
-            return onCommand(sender, this, commandLabel, args);
-        return true;
+
+        if ((args.length > 0) && (children != null)) {
+            for (AbstractCommand child : children) {
+                for (String childCommand : child.getCommands()) {
+                    if (childCommand.equalsIgnoreCase(args[0])) {
+                        return child.execute(sender, childCommand.toLowerCase(), Arrays.copyOfRange(args, 1, args.length));
+                    }
+                }
+            }
+            return true;
+        }
+
+        if (!checkPermission(sender)) return true;
+
+        return onCommand(sender, this, commandLabel, args);
     }
 
     @Override
