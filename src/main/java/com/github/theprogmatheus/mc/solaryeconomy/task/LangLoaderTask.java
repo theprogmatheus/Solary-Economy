@@ -7,7 +7,7 @@ import com.github.theprogmatheus.mc.solaryeconomy.exception.LangConfigurationLoa
 import java.lang.reflect.Field;
 import java.util.function.Consumer;
 
-public class LangClassLoaderTask implements Consumer<Config> {
+public class LangLoaderTask implements Consumer<Config> {
 
     @Override
     public void accept(Config config) {
