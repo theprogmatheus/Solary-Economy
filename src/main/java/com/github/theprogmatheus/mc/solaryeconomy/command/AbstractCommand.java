@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 @Getter
 public abstract class AbstractCommand extends BukkitCommand implements CommandExecutor, TabCompleter {
 
@@ -27,16 +26,17 @@ public abstract class AbstractCommand extends BukkitCommand implements CommandEx
         }
     }
 
-
     private final String[] commands;
 
-    protected AbstractCommand(String[] commands, String permission, String usage) {
+    protected AbstractCommand(String[] commands, String description, String permission, String usage) {
         super(commands[0]);
 
         this.commands = commands;
-        super.setUsage(usage);
+
+        super.setDescription(description);
         super.setPermission(permission);
         super.setPermissionMessage("§cVocê não tem permissão para isso.");
+        super.setUsage(usage);
         if (commands.length > 1)
             super.setAliases(new ArrayList<>(Arrays.asList(Arrays.copyOfRange(commands, 1, commands.length))));
     }

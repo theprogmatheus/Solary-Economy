@@ -14,7 +14,7 @@ public class CommandRemove extends AbstractCommand {
     private final EconomyService economyService;
 
     public CommandRemove() {
-        super(new String[]{"remove"}, "remove", "remove <player> <value>");
+        super(new String[]{"remove"}, "Remove players balance", "remove", "remove <player> <value>");
         this.economyService = SolaryEconomy.getInstance().getEconomyService();
     }
 
