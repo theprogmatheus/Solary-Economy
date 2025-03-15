@@ -59,6 +59,7 @@ public class DatabaseManager {
         if (this.connectionSource == null) return;
         try {
             this.connectionSource.close();
+            this.connectionSource = null;
         } catch (Exception e) {
             throw new RuntimeException("Unable to shutdown database.", e);
         }
@@ -112,11 +113,6 @@ public class DatabaseManager {
     }
 
     private ConnectionSource postgresqlConnectionSource(String hostname, String dbName, String username, String password) throws SQLException {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("PostgreSQL Driver not found.", e);
-        }
         String dbUrl = "jdbc:postgresql://" + hostname + "/" + dbName;
         return new JdbcConnectionSource(dbUrl, username, password, new PostgresDatabaseType());
     }
