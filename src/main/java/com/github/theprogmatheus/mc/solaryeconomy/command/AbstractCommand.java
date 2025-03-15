@@ -55,7 +55,7 @@ public abstract class AbstractCommand extends BukkitCommand implements CommandEx
             for (AbstractCommand child : children) {
                 for (String childCommand : child.getCommands()) {
                     if (childCommand.equalsIgnoreCase(args[0])) {
-                        return child.execute(sender, childCommand.toLowerCase(), Arrays.copyOfRange(args, 1, args.length));
+                        return child.execute(sender, commandLabel, Arrays.copyOfRange(args, 1, args.length));
                     }
                 }
             }
@@ -66,7 +66,7 @@ public abstract class AbstractCommand extends BukkitCommand implements CommandEx
         boolean executed = onCommand(sender, this, commandLabel, args);
 
         if (!executed)
-            sender.sendMessage(MessageFormat.format(Lang.COMMAND_USAGE_FORMAT, "/" + getUsage().replace("<command>", this.parent != null ? this.parent.getCommands()[0] : commandLabel)));
+            sender.sendMessage(MessageFormat.format(Lang.COMMAND_USAGE_FORMAT, "/" + getUsage().replace("<command>", commandLabel)));
 
         return executed;
     }
