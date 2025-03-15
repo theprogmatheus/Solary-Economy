@@ -5,10 +5,13 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.command.defaults.BukkitCommand;
+import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -50,7 +53,19 @@ public abstract class AbstractCommand extends BukkitCommand implements CommandEx
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return List.of();
+        if (args.length == 0)
+            return new ArrayList<>();
+
+        String lastWord = args[args.length - 1];
+        Player senderPlayer = (sender instanceof Player) ? (Player) sender : null;
+        ArrayList<String> matchedPlayers = new ArrayList<String>();
+        for (Player player : sender.getServer().getOnlinePlayers()) {
+            String name = player.getName();
+            if ((senderPlayer == null || senderPlayer.canSee(player)) && StringUtil.startsWithIgnoreCase(name, lastWord))
+                matchedPlayers.add(name);
+        }
+        matchedPlayers.sort(String.CASE_INSENSITIVE_ORDER);
+        return matchedPlayers;
     }
 
     private boolean checkPermission(CommandSender sender) {
