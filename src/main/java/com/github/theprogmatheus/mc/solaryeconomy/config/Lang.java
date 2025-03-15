@@ -17,4 +17,8 @@ public class Lang {
     public static String BALANCE_SET_SUCCESS;
     public static String BALANCE_ADD_SUCCESS;
     public static String BALANCE_REMOVE_SUCCESS;
+
+    public static String BALANCE_HAS_NO_FUNDS;
+    public static String PAYMENT_SEND_SUCCESS;
+    public static String PAYMENT_RECEIVED_SUCCESS;
 }

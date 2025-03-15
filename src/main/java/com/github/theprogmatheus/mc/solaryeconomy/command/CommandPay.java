@@ -5,6 +5,7 @@ import com.github.theprogmatheus.mc.solaryeconomy.config.Lang;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
 import com.github.theprogmatheus.mc.solaryeconomy.service.EconomyService;
 import com.github.theprogmatheus.mc.solaryeconomy.util.InputParse;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -44,7 +45,7 @@ public class CommandPay extends AbstractCommand {
                 }
 
                 if (account.getBalance().doubleValue() < value.doubleValue()) {
-                    sender.sendMessage("§cVocê não tem saldo suficente para isso.");
+                    sender.sendMessage(MessageFormat.format(Lang.BALANCE_HAS_NO_FUNDS, account.getBalance().toPlainString(), value.toPlainString()));
                     return true;
                 }
 
@@ -54,7 +55,12 @@ public class CommandPay extends AbstractCommand {
                 account = this.economyService.saveInCache(account);
                 targetAccount = this.economyService.saveInCache(targetAccount);
 
-                sender.sendMessage("§aVocê pagou " + value.toPlainString() + " ao jogador " + targetAccount.getOwnerName());
+                sender.sendMessage(MessageFormat.format(Lang.PAYMENT_SEND_SUCCESS, value.toPlainString(), targetAccount.getOwnerName()));
+
+                Player targetPlayer = Bukkit.getPlayer(targetAccount.getOwnerName());
+                if (targetPlayer != null)
+                    targetPlayer.sendMessage(MessageFormat.format(Lang.PAYMENT_RECEIVED_SUCCESS, value.toPlainString(), account.getOwnerName()));
+
             }
             return true;
         }

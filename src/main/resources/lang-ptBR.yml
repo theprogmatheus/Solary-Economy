@@ -28,3 +28,6 @@ BALANCE_ADD_SUCCESS: "&aVocê adicionou {0} ao saldo de {1}" # {0} value, {1} ac
 BALANCE_REMOVE_SUCCESS: "&aVocê removeu {0} do saldo de {1}" # {0} value, {1} account name
 CURRENT_SELF_BALANCE: "&aSaldo: {0}" # {0} current player balance
 CURRENT_PLAYER_BALANCE: "&aSaldo de {1}: {0}" # {0} current player balance, {1} player name
+BALANCE_HAS_NO_FUNDS: "&cVocê não tem saldo suficente para isso." # {0} current player balance, {1} requested value
+PAYMENT_SEND_SUCCESS: "&aVocê pagou {0} para o jogador {1} com sucesso." # {0} amount, {1} target player
+PAYMENT_RECEIVED_SUCCESS: "§aVocê recebeu {0} do jogador {1}" # {0} amount, {1} who pays
