@@ -35,7 +35,7 @@ public class CommandSet extends AbstractCommand {
                 sender.sendMessage(MessageFormat.format(Lang.INVALID_INPUT_VALUE, args[1]));
                 return true;
             }
-            if (value.doubleValue() <= 0) {
+            if (value.doubleValue() < 0) {
                 sender.sendMessage(MessageFormat.format(Lang.VALUE_CANT_BE_NEGATIVE, value.toPlainString()));
                 return true;
             }
