@@ -1,6 +1,7 @@
 package com.github.theprogmatheus.mc.solaryeconomy.service;
 
 import com.github.theprogmatheus.mc.solaryeconomy.cache.BankAccountCache;
+import com.github.theprogmatheus.mc.solaryeconomy.config.Env;
 import com.github.theprogmatheus.mc.solaryeconomy.database.crud.EconomyCrud;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
 import lombok.Getter;
@@ -32,7 +33,7 @@ public class EconomyService implements Service {
     @Override
     public void startup() {
         this.economyCrud = new EconomyCrud();
-        this.accountCache = new BankAccountCache(this.economyCrud, 10, Duration.ofMinutes(1), Duration.ofMinutes(5));
+        this.accountCache = new BankAccountCache(this.economyCrud, Env.CACHE_ACCOUNTS_MAX_SIZE, Duration.ofSeconds(Env.CACHE_ACCOUNTS_EXPIRE), Duration.ofSeconds(Env.CACHE_ACCOUNTS_AUTO_FLUSH_DELAY));
         this.setupDefaultBank();
         this.accountCache.startup();
     }
