@@ -45,20 +45,15 @@ public class DatabaseManager {
 
     public void startDatabase() {
         try {
-
-            // Alterar entre os tipos de banco de dados disponíveis.
             this.connectionSource = getConnectionSource();
-
-            if (!this.entities.isEmpty()) {
-                for (Class<?> entityClass : this.entities.keySet()) {
-                    this.entities.put(entityClass, DaoManager.createDao(this.connectionSource, entityClass));
-                    TableUtils.createTableIfNotExists(this.connectionSource, entityClass);
-                }
+            for (Class<?> entityClass : this.entities.keySet()) {
+                this.entities.put(entityClass, setupDao(entityClass, this.connectionSource));
             }
         } catch (SQLException e) {
             throw new RuntimeException("Unable to setup database.", e);
         }
     }
+
 
     public void shutdownDatabase() {
         if (this.connectionSource == null) return;
@@ -67,6 +62,20 @@ public class DatabaseManager {
         } catch (Exception e) {
             throw new RuntimeException("Unable to shutdown database.", e);
         }
+    }
+
+    private Dao<?, ?> setupDao(Class<?> entityClass, ConnectionSource connectionSource) throws SQLException {
+        Dao<?, ?> entityDao = DaoManager.createDao(this.connectionSource, entityClass);
+
+        // Create table if not exists
+
+        try {
+            entityDao.countOf();
+        } catch (Exception e) {
+            TableUtils.createTableIfNotExists(this.connectionSource, entityClass);
+        }
+
+        return entityDao;
     }
 
     public ConnectionSource getConnectionSource() throws SQLException {
@@ -80,14 +89,14 @@ public class DatabaseManager {
             case "PostgreSQL":
                 return postgresqlConnectionSource(Env.DATABASE_ADDRESS, Env.DATABASE_NAME, Env.DATABASE_USERNAME, Env.DATABASE_PASSWORD);
             default:
-                return sqliteConnectionSource("storage.sqlite.db");
+                return sqliteConnectionSource("storage.sqlite");
         }
     }
 
     private ConnectionSource sqliteConnectionSource(String fileName) throws SQLException {
         if (!this.plugin.getDataFolder().exists())
             this.plugin.getDataFolder().mkdirs();
-        File dbFile = new File(this.plugin.getDataFolder(), fileName);
+        File dbFile = new File(this.plugin.getDataFolder(), fileName.concat(".db"));
         String dbUrl = "jdbc:sqlite:".concat(dbFile.getPath());
         return new JdbcConnectionSource(dbUrl, new SqliteDatabaseType());
     }
@@ -106,7 +115,7 @@ public class DatabaseManager {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Driver PostgreSQL não encontrado.", e);
+            throw new RuntimeException("PostgreSQL Driver not found.", e);
         }
         String dbUrl = "jdbc:postgresql://" + hostname + "/" + dbName;
         return new JdbcConnectionSource(dbUrl, username, password, new PostgresDatabaseType());
