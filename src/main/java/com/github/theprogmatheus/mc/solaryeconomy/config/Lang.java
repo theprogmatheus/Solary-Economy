@@ -14,4 +14,5 @@ public class Lang {
     public static String CURRENT_PLAYER_BALANCE;
     public static String ACCOUNT_NOT_FOUND;
     public static String BALANCE_SET_SUCCESS;
+    public static String BALANCE_ADD_SUCCESS;
 }
