@@ -1,10 +1,12 @@
 package com.github.theprogmatheus.mc.solaryeconomy.database;
 
+import com.github.theprogmatheus.mc.solaryeconomy.config.Env;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.jdbc.db.MariaDbDatabaseType;
 import com.j256.ormlite.jdbc.db.MysqlDatabaseType;
+import com.j256.ormlite.jdbc.db.PostgresDatabaseType;
 import com.j256.ormlite.jdbc.db.SqliteDatabaseType;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
@@ -44,9 +46,8 @@ public class DatabaseManager {
     public void startDatabase() {
         try {
 
-
             // Alterar entre os tipos de banco de dados disponíveis.
-            this.connectionSource = sqliteConnectionSource();
+            this.connectionSource = getConnectionSource();
 
             if (!this.entities.isEmpty()) {
                 for (Class<?> entityClass : this.entities.keySet()) {
@@ -68,10 +69,25 @@ public class DatabaseManager {
         }
     }
 
-    private ConnectionSource sqliteConnectionSource() throws SQLException {
+    public ConnectionSource getConnectionSource() throws SQLException {
+        switch (Env.DATABASE_TYPE) {
+            case "SQLite":
+                return sqliteConnectionSource(Env.DATABASE_NAME);
+            case "MySQL":
+                return mysqlConnectionSource(Env.DATABASE_ADDRESS, Env.DATABASE_NAME, Env.DATABASE_USERNAME, Env.DATABASE_PASSWORD);
+            case "MariaDB":
+                return mariadbConnectionSource(Env.DATABASE_ADDRESS, Env.DATABASE_NAME, Env.DATABASE_USERNAME, Env.DATABASE_PASSWORD);
+            case "PostgreSQL":
+                return postgresqlConnectionSource(Env.DATABASE_ADDRESS, Env.DATABASE_NAME, Env.DATABASE_USERNAME, Env.DATABASE_PASSWORD);
+            default:
+                return sqliteConnectionSource("storage.sqlite.db");
+        }
+    }
+
+    private ConnectionSource sqliteConnectionSource(String fileName) throws SQLException {
         if (!this.plugin.getDataFolder().exists())
             this.plugin.getDataFolder().mkdirs();
-        File dbFile = new File(this.plugin.getDataFolder(), "storage.sqlite.db");
+        File dbFile = new File(this.plugin.getDataFolder(), fileName);
         String dbUrl = "jdbc:sqlite:".concat(dbFile.getPath());
         return new JdbcConnectionSource(dbUrl, new SqliteDatabaseType());
     }
@@ -84,5 +100,15 @@ public class DatabaseManager {
     private ConnectionSource mariadbConnectionSource(String hostname, String dbName, String username, String password) throws SQLException {
         String dbUrl = "jdbc:mariadb://" + hostname + "/" + dbName;
         return new JdbcConnectionSource(dbUrl, username, password, new MariaDbDatabaseType());
+    }
+
+    private ConnectionSource postgresqlConnectionSource(String hostname, String dbName, String username, String password) throws SQLException {
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Driver PostgreSQL não encontrado.", e);
+        }
+        String dbUrl = "jdbc:postgresql://" + hostname + "/" + dbName;
+        return new JdbcConnectionSource(dbUrl, username, password, new PostgresDatabaseType());
     }
 }

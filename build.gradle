@@ -15,6 +15,7 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
+
 dependencies {
     // Section: compileOnly
     compileOnly 'org.projectlombok:lombok:1.18.36'
@@ -28,6 +29,7 @@ dependencies {
     implementation 'com.github.theprogmatheus.minecraft.utils:guibuilder:1.0'
     implementation('com.j256.ormlite:ormlite-jdbc:6.1')
     implementation("com.github.ben-manes.caffeine:caffeine:3.2.0")
+    implementation 'org.postgresql:postgresql:42.7.5'
 
     // Section: annotationProcessor
     annotationProcessor 'org.projectlombok:lombok:1.18.36'
@@ -48,26 +50,6 @@ bukkit {
     apiVersion = '1.8'
     depend = ['Vault']
     load = 'STARTUP'
-
-    /*
-    commands {
-        register("seco") {
-            description = 'See the plugin info'
-        }
-        register("add") {
-            description = 'Add balance in account'
-        }
-        register("remove") {
-            description = 'Remove balance from account'
-        }
-        register("set") {
-            description = 'Set new account balance'
-        }
-        register("balance") {
-            description = 'See current account balance'
-        }
-
-    }*/
 }
 
 shadowJar {
