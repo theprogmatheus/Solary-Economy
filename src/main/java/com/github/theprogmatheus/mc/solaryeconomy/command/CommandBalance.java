@@ -21,7 +21,8 @@ public class CommandBalance extends AbstractCommand {
                 new CommandSet(),
                 new CommandAdd(),
                 new CommandRemove(),
-                new CommandPay()
+                new CommandPay(),
+                new CommandRank()
         });
     }
 
