@@ -33,6 +33,7 @@ public abstract class AbstractCommand extends BukkitCommand implements CommandEx
     }
 
     private final String[] commands;
+    private AbstractCommand parent;
     private AbstractCommand[] children;
 
     protected AbstractCommand(String[] commands, String description, String permission, String usage) {
@@ -65,7 +66,7 @@ public abstract class AbstractCommand extends BukkitCommand implements CommandEx
         boolean executed = onCommand(sender, this, commandLabel, args);
 
         if (!executed)
-            sender.sendMessage(getUsage());
+            sender.sendMessage("/" + getUsage().replace("<command>", this.parent != null ? this.parent.getCommands()[0] : commandLabel));
 
         return executed;
     }
@@ -93,6 +94,16 @@ public abstract class AbstractCommand extends BukkitCommand implements CommandEx
         if (message != null && !message.isEmpty())
             sender.sendMessage(getPermissionMessage());
         return false;
+    }
+
+    public void setChildren(AbstractCommand[] children) {
+        if (children != null) {
+            for (AbstractCommand child : children) {
+                child.setParent(this);
+                child.setUsage("<command> " + child.getUsage());
+            }
+        }
+        this.children = children;
     }
 
     public static <C extends AbstractCommand> C register(C command) {
