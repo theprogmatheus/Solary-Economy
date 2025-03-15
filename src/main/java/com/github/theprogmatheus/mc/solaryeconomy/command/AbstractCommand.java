@@ -66,7 +66,7 @@ public abstract class AbstractCommand extends BukkitCommand implements CommandEx
         boolean executed = onCommand(sender, this, commandLabel, args);
 
         if (!executed)
-            sender.sendMessage("/" + getUsage().replace("<command>", this.parent != null ? this.parent.getCommands()[0] : commandLabel));
+            sender.sendMessage(MessageFormat.format(Lang.COMMAND_USAGE_FORMAT, "/" + getUsage().replace("<command>", this.parent != null ? this.parent.getCommands()[0] : commandLabel)));
 
         return executed;
     }

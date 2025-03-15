@@ -5,6 +5,7 @@ package com.github.theprogmatheus.mc.solaryeconomy.config;
  */
 public class Lang {
 
+    public static String COMMAND_USAGE_FORMAT;
     public static String COMMAND_NO_PERMISSION;
     public static String DEFAULT_NO_PERMISSION;
     public static String INVALID_INPUT_VALUE;

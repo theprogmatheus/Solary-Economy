@@ -14,7 +14,8 @@
 #     Versão: 2.0.0
 #/------------------------------------------------------------------/
 
-COMMAND_NO_PERMISSION: "§cVocê não tem permissão para executar esse comando." # {0} command usage, {1} command permission node
+COMMAND_USAGE_FORMAT: "&cUse: {0}" # {0} command usage
+COMMAND_NO_PERMISSION: "&cVocê não tem permissão para executar esse comando." # {0} command usage, {1} command permission node
 DEFAULT_NO_PERMISSION: "&cVocê não tem permissão para isso."
 INVALID_INPUT_VALUE: "&cO valor que você inseriu \"{0}\" é inválido." # {0} input value
 VALUE_CANT_BE_NEGATIVE: "&cO valor não pode ser negativo." # {0} value
