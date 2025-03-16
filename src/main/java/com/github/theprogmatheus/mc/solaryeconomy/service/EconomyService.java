@@ -75,7 +75,7 @@ public class EconomyService implements Service {
         synchronized (lock) {
             try {
                 if (!this.economyCrud.existsBankAccount(DEFAULT_BANK_ID, accountId))
-                    return this.economyCrud.createBankAccount(DEFAULT_BANK_ID, accountId, name, new BigDecimal(0));
+                    return this.economyCrud.createBankAccount(DEFAULT_BANK_ID, accountId, name, new BigDecimal(Env.ECONOMY_START_VALUE));
             } finally {
                 this.checkDefaultAccountLocks.remove(accountId);
             }
