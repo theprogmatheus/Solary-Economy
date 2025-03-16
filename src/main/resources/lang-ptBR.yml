@@ -32,6 +32,6 @@ BALANCE_HAS_NO_FUNDS: "&cVocê não tem saldo suficente para isso." # {0} curren
 PAYMENT_SEND_SUCCESS: "&aVocê pagou {0} para o jogador {1} com sucesso." # {0} amount, {1} target player
 PAYMENT_RECEIVED_SUCCESS: "§aVocê recebeu {0} do jogador {1}" # {0} amount, {1} who pays
 
-COMMAND_RANK_FORMAT_HEADER: "\\n&2Top {0} Mais Ricos &7(Atualizado de 5 em 5 minutos)" # {0} rank size
-COMMAND_RANK_FORMAT_BODY: "&a{0}. &2{1}: &7({2})" # {0} rank position, {1} account name, {2} account balance
-COMMAND_RANK_FORMAT_FOOTER: "&2Top {0} Mais Ricos &7(Atualizado de 5 em 5 minutos)\\n" # {0} rank size
+COMMAND_RANK_FORMAT_HEADER: "\n&6Top {0} Mais Ricos &e(Atualizado de 5 em 5 minutos)\n&f " # {0} rank size
+COMMAND_RANK_FORMAT_BODY: "&6{0}. &e{1}: &f({2})" # {0} rank position, {1} account name, {2} account balance
+COMMAND_RANK_FORMAT_FOOTER: "\n&6Top {0} Mais Ricos &e(Atualizado de 5 em 5 minutos)\n&f " # {0} rank size

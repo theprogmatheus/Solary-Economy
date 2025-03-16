@@ -19,12 +19,14 @@ public class CommandRank extends AbstractCommand {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         List<BankAccountEntity> rank = SolaryEconomy.getInstance().getEconomyService().getAccountCache().getAccountsRank();
 
-        sender.sendMessage(MessageFormat.format(Lang.COMMAND_RANK_FORMAT_HEADER, rank.size()));
+        if (Lang.COMMAND_RANK_FORMAT_HEADER != null)
+            sender.sendMessage(MessageFormat.format(Lang.COMMAND_RANK_FORMAT_HEADER, rank.size()));
         for (int i = 0; i < rank.size(); i++) {
             BankAccountEntity account = rank.get(i);
-            sender.sendMessage(MessageFormat.format(Lang.COMMAND_RANK_FORMAT_BODY, i, account.getOwnerName(), account.getBalance().toPlainString()));
+            sender.sendMessage(MessageFormat.format(Lang.COMMAND_RANK_FORMAT_BODY, (i + 1), account.getOwnerName(), account.getBalance().toPlainString()));
         }
-        sender.sendMessage(MessageFormat.format(Lang.COMMAND_RANK_FORMAT_FOOTER, rank.size()));
+        if (Lang.COMMAND_RANK_FORMAT_FOOTER != null)
+            sender.sendMessage(MessageFormat.format(Lang.COMMAND_RANK_FORMAT_FOOTER, rank.size()));
         return true;
     }
 }
