@@ -35,14 +35,14 @@ public class CommandRemove extends AbstractCommand {
                 return true;
             }
             if (value.doubleValue() <= 0) {
-                sender.sendMessage(MessageFormat.format(Lang.VALUE_CANT_BE_NEGATIVE, value.toPlainString()));
+                sender.sendMessage(MessageFormat.format(Lang.VALUE_CANT_BE_NEGATIVE, this.economyService.formatBigDecimal(value)));
                 return true;
             }
 
             account.setBalance(account.getBalance().subtract(value));
             account = this.economyService.saveInCache(account);
 
-            sender.sendMessage(MessageFormat.format(Lang.BALANCE_REMOVE_SUCCESS, value.toPlainString(), account.getOwnerName()));
+            sender.sendMessage(MessageFormat.format(Lang.BALANCE_REMOVE_SUCCESS, this.economyService.formatBigDecimal(value), account.getOwnerName()));
             return true;
         }
         return false;

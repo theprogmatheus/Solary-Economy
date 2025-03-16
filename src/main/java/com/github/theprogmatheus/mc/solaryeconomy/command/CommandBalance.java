@@ -31,14 +31,14 @@ public class CommandBalance extends AbstractCommand {
 
         if (args.length == 0 && (sender instanceof Player)) {
             BankAccountEntity account = this.economyService.getDefaultAccountOrCreateIfNotExists((Player) sender);
-            sender.sendMessage(MessageFormat.format(Lang.CURRENT_SELF_BALANCE, account.getBalance().toPlainString()));
+            sender.sendMessage(MessageFormat.format(Lang.CURRENT_SELF_BALANCE, this.economyService.formatBigDecimal(account.getBalance())));
             return true;
         }
 
         if (args.length == 1 && checkPermission(sender, "other")) {
             BankAccountEntity account = this.economyService.getDefaultAccount(args[0].toLowerCase());
             if (account != null) {
-                sender.sendMessage(MessageFormat.format(Lang.CURRENT_PLAYER_BALANCE, account.getBalance().toPlainString(), account.getOwnerName()));
+                sender.sendMessage(MessageFormat.format(Lang.CURRENT_PLAYER_BALANCE, this.economyService.formatBigDecimal(account.getBalance()), account.getOwnerName()));
             } else {
                 sender.sendMessage(MessageFormat.format(Lang.ACCOUNT_NOT_FOUND, args[0]));
             }

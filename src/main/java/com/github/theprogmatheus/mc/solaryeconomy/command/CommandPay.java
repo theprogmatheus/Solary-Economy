@@ -40,12 +40,12 @@ public class CommandPay extends AbstractCommand {
                     return true;
                 }
                 if (value.doubleValue() <= 0) {
-                    sender.sendMessage(MessageFormat.format(Lang.VALUE_CANT_BE_NEGATIVE, value.toPlainString()));
+                    sender.sendMessage(MessageFormat.format(Lang.VALUE_CANT_BE_NEGATIVE, this.economyService.formatBigDecimal(value)));
                     return true;
                 }
 
                 if (account.getBalance().doubleValue() < value.doubleValue()) {
-                    sender.sendMessage(MessageFormat.format(Lang.BALANCE_HAS_NO_FUNDS, account.getBalance().toPlainString(), value.toPlainString()));
+                    sender.sendMessage(MessageFormat.format(Lang.BALANCE_HAS_NO_FUNDS, this.economyService.formatBigDecimal(account.getBalance()), this.economyService.formatBigDecimal(value)));
                     return true;
                 }
 
@@ -55,11 +55,11 @@ public class CommandPay extends AbstractCommand {
                 account = this.economyService.saveInCache(account);
                 targetAccount = this.economyService.saveInCache(targetAccount);
 
-                sender.sendMessage(MessageFormat.format(Lang.PAYMENT_SEND_SUCCESS, value.toPlainString(), targetAccount.getOwnerName()));
+                sender.sendMessage(MessageFormat.format(Lang.PAYMENT_SEND_SUCCESS, this.economyService.formatBigDecimal(value), targetAccount.getOwnerName()));
 
                 Player targetPlayer = Bukkit.getPlayer(targetAccount.getOwnerName());
                 if (targetPlayer != null)
-                    targetPlayer.sendMessage(MessageFormat.format(Lang.PAYMENT_RECEIVED_SUCCESS, value.toPlainString(), account.getOwnerName()));
+                    targetPlayer.sendMessage(MessageFormat.format(Lang.PAYMENT_RECEIVED_SUCCESS, this.economyService.formatBigDecimal(value), account.getOwnerName()));
 
             }
             return true;

@@ -36,14 +36,14 @@ public class CommandSet extends AbstractCommand {
                 return true;
             }
             if (value.doubleValue() < 0) {
-                sender.sendMessage(MessageFormat.format(Lang.VALUE_CANT_BE_NEGATIVE, value.toPlainString()));
+                sender.sendMessage(MessageFormat.format(Lang.VALUE_CANT_BE_NEGATIVE, this.economyService.formatBigDecimal(value)));
                 return true;
             }
 
             account.setBalance(value);
             account = this.economyService.saveInCache(account);
 
-            sender.sendMessage(MessageFormat.format(Lang.BALANCE_SET_SUCCESS, value.toPlainString(), account.getOwnerName()));
+            sender.sendMessage(MessageFormat.format(Lang.BALANCE_SET_SUCCESS, this.economyService.formatBigDecimal(value), account.getOwnerName()));
             return true;
         }
 
