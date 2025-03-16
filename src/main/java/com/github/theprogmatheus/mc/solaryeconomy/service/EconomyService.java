@@ -44,6 +44,12 @@ public class EconomyService implements Service {
         this.accountCache.shutdown();
     }
 
+    public String formatCurrency(BigDecimal value) {
+        if (value.doubleValue() >= 0 && value.doubleValue() <= 1)
+            return formatBigDecimal(value).concat(" ").concat(Env.ECONOMY_CURRENCY_SINGULAR);
+        return formatBigDecimal(value).concat(" ").concat(Env.ECONOMY_CURRENCY_PLURAL);
+    }
+
     public String formatBigDecimal(BigDecimal value) {
         if (Env.ECONOMY_CURRENCY_FORMATTER_WITH_TAG)
             return CurrencyFormatter.formatCurrencyWithTag(value, Env.ECONOMY_CURRENCY_FORMATTER_PRECISION);
