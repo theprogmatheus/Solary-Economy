@@ -92,10 +92,23 @@ economy:
     #Se o nome do jogador/conta ultrapassar o tamanho máximo, não irá aparecer no rank.
     max_name_size: 16
     
-  #Define o nome da moeda, sua versão no singular e no plural.
+  #Aqui você define as configurações da moeda.
   currency:
+  
+    #Defina o nome da moeda no singular
     singular: "coin"
+    
+    #Defina o nome da moeda no plural
     plural: "coins"
+    
+    #Aqui você define as configurações da formatação da moeda.
+    formatter:
+    
+      #Defina quantas casas decimais você quer na moeda.
+      precision: 2
+      
+      #Defina se você quer formatar usando abreviações por tags. Ex: (38K, 14B, 1T)
+      with_tag: true
     
   #Aqui você define as configurações relacionadas ao magnata (Jogador/Conta mais rico(a) do servidor)
   tycoon:

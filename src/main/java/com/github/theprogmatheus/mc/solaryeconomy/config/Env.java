@@ -30,6 +30,8 @@ public class Env {
      */
     public static String ECONOMY_CURRENCY_SINGULAR;
     public static String ECONOMY_CURRENCY_PLURAL;
+    public static int ECONOMY_CURRENCY_FORMATTER_PRECISION;
+    public static boolean ECONOMY_CURRENCY_FORMATTER_WITH_TAG;
     public static double ECONOMY_START_VALUE;
     public static int ECONOMY_RANK_SIZE;
     public static long ECONOMY_RANK_UPDATE_DELAY;
