@@ -83,14 +83,15 @@ Experimente o **Solary-Economy** hoje mesmo e leve a economia do seu servidor pa
 
 ## 🔒 Permissões  
 
-  - `solaryeconomy.commands.money.other` - Permissão para usar o comando /money <player>
-  - `solaryeconomy.commands.top` - Permissão para usar o comando /money top
+  - `solaryeconomy.command.balance` - Permissão para usar o comando /money
+  - `solaryeconomy.command.balance.other` - Permissão para usar o comando /money <player>
+  - `solaryeconomy.command.rank` - Permissão para usar o comando /money top
   - `solaryeconomy.commands.criar` - Permissão para usar o comando /money create
   - `solaryeconomy.commands.deletar` - Permissão para usar o comando /money delete
-  - `solaryeconomy.commands.add` - Permissão para usar o comando /money add
-  - `solaryeconomy.commands.remove` - Permissão para usar o comando /money remove
-  - `solaryeconomy.commands.set` - Permissão para usar o comando /money set
-  - `solaryeconomy.commands.pay` - Permissão para usar o comando /money pay
+  - `solaryeconomy.command.add` - Permissão para usar o comando /money add
+  - `solaryeconomy.command.remove` - Permissão para usar o comando /money remove
+  - `solaryeconomy.command.set` - Permissão para usar o comando /money set
+  - `solaryeconomy.command.pay` - Permissão para usar o comando /money pay
   - `solaryeconomy.commands.toggle` - Permissão para usar o comando /money toggle
   - `solaryeconomy.commands.reload` - Permissão para usar o comando /money reload
   - `solaryeconomy.commands.magnata` - Permissão para usar o comando /money magnata

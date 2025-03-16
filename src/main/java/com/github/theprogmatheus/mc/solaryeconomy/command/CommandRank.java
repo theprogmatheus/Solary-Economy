@@ -10,7 +10,7 @@ import java.util.List;
 public class CommandRank extends AbstractCommand {
 
     protected CommandRank() {
-        super(new String[]{"rank", "top"}, "Ranking of the richest players", "rank", "rank");
+        super(new String[]{"rank", "top"}, "Ranking of the richest players", "solaryeconomy.command.rank", "rank");
     }
 
     @Override

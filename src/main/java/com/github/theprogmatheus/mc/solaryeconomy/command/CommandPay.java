@@ -18,7 +18,7 @@ public class CommandPay extends AbstractCommand {
     private final EconomyService economyService;
 
     protected CommandPay() {
-        super(new String[]{"pay", "send"}, "Pay to another player", "pay", "pay <player> <value>");
+        super(new String[]{"pay", "send"}, "Pay to another player", "solaryeconomy.command.pay", "pay <player> <value>");
         this.economyService = SolaryEconomy.getInstance().getEconomyService();
     }
 

@@ -16,7 +16,7 @@ public class CommandSet extends AbstractCommand {
     private final EconomyService economyService;
 
     public CommandSet() {
-        super(new String[]{"set"}, "Set new player balance", "set", "set <player> <balance>");
+        super(new String[]{"set"}, "Set new player balance", "solaryeconomy.command.set", "set <player> <balance>");
         this.economyService = SolaryEconomy.getInstance().getEconomyService();
     }
 

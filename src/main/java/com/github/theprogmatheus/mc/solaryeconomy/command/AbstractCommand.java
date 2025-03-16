@@ -88,8 +88,18 @@ public abstract class AbstractCommand extends BukkitCommand implements CommandEx
         return matchedPlayers;
     }
 
-    private boolean checkPermission(CommandSender sender) {
+    public boolean checkPermission(CommandSender sender) {
         if (getPermission() == null || getPermission().isEmpty() || sender.hasPermission(getPermission())) return true;
+        String message = getPermissionMessage() != null ? getPermissionMessage() : MessageFormat.format(Lang.COMMAND_NO_PERMISSION, getUsage(), getPermission());
+        if (message != null && !message.isEmpty())
+            sender.sendMessage(getPermissionMessage());
+        return false;
+    }
+
+    public boolean checkPermission(CommandSender sender, String subPermission) {
+        if (getPermission() == null || getPermission().isEmpty() || sender.hasPermission(getPermission().concat(".").concat(subPermission)))
+            return true;
+
         String message = getPermissionMessage() != null ? getPermissionMessage() : MessageFormat.format(Lang.COMMAND_NO_PERMISSION, getUsage(), getPermission());
         if (message != null && !message.isEmpty())
             sender.sendMessage(getPermissionMessage());

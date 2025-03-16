@@ -16,7 +16,7 @@ public class CommandAdd extends AbstractCommand {
     private final EconomyService economyService;
 
     public CommandAdd() {
-        super(new String[]{"add"}, "Add balance to player", "add", "add <player> <value>");
+        super(new String[]{"add"}, "Add balance to player", "solaryeconomy.command.add", "add <player> <value>");
         this.economyService = SolaryEconomy.getInstance().getEconomyService();
 
     }

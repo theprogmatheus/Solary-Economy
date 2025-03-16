@@ -15,7 +15,7 @@ public class CommandBalance extends AbstractCommand {
     private final EconomyService economyService;
 
     public CommandBalance() {
-        super(new String[]{"balance", "bal", "money"}, "Check players balance", "balance", "balance <player>");
+        super(new String[]{"balance", "bal", "money"}, "Check players balance", "solaryeconomy.command.balance", "balance <player>");
         this.economyService = SolaryEconomy.getInstance().getEconomyService();
         setChildren(new AbstractCommand[]{
                 new CommandSet(),
@@ -35,7 +35,7 @@ public class CommandBalance extends AbstractCommand {
             return true;
         }
 
-        if (args.length == 1) {
+        if (args.length == 1 && checkPermission(sender, "other")) {
             BankAccountEntity account = this.economyService.getDefaultAccount(args[0].toLowerCase());
             if (account != null) {
                 sender.sendMessage(MessageFormat.format(Lang.CURRENT_PLAYER_BALANCE, account.getBalance().toPlainString(), account.getOwnerName()));
