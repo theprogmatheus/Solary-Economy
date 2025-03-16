@@ -1,5 +1,6 @@
 package com.github.theprogmatheus.mc.solaryeconomy.hook;
 
+import com.github.theprogmatheus.mc.solaryeconomy.config.Env;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
 import com.github.theprogmatheus.mc.solaryeconomy.service.EconomyService;
 import net.milkbowl.vault.economy.AbstractEconomy;
@@ -36,7 +37,7 @@ public class VaultEconomyHook extends AbstractEconomy {
 
     @Override
     public int fractionalDigits() {
-        return 0;
+        return 2;
     }
 
     @Override
@@ -46,12 +47,12 @@ public class VaultEconomyHook extends AbstractEconomy {
 
     @Override
     public String currencyNamePlural() {
-        return "coins";
+        return Env.ECONOMY_CURRENCY_PLURAL;
     }
 
     @Override
     public String currencyNameSingular() {
-        return "coin";
+        return Env.ECONOMY_CURRENCY_SINGULAR;
     }
 
     @Override
