@@ -21,4 +21,8 @@ public class Lang {
     public static String BALANCE_HAS_NO_FUNDS;
     public static String PAYMENT_SEND_SUCCESS;
     public static String PAYMENT_RECEIVED_SUCCESS;
+
+    public static String COMMAND_RANK_FORMAT_HEADER;
+    public static String COMMAND_RANK_FORMAT_BODY;
+    public static String COMMAND_RANK_FORMAT_FOOTER;
 }
