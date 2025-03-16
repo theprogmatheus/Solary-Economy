@@ -5,10 +5,25 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public class CurrencyFormatter {
 
-    public static String formatCurrency(BigDecimal amount, int precision) {
+    public static String formatCurrency(BigDecimal value, int precision) {
+        StringBuilder pattern = new StringBuilder("#,###");
+
+        if (precision > 0) {
+            pattern.append(".");
+            for (int i = 0; i < precision; i++)
+                pattern.append("0");
+        }
+
+        return new DecimalFormat(pattern.toString(), new DecimalFormatSymbols(Locale.GERMAN)).format(value);
+    }
+
+    public static String formatCurrencyWithTag(BigDecimal amount, int precision) {
         CurrencyUnit[] values = CurrencyUnit.values();
         for (int i = values.length; i > 0; i--) {
             CurrencyUnit unit = values[i - 1];
