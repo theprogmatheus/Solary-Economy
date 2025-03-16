@@ -10,11 +10,7 @@ public class InputParse {
     }
 
     public static BigDecimal parseBigDecimal(String inputString) {
-        try {
-            return new BigDecimal(inputString.replace(",", "."));
-        } catch (Exception e) {
-            return null;
-        }
+        return CurrencyFormatter.parseCurrency(inputString);
     }
 
 }
