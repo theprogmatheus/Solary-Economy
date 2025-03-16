@@ -37,12 +37,12 @@ public class VaultEconomyHook extends AbstractEconomy {
 
     @Override
     public int fractionalDigits() {
-        return 2;
+        return Env.ECONOMY_CURRENCY_FORMATTER_PRECISION;
     }
 
     @Override
     public String format(double v) {
-        return "";
+        return this.economyService.formatCurrency(new BigDecimal(v));
     }
 
     @Override
