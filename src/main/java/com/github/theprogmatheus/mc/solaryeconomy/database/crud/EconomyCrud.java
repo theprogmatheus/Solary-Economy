@@ -4,6 +4,8 @@ import com.github.theprogmatheus.mc.solaryeconomy.SolaryEconomy;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankEntity;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.db.DatabaseType;
+import com.j256.ormlite.jdbc.db.PostgresDatabaseType;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -101,10 +103,11 @@ public class EconomyCrud {
 
     public List<BankAccountEntity> readBankAccountsRank(long size, int maxNameLen) {
         try {
+            DatabaseType dbType = this.bankAccountDao.getConnectionSource().getDatabaseType();
             return this.bankAccountDao.queryBuilder()
                     .orderByRaw("CAST(balance AS DECIMAL) DESC")
                     .where()
-                    .raw("LENGTH(owner_name) <= " + maxNameLen) // Filtra nomes menores que 16 caracteres
+                    .raw(((dbType instanceof PostgresDatabaseType) ? "CHAR_" : "") + "LENGTH(owner_name) <= " + maxNameLen)
                     .queryBuilder()
                     .limit(size)
                     .query();
