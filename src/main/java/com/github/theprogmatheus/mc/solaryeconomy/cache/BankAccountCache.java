@@ -26,9 +26,10 @@ public class BankAccountCache implements Service {
     public final long maximumSize;
     public final Duration expireAfterAccess;
     public final AsyncLoadingCache<BankAccountKey, BankAccountEntity> accounts;
-    private final Duration autoFlushDelay;
-    private ScheduledExecutorService scheduler;
     private final List<BankAccountEntity> accountsRank;
+    private final Duration autoFlushDelay;
+    private ScheduledExecutorService autoFlushScheduler;
+    private ScheduledExecutorService accountsRankScheduler;
 
     public BankAccountCache(EconomyCrud crud, long maximumSize, Duration expireAfterAccess, Duration autoFlushDelay) {
         this.crud = crud;
@@ -80,10 +81,9 @@ public class BankAccountCache implements Service {
     /*
      * Load accounts rank
      */
-    public void loadAccountsRank() {
+    public synchronized void loadAccountsRank() {
 
         Map<BankAccountKey, BankAccountEntity> mergedAccounts = new HashMap<>();
-
 
         // load from DB (accounts can be outdated)
         this.crud.readBankAccountsRank(Env.ECONOMY_RANK_SIZE, Env.ECONOMY_RANK_MAX_NAME_SIZE)
@@ -98,6 +98,7 @@ public class BankAccountCache implements Service {
 
         this.accountsRank.clear();
         this.accountsRank.addAll(mergedAccounts.values().stream()
+                .filter(account -> account.getOwnerName().length() <= Env.ECONOMY_RANK_MAX_NAME_SIZE)
                 .sorted(Comparator.comparing(BankAccountEntity::getBalance).reversed())
                 .limit(Env.ECONOMY_RANK_SIZE)
                 .collect(Collectors.toList()));
@@ -105,18 +106,25 @@ public class BankAccountCache implements Service {
 
     @Override
     public void startup() {
-        if (this.autoFlushDelay != null && this.scheduler == null)
-            (this.scheduler = Executors.newSingleThreadScheduledExecutor()).scheduleAtFixedRate(() -> CompletableFuture.runAsync(this::flush), this.autoFlushDelay.getSeconds(), this.autoFlushDelay.getSeconds(), TimeUnit.SECONDS);
-        this.loadAccountsRank();
+        if (this.autoFlushDelay != null && this.autoFlushScheduler == null)
+            (this.autoFlushScheduler = Executors.newSingleThreadScheduledExecutor()).scheduleAtFixedRate(() -> CompletableFuture.runAsync(this::flush), this.autoFlushDelay.getSeconds(), this.autoFlushDelay.getSeconds(), TimeUnit.SECONDS);
+
+        if (this.accountsRankScheduler == null)
+            (this.accountsRankScheduler = Executors.newSingleThreadScheduledExecutor()).scheduleAtFixedRate(() -> CompletableFuture.runAsync(this::loadAccountsRank), 0L, Env.ECONOMY_RANK_UPDATE_DELAY, TimeUnit.SECONDS);
     }
 
     @Override
     public void shutdown() {
-        if (this.scheduler != null)
-            this.scheduler.shutdown();
+        if (this.autoFlushScheduler != null)
+            this.autoFlushScheduler.shutdown();
+
+        if (this.accountsRankScheduler != null)
+            this.accountsRankScheduler.shutdown();
 
         this.flush();
+
         this.accounts.synchronous().invalidateAll();
-        this.scheduler = null;
+        this.autoFlushScheduler = null;
+        this.accountsRankScheduler = null;
     }
 }
