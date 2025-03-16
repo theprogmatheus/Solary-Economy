@@ -62,7 +62,7 @@ cache:
     expire: 300
     
     #Aqui você define o delay de salvamento automático dos dados do cache. (em segundos)
-    auto_flush_delay: 1800
+    auto_flush_delay: 300
     
 #Aqui você define a linguagem das mensagens que será usada no servidor.
 #Línguas disponíveis: (enUS, ptBR)
@@ -83,7 +83,7 @@ economy:
     size: 10
     
     #Define um tempo para a atualização do rank. (em segundos)
-    update_delay: 600
+    update_delay: 300
     
     #Define se você deseja usar prefix na exibição do rank.
     use_prefix: true
