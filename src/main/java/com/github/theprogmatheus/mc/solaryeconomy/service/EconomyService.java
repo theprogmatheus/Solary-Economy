@@ -4,6 +4,7 @@ import com.github.theprogmatheus.mc.solaryeconomy.cache.BankAccountCache;
 import com.github.theprogmatheus.mc.solaryeconomy.config.Env;
 import com.github.theprogmatheus.mc.solaryeconomy.database.crud.EconomyCrud;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
+import com.github.theprogmatheus.mc.solaryeconomy.util.CurrencyFormatter;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -41,6 +42,13 @@ public class EconomyService implements Service {
     @Override
     public void shutdown() {
         this.accountCache.shutdown();
+    }
+
+    public String formatBigDecimal(BigDecimal value) {
+        if (Env.ECONOMY_CURRENCY_FORMATTER_WITH_TAG)
+            return CurrencyFormatter.formatCurrencyWithTag(value, Env.ECONOMY_CURRENCY_FORMATTER_PRECISION);
+
+        return CurrencyFormatter.formatCurrency(value, Env.ECONOMY_CURRENCY_FORMATTER_PRECISION);
     }
 
     private void setupDefaultBank() {
