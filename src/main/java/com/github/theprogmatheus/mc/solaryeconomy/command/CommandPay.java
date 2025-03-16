@@ -55,11 +55,11 @@ public class CommandPay extends AbstractCommand {
                 account = this.economyService.saveInCache(account);
                 targetAccount = this.economyService.saveInCache(targetAccount);
 
-                sender.sendMessage(MessageFormat.format(Lang.PAYMENT_SEND_SUCCESS, this.economyService.formatBigDecimal(value), targetAccount.getOwnerName()));
+                sender.sendMessage(MessageFormat.format(Lang.PAYMENT_SEND_SUCCESS, this.economyService.formatCurrency(value), targetAccount.getOwnerName()));
 
                 Player targetPlayer = Bukkit.getPlayer(targetAccount.getOwnerName());
                 if (targetPlayer != null)
-                    targetPlayer.sendMessage(MessageFormat.format(Lang.PAYMENT_RECEIVED_SUCCESS, this.economyService.formatBigDecimal(value), account.getOwnerName()));
+                    targetPlayer.sendMessage(MessageFormat.format(Lang.PAYMENT_RECEIVED_SUCCESS, this.economyService.formatCurrency(value), account.getOwnerName()));
 
             }
             return true;

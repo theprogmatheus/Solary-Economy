@@ -27,7 +27,7 @@ public class CommandRank extends AbstractCommand {
             sender.sendMessage(MessageFormat.format(Lang.COMMAND_RANK_FORMAT_HEADER, rank.size()));
         for (int i = 0; i < rank.size(); i++) {
             BankAccountEntity account = rank.get(i);
-            sender.sendMessage(MessageFormat.format(Lang.COMMAND_RANK_FORMAT_BODY, (i + 1), account.getOwnerName(), this.economyService.formatBigDecimal(account.getBalance())));
+            sender.sendMessage(MessageFormat.format(Lang.COMMAND_RANK_FORMAT_BODY, (i + 1), account.getOwnerName(), this.economyService.formatCurrency(account.getBalance())));
         }
         if (Lang.COMMAND_RANK_FORMAT_FOOTER != null)
             sender.sendMessage(MessageFormat.format(Lang.COMMAND_RANK_FORMAT_FOOTER, rank.size()));
