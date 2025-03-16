@@ -3,16 +3,19 @@ package com.github.theprogmatheus.mc.solaryeconomy.cache;
 import com.github.benmanes.caffeine.cache.AsyncLoadingCache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.RemovalCause;
+import com.github.theprogmatheus.mc.solaryeconomy.config.Env;
 import com.github.theprogmatheus.mc.solaryeconomy.database.crud.EconomyCrud;
 import com.github.theprogmatheus.mc.solaryeconomy.database.entity.BankAccountEntity;
 import com.github.theprogmatheus.mc.solaryeconomy.service.Service;
 import lombok.Getter;
 
 import java.time.Duration;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static com.github.theprogmatheus.mc.solaryeconomy.service.EconomyService.DEFAULT_BANK_ID;
 
@@ -25,6 +28,7 @@ public class BankAccountCache implements Service {
     public final AsyncLoadingCache<BankAccountKey, BankAccountEntity> accounts;
     private final Duration autoFlushDelay;
     private ScheduledExecutorService scheduler;
+    private final List<BankAccountEntity> accountsRank;
 
     public BankAccountCache(EconomyCrud crud, long maximumSize, Duration expireAfterAccess, Duration autoFlushDelay) {
         this.crud = crud;
@@ -36,6 +40,7 @@ public class BankAccountCache implements Service {
                 .removalListener(this::onCacheRemove)
                 .buildAsync(this::onCacheLoad);
         this.autoFlushDelay = autoFlushDelay;
+        this.accountsRank = new ArrayList<>();
     }
 
     private BankAccountEntity onCacheLoad(BankAccountKey key) {
@@ -72,10 +77,37 @@ public class BankAccountCache implements Service {
         this.accounts.asMap().values().forEach(future -> future.whenComplete((account, t) -> this.crud.updateBankAccount(account)));
     }
 
+    /*
+     * Load accounts rank
+     */
+    public void loadAccountsRank() {
+
+        Map<BankAccountKey, BankAccountEntity> mergedAccounts = new HashMap<>();
+
+
+        // load from DB (accounts can be outdated)
+        this.crud.readBankAccountsRank(Env.ECONOMY_RANK_SIZE, Env.ECONOMY_RANK_MAX_NAME_SIZE)
+                .forEach(account ->
+                        mergedAccounts.put(new BankAccountKey(account.getBank().getId(), account.getOwnerId()), account)
+                );
+
+        // load from Cache (accounts are updated) and merge
+        this.accounts.asMap().values().stream().map(CompletableFuture::join).forEach(account -> {
+            mergedAccounts.put(new BankAccountKey(account.getBank().getId(), account.getOwnerId()), account);
+        });
+
+        this.accountsRank.clear();
+        this.accountsRank.addAll(mergedAccounts.values().stream()
+                .sorted(Comparator.comparing(BankAccountEntity::getBalance).reversed())
+                .limit(Env.ECONOMY_RANK_SIZE)
+                .collect(Collectors.toList()));
+    }
+
     @Override
     public void startup() {
         if (this.autoFlushDelay != null && this.scheduler == null)
             (this.scheduler = Executors.newSingleThreadScheduledExecutor()).scheduleAtFixedRate(() -> CompletableFuture.runAsync(this::flush), this.autoFlushDelay.getSeconds(), this.autoFlushDelay.getSeconds(), TimeUnit.SECONDS);
+        this.loadAccountsRank();
     }
 
     @Override
