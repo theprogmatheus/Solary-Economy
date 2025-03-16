@@ -8,6 +8,7 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -95,6 +96,20 @@ public class EconomyCrud {
             return this.bankAccountDao.create(new BankAccountEntity(0, bank, ownerId, ownerName, initialBalance)) > 0;
         } catch (SQLException e) {
             throw new RuntimeException("Unable to create BankAccount for bank. bankId: " + bankId + ", ownerId: " + ownerId + ", initialBalance: " + initialBalance, e);
+        }
+    }
+
+    public List<BankAccountEntity> readBankAccountsRank(long size, int maxNameLen) {
+        try {
+            return this.bankAccountDao.queryBuilder()
+                    .orderByRaw("CAST(balance AS DECIMAL) DESC")
+                    .where()
+                    .raw("LENGTH(owner_name) <= " + maxNameLen) // Filtra nomes menores que 16 caracteres
+                    .queryBuilder()
+                    .limit(size)
+                    .query();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
