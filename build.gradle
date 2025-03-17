@@ -37,15 +37,11 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.36'
 }
 
-def getGitHash() {
+def getLastGitCommitId() {
     try {
-        def stdout = new ByteArrayOutputStream()
-        exec {
-            commandLine 'git', 'rev-parse', '--short', 'HEAD'
-            standardOutput = stdout
-            ignoreExitValue = true
-        }
-        return stdout.toString().trim() ?: "dev"
+        return (providers.exec {
+            commandLine("git", "rev-parse", "--short", "HEAD")
+        }.standardOutput.asText.get() as String).trim();
     } catch (Exception e) {
         return "dev"
     }
@@ -57,7 +53,7 @@ description = 'An economy plugin for Bukkit server'
 
 java.sourceCompatibility = JavaVersion.VERSION_11
 
-def buildVersion = project.hasProperty("release") ? project.version : "${project.version}-${getGitHash()}"
+def buildVersion = project.hasProperty("release") ? project.version : "${project.version}-${getLastGitCommitId()}"
 
 bukkit {
     name = 'Solary-Economy'
