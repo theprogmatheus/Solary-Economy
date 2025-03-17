@@ -106,6 +106,13 @@ public abstract class AbstractCommand extends BukkitCommand implements CommandEx
         return false;
     }
 
+    public Player checkPlayer(CommandSender sender) {
+        if (sender instanceof Player) return ((Player) sender);
+        if (sender != null)
+            sender.sendMessage("§cThis command can only be executed in game");
+        return null;
+    }
+
     public void setChildren(AbstractCommand[] children) {
         if (children != null) {
             for (AbstractCommand child : children) {
