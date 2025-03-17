@@ -16,6 +16,7 @@
 #     Versão: 2.0.0
 #/------------------------------------------------------------------/
 
+PLUGIN_CONFIG_RELOADED: "&aOs arquivos de configurações foram recarregados com sucesso.\n&c(!) Algumas funcionalidades exigem o reinício do servidor para que sejam aplicadas."
 COMMAND_USAGE_FORMAT: "&cUse: {0}" # {0} command usage
 COMMAND_NO_PERMISSION: "&cVocê não tem permissão para executar esse comando." # {0} command usage, {1} command permission node
 DEFAULT_NO_PERMISSION: "&cVocê não tem permissão para isso."
