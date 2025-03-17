@@ -9,7 +9,10 @@ import java.util.Arrays;
 public class CommandSeco extends AbstractCommand {
 
     public CommandSeco() {
-        super(new String[]{"seco", "solaryeconomy"}, "Default plugin command", null, "seco");
+        super(new String[]{"seco", "solaryeconomy"}, "Default plugin command", "solaryeconomy.command.seco", "seco");
+        setChildren(new AbstractCommand[]{
+                new CommandReload()
+        });
     }
 
     @Override
