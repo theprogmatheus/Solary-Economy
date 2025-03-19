@@ -11,8 +11,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.util.Enumeration;
@@ -101,36 +99,41 @@ public abstract class DatabaseConnectionProvider {
         long totalSize = connection.getContentLengthLong();
         connection.disconnect();
 
-        if (totalSize <= 0)
-            throw new IOException("Failed to get file size.");
 
-        log.info("Total Size: " + (totalSize / 1024) + " KB");
+        if (totalSize < 0)
+            log.info("Failed to get file size. Proceeding with download without progress tracking.");
+        else
+            log.info("Total Size: " + (totalSize / 1024) + " KB");
 
-        InputStream inputStream = new URL(this.driverDownloadLink).openStream();
-        ReadableByteChannel rbc = Channels.newChannel(inputStream);
-        FileOutputStream fos = new FileOutputStream(getDriverFile());
 
-        byte[] buffer = new byte[8192];
-        int bytesRead;
-        long downloaded = 0;
-        long lastProgress = 0;
+        try (InputStream inputStream = new URL(this.driverDownloadLink).openStream();
+             FileOutputStream fos = new FileOutputStream(this.driverFile)) {
 
-        while ((bytesRead = inputStream.read(buffer)) != -1) {
-            fos.write(buffer, 0, bytesRead);
-            downloaded += bytesRead;
+            byte[] buffer = new byte[8192];
+            int bytesRead;
+            long downloaded = 0;
+            long lastProgress = 0;
 
-            int progress = (int) ((downloaded * 100) / totalSize);
-            if (progress >= lastProgress + 5) {
-                log.info("Driver download progress: " + progress + "%");
-                lastProgress = progress;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                fos.write(buffer, 0, bytesRead);
+                if (totalSize < 0)
+                    continue;
+                downloaded += bytesRead;
+
+                int progress = (int) ((downloaded * 100) / totalSize);
+                if (progress >= lastProgress + 5) {
+                    log.info("Driver download progress: " + progress + "%");
+                    lastProgress = progress;
+                }
             }
+
+            log.info("Driver download completed successfully");
+        } catch (IOException e) {
+            if (this.driverFile.exists()) this.driverFile.delete();
+            log.severe("Download failed and incomplete file was deleted: " + e.getMessage());
+            throw e;
         }
-
-        fos.close();
-        inputStream.close();
-
-        log.info("Driver download completed successfully");
-        return getDriverFile();
+        return this.driverFile;
     }
 
 }
