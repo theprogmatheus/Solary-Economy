@@ -30,7 +30,7 @@ public class CurrencyFormatter {
 
             if (amount.compareTo(unit.value) >= 0) {
                 BigDecimal result = amount.divide(unit.value, precision, RoundingMode.FLOOR);
-                return result.toPlainString() + unit.getDisplayTag();
+                return formatCurrency(result, precision) + unit.getDisplayTag();
             }
         }
 
