@@ -11,6 +11,10 @@ public class Env {
     public static String DATABASE_USERNAME;
     public static String DATABASE_PASSWORD;
     public static String DATABASE_TABLE_PREFIX;
+    public static String DATABASE_DRIVER_SQLITE;
+    public static String DATABASE_DRIVER_MYSQL;
+    public static String DATABASE_DRIVER_MARIADB;
+    public static String DATABASE_DRIVER_POSTGRESQL;
 
 
     /*

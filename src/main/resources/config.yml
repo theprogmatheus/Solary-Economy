@@ -45,6 +45,14 @@ database:
   #Aqui você define um prefix para as tabelas criadas pelo plugin.
   table_prefix: "seco_"
   
+  #Aqui você define os links para o driver connector para cada banco de dados
+  #Se você não entende o que está fazendo, não mexa em nada!
+  driver:
+    sqlite: "https://repo1.maven.org/maven2/org/xerial/sqlite-jdbc/3.49.1.0/sqlite-jdbc-3.49.1.0.jar" #SQLite JDBC » 3.49.1.0
+    mysql: "https://repo1.maven.org/maven2/com/mysql/mysql-connector-j/9.2.0/mysql-connector-j-9.2.0.jar" #MySQL Connector/J » 9.2.0
+    mariadb: "https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/3.5.2/mariadb-java-client-3.5.2.jar" #MariaDB Java Client » 3.5.2
+    postgresql: "https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.5/postgresql-42.7.5.jar" #PostgreSQL JDBC Driver » 42.7.5
+  
 #Configurações do cache
 cache:
 
