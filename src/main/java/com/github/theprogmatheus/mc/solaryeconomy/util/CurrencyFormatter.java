@@ -13,10 +13,10 @@ public class CurrencyFormatter {
 
     public static String formatCurrency(BigDecimal value, int precision) {
         StringBuilder pattern = new StringBuilder("#,###");
-
-        if (precision > 0) {
+        int scale = value.stripTrailingZeros().scale();
+        if (precision > 0 && scale > 0) {
             pattern.append(".");
-            for (int i = 0; i < precision; i++)
+            for (int i = 0; i < Math.min(precision, scale); i++)
                 pattern.append("0");
         }
 
