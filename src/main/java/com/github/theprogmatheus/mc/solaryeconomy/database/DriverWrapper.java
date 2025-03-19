@@ -1,5 +1,7 @@
 package com.github.theprogmatheus.mc.solaryeconomy.database;
 
+import lombok.Getter;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverPropertyInfo;
@@ -7,6 +9,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+@Getter
 public class DriverWrapper implements Driver {
     private final Driver driver;
 

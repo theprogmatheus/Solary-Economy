@@ -82,6 +82,10 @@ public abstract class DatabaseConnectionProvider {
         Enumeration<Driver> drivers = DriverManager.getDrivers();
         while (drivers.hasMoreElements()) {
             Driver driver = drivers.nextElement();
+
+            if (driver instanceof DriverWrapper)
+                driver = ((DriverWrapper) driver).getDriver();
+
             if (driver.getClass().getName().equals(this.driverClassName))
                 return true;
         }
