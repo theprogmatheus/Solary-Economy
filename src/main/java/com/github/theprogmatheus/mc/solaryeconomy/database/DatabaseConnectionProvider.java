@@ -53,23 +53,28 @@ public abstract class DatabaseConnectionProvider {
     public abstract ConnectionSource connectionSource();
 
     public boolean loadDriver() {
-        if (isDriverLoaded()) return true;
         try {
-            File driverFile = getDriverFile();
-
-            if (!driverFile.exists())
-                driverFile = downloadDriverFile();
-
-            URLClassLoader classLoader = new URLClassLoader(new URL[]{driverFile.toURI().toURL()}, DatabaseConnectionProvider.class.getClassLoader());
-            Class<?> driverClass = Class.forName(this.driverClassName, true, classLoader);
-
-            // Criar uma instância do driver e registrar manualmente no DriverManager
-            Driver driverInstance = (Driver) driverClass.getDeclaredConstructor().newInstance();
-            DriverManager.registerDriver(new DriverShim(driverInstance));
+            Class.forName(this.driverClassName);
             return true;
-        } catch (Exception e) {
-            log.severe("Unable to load database driver " + this.type + ": " + e.getMessage());
-            return false;
+        } catch (ClassNotFoundException classNotFoundException) {
+            if (isDriverLoaded()) return true;
+            try {
+                File driverFile = getDriverFile();
+
+                if (!driverFile.exists())
+                    driverFile = downloadDriverFile();
+
+                URLClassLoader classLoader = new URLClassLoader(new URL[]{driverFile.toURI().toURL()}, DatabaseConnectionProvider.class.getClassLoader());
+                Class<?> driverClass = Class.forName(this.driverClassName, true, classLoader);
+
+                // Criar uma instância do driver e registrar manualmente no DriverManager
+                Driver driverInstance = (Driver) driverClass.getDeclaredConstructor().newInstance();
+                DriverManager.registerDriver(new DriverShim(driverInstance));
+                return true;
+            } catch (Exception e) {
+                log.severe("Unable to load database driver " + this.type + ": " + e.getMessage());
+                return false;
+            }
         }
     }
 
