@@ -111,7 +111,7 @@ public abstract class DatabaseConnectionProvider {
             downloaded += bytesRead;
 
             int progress = (int) ((downloaded * 100) / totalSize);
-            if (progress >= lastProgress + 2) {
+            if (progress >= lastProgress + 5) {
                 log.info("Driver download progress: " + progress + "%");
                 lastProgress = progress;
             }
