@@ -1,20 +1,18 @@
 package com.github.theprogmatheus.mc.solaryeconomy.database;
 
 import com.github.theprogmatheus.mc.solaryeconomy.config.Env;
+import com.github.theprogmatheus.mc.solaryeconomy.database.providers.MariaDBConnectionProvider;
+import com.github.theprogmatheus.mc.solaryeconomy.database.providers.MySQLConnectionProvider;
+import com.github.theprogmatheus.mc.solaryeconomy.database.providers.PostgreSQLConnectionProvider;
+import com.github.theprogmatheus.mc.solaryeconomy.database.providers.SQLiteConnectionProvider;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
-import com.j256.ormlite.jdbc.db.MariaDbDatabaseType;
-import com.j256.ormlite.jdbc.db.MysqlDatabaseType;
-import com.j256.ormlite.jdbc.db.PostgresDatabaseType;
-import com.j256.ormlite.jdbc.db.SqliteDatabaseType;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Proxy;
 import java.sql.SQLException;
@@ -25,6 +23,7 @@ import java.util.Map;
 public class DatabaseManager {
 
     private final JavaPlugin plugin;
+    private DatabaseConnectionProvider connectionProvider;
     private ConnectionSource connectionSource;
     private final Map<Class<?>, Dao<?, ?>> entities;
 
@@ -49,7 +48,8 @@ public class DatabaseManager {
 
     public void startDatabase() {
         try {
-            this.connectionSource = getConnectionSource();
+            this.connectionProvider = loadConnectionProvider();
+            this.connectionSource = this.connectionProvider.connectionSource();
             for (Class<?> entityClass : this.entities.keySet()) {
                 this.entities.put(entityClass, setupDao(entityClass, this.connectionSource));
             }
@@ -98,41 +98,17 @@ public class DatabaseManager {
         return entityDao;
     }
 
-    public ConnectionSource getConnectionSource() throws SQLException {
+    private DatabaseConnectionProvider loadConnectionProvider() {
         switch (Env.DATABASE_TYPE.toLowerCase()) {
-            case "sqlite":
-                return sqliteConnectionSource(Env.DATABASE_NAME);
             case "mysql":
-                return mysqlConnectionSource(Env.DATABASE_ADDRESS, Env.DATABASE_NAME, Env.DATABASE_USERNAME, Env.DATABASE_PASSWORD);
+                return new MySQLConnectionProvider();
             case "mariadb":
-                return mariadbConnectionSource(Env.DATABASE_ADDRESS, Env.DATABASE_NAME, Env.DATABASE_USERNAME, Env.DATABASE_PASSWORD);
+                return new MariaDBConnectionProvider();
             case "postgresql":
-                return postgresqlConnectionSource(Env.DATABASE_ADDRESS, Env.DATABASE_NAME, Env.DATABASE_USERNAME, Env.DATABASE_PASSWORD);
+                return new PostgreSQLConnectionProvider();
             default:
-                return sqliteConnectionSource("storage.sqlite");
+                return new SQLiteConnectionProvider();
         }
     }
 
-    private ConnectionSource sqliteConnectionSource(String fileName) throws SQLException {
-        if (!this.plugin.getDataFolder().exists())
-            this.plugin.getDataFolder().mkdirs();
-        File dbFile = new File(this.plugin.getDataFolder(), fileName.concat(".db"));
-        String dbUrl = "jdbc:sqlite:".concat(dbFile.getPath());
-        return new JdbcConnectionSource(dbUrl, new SqliteDatabaseType());
-    }
-
-    private ConnectionSource mysqlConnectionSource(String hostname, String dbName, String username, String password) throws SQLException {
-        String dbUrl = "jdbc:mysql://" + hostname + "/" + dbName;
-        return new JdbcConnectionSource(dbUrl, username, password, new MysqlDatabaseType());
-    }
-
-    private ConnectionSource mariadbConnectionSource(String hostname, String dbName, String username, String password) throws SQLException {
-        String dbUrl = "jdbc:mariadb://" + hostname + "/" + dbName;
-        return new JdbcConnectionSource(dbUrl, username, password, new MariaDbDatabaseType());
-    }
-
-    private ConnectionSource postgresqlConnectionSource(String hostname, String dbName, String username, String password) throws SQLException {
-        String dbUrl = "jdbc:postgresql://" + hostname + "/" + dbName;
-        return new JdbcConnectionSource(dbUrl, username, password, new PostgresDatabaseType());
-    }
 }
