@@ -69,7 +69,7 @@ public abstract class DatabaseConnectionProvider {
 
                 // Criar uma instância do driver e registrar manualmente no DriverManager
                 Driver driverInstance = (Driver) driverClass.getDeclaredConstructor().newInstance();
-                DriverManager.registerDriver(new DriverShim(driverInstance));
+                DriverManager.registerDriver(new DriverWrapper(driverInstance));
                 return true;
             } catch (Exception e) {
                 log.severe("Unable to load database driver " + this.type + ": " + e.getMessage());

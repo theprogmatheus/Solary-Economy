@@ -7,10 +7,10 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class DriverShim implements Driver {
+public class DriverWrapper implements Driver {
     private final Driver driver;
 
-    public DriverShim(Driver driver) {
+    public DriverWrapper(Driver driver) {
         this.driver = driver;
     }
 
