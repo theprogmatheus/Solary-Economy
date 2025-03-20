@@ -11,26 +11,27 @@ import java.util.Locale;
 
 public class CurrencyFormatter {
 
-    public static String formatCurrency(BigDecimal value, int precision) {
+    public static String formatCurrency(BigDecimal value, int precision, boolean forcePrecision) {
         StringBuilder pattern = new StringBuilder("#,###");
         int scale = value.stripTrailingZeros().scale();
-        if (precision > 0 && scale > 0) {
+        if ((precision > 0 && scale > 0) || forcePrecision) {
             pattern.append(".");
-            for (int i = 0; i < Math.min(precision, scale); i++)
+            int max = (forcePrecision ? precision : Math.min(precision, scale));
+            for (int i = 0; i < max; i++)
                 pattern.append("0");
         }
 
         return new DecimalFormat(pattern.toString(), new DecimalFormatSymbols(Locale.GERMAN)).format(value);
     }
 
-    public static String formatCurrencyWithTag(BigDecimal amount, int precision) {
+    public static String formatCurrencyWithTag(BigDecimal amount, int precision, boolean forcePrecision) {
         CurrencyUnit[] values = CurrencyUnit.values();
         for (int i = values.length; i > 0; i--) {
             CurrencyUnit unit = values[i - 1];
 
             if (amount.compareTo(unit.value) >= 0) {
                 BigDecimal result = amount.divide(unit.value, precision, RoundingMode.FLOOR);
-                return formatCurrency(result, precision) + unit.getDisplayTag();
+                return formatCurrency(result, precision, forcePrecision) + unit.getDisplayTag();
             }
         }
 

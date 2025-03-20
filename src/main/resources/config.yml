@@ -115,6 +115,10 @@ economy:
       #Defina quantas casas decimais você quer na moeda.
       precision: 2
       
+      #Defina se você quer forçar a precisão.
+      #Se habilitado, valores redondos também terão casas decimais, Ex: (10 = 10,00) (10,047 = 10,04)
+      force_precision: false
+      
       #Defina se você quer formatar usando abreviações por tags. Ex: (38K, 14B, 1T)
       with_tag: true
     

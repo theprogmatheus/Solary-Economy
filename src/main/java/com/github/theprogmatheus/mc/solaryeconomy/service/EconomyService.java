@@ -52,9 +52,9 @@ public class EconomyService implements Service {
 
     public String formatBigDecimal(BigDecimal value) {
         if (Env.ECONOMY_CURRENCY_FORMATTER_WITH_TAG)
-            return CurrencyFormatter.formatCurrencyWithTag(value, Env.ECONOMY_CURRENCY_FORMATTER_PRECISION);
+            return CurrencyFormatter.formatCurrencyWithTag(value, Env.ECONOMY_CURRENCY_FORMATTER_PRECISION, Env.ECONOMY_CURRENCY_FORMATTER_FORCE_PRECISION);
 
-        return CurrencyFormatter.formatCurrency(value, Env.ECONOMY_CURRENCY_FORMATTER_PRECISION);
+        return CurrencyFormatter.formatCurrency(value, Env.ECONOMY_CURRENCY_FORMATTER_PRECISION, Env.ECONOMY_CURRENCY_FORMATTER_FORCE_PRECISION);
     }
 
     private void setupDefaultBank() {
