@@ -7,6 +7,7 @@ import com.redeskyller.bukkit.solaryeconomy.util.NumbersUtils;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 
+@Deprecated
 public class PlaceholdersHook extends PlaceholderExpansion {
 
 	private static final PlaceholdersHook instance;

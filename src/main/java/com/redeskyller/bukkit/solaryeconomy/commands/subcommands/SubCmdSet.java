@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 
 import com.redeskyller.bukkit.solaryeconomy.SolaryEconomy;
 
+@Deprecated
 public class SubCmdSet extends SubCommand {
 
 	public SubCmdSet(String command)

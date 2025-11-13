@@ -18,6 +18,7 @@ import org.bukkit.plugin.Plugin;
 
 import com.redeskyller.bukkit.solaryeconomy.hook.VaultChat;
 
+@Deprecated
 public class Economia {
 
 	private Map<String, Account> accounts;

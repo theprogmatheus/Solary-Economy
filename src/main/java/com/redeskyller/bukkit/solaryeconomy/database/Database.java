@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
 
 import com.redeskyller.bukkit.solaryeconomy.util.CallBack;
 
+@Deprecated
 public abstract class Database {
 
 	private static final ExecutorService executorService = Executors.newFixedThreadPool(10);

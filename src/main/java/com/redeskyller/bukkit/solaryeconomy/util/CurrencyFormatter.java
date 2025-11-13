@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 import java.util.TreeMap;
 
+@Deprecated
 public class CurrencyFormatter {
 
 	private TreeMap<BigDecimal, String> dictionary;

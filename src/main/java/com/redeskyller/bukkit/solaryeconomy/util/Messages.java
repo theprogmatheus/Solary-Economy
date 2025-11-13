@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+@Deprecated
 public class Messages {
 
 	private Configuration config;

@@ -12,6 +12,7 @@ import com.redeskyller.bukkit.solaryeconomy.SolaryEconomy;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
+@Deprecated
 public class VaultEconomy implements Economy {
 
 	public VaultEconomy register()

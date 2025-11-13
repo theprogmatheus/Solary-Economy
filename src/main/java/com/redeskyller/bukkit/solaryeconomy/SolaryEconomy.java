@@ -38,6 +38,7 @@ import com.redeskyller.bukkit.solaryeconomy.util.Configuration;
 import com.redeskyller.bukkit.solaryeconomy.util.CurrencyFormatter;
 import com.redeskyller.bukkit.solaryeconomy.util.Messages;
 
+@Deprecated
 public class SolaryEconomy extends JavaPlugin {
 
 	private static SolaryEconomy instance;

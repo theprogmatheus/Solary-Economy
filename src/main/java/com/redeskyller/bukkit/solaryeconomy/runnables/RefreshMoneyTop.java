@@ -4,6 +4,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.redeskyller.bukkit.solaryeconomy.SolaryEconomy;
 
+@Deprecated
 public class RefreshMoneyTop {
 
 	private BukkitRunnable bukkitRunnable;

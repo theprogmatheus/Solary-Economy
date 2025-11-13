@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 
 import com.redeskyller.bukkit.solaryeconomy.SolaryEconomy;
 
+@Deprecated
 public class SubCmdPay extends SubCommand {
 
 	public SubCmdPay(String command)

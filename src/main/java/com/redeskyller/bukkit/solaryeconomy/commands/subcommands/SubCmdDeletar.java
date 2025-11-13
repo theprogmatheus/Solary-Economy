@@ -4,6 +4,7 @@ import org.bukkit.command.CommandSender;
 
 import com.redeskyller.bukkit.solaryeconomy.SolaryEconomy;
 
+@Deprecated
 public class SubCmdDeletar extends SubCommand {
 
 	public SubCmdDeletar(String command)

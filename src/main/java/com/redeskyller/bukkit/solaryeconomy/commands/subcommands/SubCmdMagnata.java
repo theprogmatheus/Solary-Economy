@@ -8,6 +8,7 @@ import com.redeskyller.bukkit.solaryeconomy.RankAccount;
 import com.redeskyller.bukkit.solaryeconomy.SolaryEconomy;
 import com.redeskyller.bukkit.solaryeconomy.hook.VaultChat;
 
+@Deprecated
 public class SubCmdMagnata extends SubCommand {
 
 	public SubCmdMagnata(String command)
