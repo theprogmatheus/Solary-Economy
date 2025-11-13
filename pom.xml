@@ -10,7 +10,7 @@
 
 
 	<properties>
-		<jdkVersion>1.8</jdkVersion>
+		<jdkVersion>1.11</jdkVersion>
 		<project.mainClass>com.redeskyller.bukkit.solaryeconomy.SolaryEconomy</project.mainClass>
 		<project.author>Sr_Edition</project.author>
 		<libsPath>${project.basedir}/src/main/libs</libsPath>
@@ -65,6 +65,12 @@
 			<version>1.1.5</version>
 			<scope>provided</scope>
 		</dependency>
+
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>7.0.2</version>
+        </dependency>
 
 	</dependencies>
 
