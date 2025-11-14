@@ -1,4 +1,4 @@
-package com.redeskyller.bukkit.solaryeconomy.command.balance;
+package com.redeskyller.bukkit.solaryeconomy.command.economy;
 
 import com.redeskyller.bukkit.solaryeconomy.command.AbstractCommand;
 import lombok.Getter;
@@ -6,11 +6,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 @Getter
-public class BalanceToggleCommand extends AbstractCommand {
+public class EconomyToggleCommand extends AbstractCommand {
 
-    private final AbstractBalanceCommand parent;
+    private final AbstractEconomyCommand parent;
 
-    public BalanceToggleCommand(AbstractBalanceCommand parent) {
+    public EconomyToggleCommand(AbstractEconomyCommand parent) {
         super(
                 "toggle",
                 parent.getPermission().concat(".toggle"),

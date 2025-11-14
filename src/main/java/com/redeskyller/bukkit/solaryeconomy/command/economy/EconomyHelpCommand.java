@@ -1,17 +1,16 @@
-package com.redeskyller.bukkit.solaryeconomy.command.balance;
+package com.redeskyller.bukkit.solaryeconomy.command.economy;
 
 import com.redeskyller.bukkit.solaryeconomy.command.AbstractCommand;
-import lombok.Data;
 import lombok.Getter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 @Getter
-public class BalanceHelpCommand extends AbstractCommand {
+public class EconomyHelpCommand extends AbstractCommand {
 
-    private final AbstractBalanceCommand parent;
+    private final AbstractEconomyCommand parent;
 
-    public BalanceHelpCommand(AbstractBalanceCommand parent) {
+    public EconomyHelpCommand(AbstractEconomyCommand parent) {
         super(
                 "help",
                 parent.getPermission().concat(".help"),
