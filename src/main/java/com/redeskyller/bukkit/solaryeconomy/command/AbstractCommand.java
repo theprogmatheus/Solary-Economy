@@ -24,6 +24,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
     }
 
     public void execute(Player player, Command command, String label, String[] args) {
+        this.execute((CommandSender) player, command, label, args);
     }
 
     @Override
