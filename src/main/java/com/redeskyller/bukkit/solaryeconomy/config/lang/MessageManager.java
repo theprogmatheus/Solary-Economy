@@ -1,12 +1,15 @@
 package com.redeskyller.bukkit.solaryeconomy.config.lang;
 
 import com.redeskyller.bukkit.solaryeconomy.config.ConfigurationFile;
+import com.redeskyller.bukkit.solaryeconomy.util.ArrayUtils;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,6 +17,7 @@ import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 import static com.redeskyller.bukkit.solaryeconomy.config.ConfigurationManager.LOG_FORMAT;
+import static com.redeskyller.bukkit.solaryeconomy.util.LocaleUtils.getLocaleByString;
 
 
 @RequiredArgsConstructor
@@ -101,6 +105,33 @@ public class MessageManager {
         langs.values().forEach(ConfigurationFile::load);
     }
 
+
+    public void sendMessage(CommandSender sender, MessageKey messageKey) {
+        sendMessage(sender, messageKey, new String[0]);
+    }
+
+    public void sendMessage(CommandSender sender, MessageKey messageKey, String... arrayPlaceholders) {
+        sendMessage(sender, messageKey, ArrayUtils.toMap(arrayPlaceholders));
+    }
+
+    public void sendMessage(CommandSender sender, MessageKey messageKey, Map<String, String> placeholders) {
+        var messageFile = this.getDefaultMessageFile();
+        if (sender instanceof Player)
+            messageFile = this.getMessageFile((Player) sender);
+
+        List<String> message = null;
+        if (messageKey.isList())
+            message = messageFile.getMessageList(messageKey, placeholders);
+        else {
+            var rawMessage = messageFile.getMessage(messageKey, placeholders);
+            if (rawMessage != null)
+                message = List.of(rawMessage);
+        }
+
+        if (message != null)
+            message.forEach(sender::sendMessage);
+    }
+
     private String normalizedTag(Locale locale) {
         if (locale == null) return "";
         return locale.toString().toLowerCase();
@@ -119,21 +150,4 @@ public class MessageManager {
         }
     }
 
-    private Locale getLocaleByString(String localeString) {
-        try {
-            var localeStringParts = localeString.split("_");
-            switch (localeStringParts.length) {
-                case 1:
-                    return new Locale(localeStringParts[0]);
-                case 2:
-                    return new Locale(localeStringParts[0], localeStringParts[1]);
-                case 3:
-                    return new Locale(localeStringParts[0], localeStringParts[1], localeStringParts[2]);
-                default:
-                    return null;
-            }
-        } catch (Exception ignored) {
-            return null;
-        }
-    }
 }
