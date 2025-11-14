@@ -9,8 +9,6 @@ public interface Account {
 
     Economy getEconomy();
 
-    UUID getId();
-
     String getNameId();
 
     UUID getOwnerId();
