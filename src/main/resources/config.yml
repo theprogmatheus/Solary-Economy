@@ -33,10 +33,10 @@ lang:
 # =====================[ CONFIGURAÇÕES DO BANCO DE DADOS ]===================== #
 database:
   # Tipo de banco de dados a ser utilizado.
-  # Opções: "sqlite", "mysql"
+  # Opções: "sqlite", "mysql", "mariadb"
   type: "sqlite"
 
-  # Configurações do MySQL (se o tipo for "mysql").
+  # Configurações do MySQL/MariaDB (se o tipo for "mysql" ou "mariadb").
   # Ignorado se o tipo for "sqlite".
   mysql:
     host: "localhost"
@@ -45,4 +45,3 @@ database:
     username: "root"
     password: "senha"
     table-prefix: "seco_"
-    mariadb: false

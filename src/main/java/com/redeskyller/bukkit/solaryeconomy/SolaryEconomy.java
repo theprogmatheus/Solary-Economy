@@ -5,18 +5,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class SolaryEconomy extends JavaPlugin {
 
+    private SolaryEconomyBootstrap bootstrap;
+
     @Override
     public void onLoad() {
-        SolaryEconomyBootstrap.bootstrap(this);
+        this.bootstrap = new SolaryEconomyBootstrap(this);
     }
 
     @Override
     public void onEnable() {
-        SolaryEconomyBootstrap.enable(this);
+        this.bootstrap.enable();
     }
 
     @Override
     public void onDisable() {
-        SolaryEconomyBootstrap.disable(this);
+        this.bootstrap.disable();
     }
 }

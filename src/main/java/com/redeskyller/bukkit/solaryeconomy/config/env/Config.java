@@ -38,7 +38,4 @@ public class Config {
 
     public static final ConfigurationHolder<String> DATABASE_MYSQL_TABLE_PREFIX
             = new ConfigurationHolder<>("database.mysql.table-prefix", String.class);
-
-    public static final ConfigurationHolder<Boolean> DATABASE_MYSQL_MARIADB
-            = new ConfigurationHolder<>("database.mysql.table-prefix", Boolean.class);
 }
