@@ -1,0 +1,5 @@
+# pt_BR language file
+
+prefix: "&6[SpawnerX] &f"
+command:
+  template: "&aVocê executou o comando com sucesso. Plugin: {plugin}"
