@@ -29,3 +29,20 @@ lang:
   # (baseado nas configurações de idioma do Minecraft).
   # OBS: Nem sempre isso funcionará corretamente.
   individual: true
+
+# =====================[ CONFIGURAÇÕES DO BANCO DE DADOS ]===================== #
+database:
+  # Tipo de banco de dados a ser utilizado.
+  # Opções: "sqlite", "mysql"
+  type: "sqlite"
+
+  # Configurações do MySQL (se o tipo for "mysql").
+  # Ignorado se o tipo for "sqlite".
+  mysql:
+    host: "localhost"
+    port: 3306
+    database: "solaryeconomy"
+    username: "root"
+    password: "senha"
+    table-prefix: "seco_"
+    mariadb: false
