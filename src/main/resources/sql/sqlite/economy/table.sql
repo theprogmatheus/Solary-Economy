@@ -1,12 +1,12 @@
 CREATE TABLE IF NOT EXISTS %prefix%_economy (
-    name_id TEXT NOT NULL,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name_id TEXT NOT NULL UNIQUE,
     name TEXT NOT NULL,
-    description TEXT,
+    description TEXT NOT NULL,
     command TEXT NOT NULL,
-    command_aliases TEXT NOT NULL DEFAULT '',
+    command_aliases TEXT NOT NULL,
     currency_symbol TEXT NOT NULL,
     currency_name TEXT NOT NULL,
     currency_name_plural TEXT NOT NULL,
-    flags INTEGER NOT NULL DEFAULT 0,
-    PRIMARY KEY (name_id)
+    flags INTEGER NOT NULL DEFAULT 0
 );

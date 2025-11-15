@@ -1,1 +1,0 @@
-DELETE FROM %prefix%_economy WHERE name_id = ?;

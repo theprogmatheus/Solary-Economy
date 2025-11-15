@@ -1,0 +1,1 @@
+DELETE FROM %prefix%_account WHERE id = ?;
