@@ -34,6 +34,8 @@ public class DatabaseBootstrap {
         this.sqlQueryLoader = loadQueryLoader();
         this.economyRepository = new EconomyRepositoryImpl(this.hikariDataSource, this.sqlQueryLoader, this.plugin.getLogger());
         this.accountRepository = new AccountRepositoryImpl(this.hikariDataSource, this.sqlQueryLoader, this.plugin.getLogger());
+        this.economyRepository.createTableIfNotExists();
+        this.accountRepository.createTableIfNotExists();
     }
 
     public void shutdownDatabase() {

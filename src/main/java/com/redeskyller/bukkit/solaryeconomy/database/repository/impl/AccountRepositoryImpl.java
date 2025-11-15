@@ -25,6 +25,17 @@ public class AccountRepositoryImpl implements AccountRepository {
     private final Logger logger;
 
     @Override
+    public void createTableIfNotExists() {
+        String sql = loader.getQuery("account/table");
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.severe("Error executing createTableIfNotExists (Account): " + e.getMessage());
+        }
+    }
+
+    @Override
     public Optional<AccountEntity> findById(long id) {
         String sql = loader.getQuery("account/select_by_id");
         try (Connection conn = dataSource.getConnection();

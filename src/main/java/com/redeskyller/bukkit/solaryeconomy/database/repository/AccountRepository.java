@@ -8,6 +8,8 @@ import java.util.UUID;
 
 public interface AccountRepository {
 
+    void createTableIfNotExists();
+
     Optional<AccountEntity> findById(long id);
 
     Optional<AccountEntity> findByNameIdAndEconomy(String nameId, long economyId);

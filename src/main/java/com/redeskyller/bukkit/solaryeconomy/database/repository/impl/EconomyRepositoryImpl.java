@@ -23,6 +23,17 @@ public class EconomyRepositoryImpl implements EconomyRepository {
     private final Logger logger;
 
     @Override
+    public void createTableIfNotExists() {
+        String sql = loader.getQuery("economy/table");
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.severe("Error executing createTableIfNotExists (Economy): " + e.getMessage());
+        }
+    }
+
+    @Override
     public Optional<EconomyEntity> findById(long id) {
         String sql = loader.getQuery("economy/select_by_id");
         try (Connection conn = dataSource.getConnection();

@@ -5,7 +5,9 @@ import com.redeskyller.bukkit.solaryeconomy.database.entity.EconomyEntity;
 import java.util.List;
 import java.util.Optional;
 
-    public interface EconomyRepository {
+public interface EconomyRepository {
+
+    void createTableIfNotExists();
 
     Optional<EconomyEntity> findById(long id);
 
