@@ -8,12 +8,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EconomyEntity {
+    private long id;
     private String nameId;
     private String name;
     private String description;
     private String command;
     private String commandAliases;
-    private String currencySimbol;
+    private String currencySymbol;
     private String currencyName;
     private String currencyNamePlural;
     private int flags;

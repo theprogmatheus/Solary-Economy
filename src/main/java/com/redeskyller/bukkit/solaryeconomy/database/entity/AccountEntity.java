@@ -11,9 +11,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountEntity {
+    private long id;
     private String nameId;
+    private String name;
     private UUID ownerId;
     private BigDecimal balance;
-    private String economyId;
+    private long economyId;
     private int flags;
 }

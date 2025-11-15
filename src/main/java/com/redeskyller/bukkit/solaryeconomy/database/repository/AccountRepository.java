@@ -8,12 +8,18 @@ import java.util.UUID;
 
 public interface AccountRepository {
 
-    Optional<AccountEntity> findByNameId(String nameId);
+    Optional<AccountEntity> findById(long id);
 
-    List<AccountEntity> findByOwnerId(UUID ownerId);
+    Optional<AccountEntity> findByNameIdAndEconomy(String nameId, long economyId);
 
-    void save(AccountEntity accountEntity);
+    List<AccountEntity> findByOwner(UUID ownerId);
 
-    void delete(String nameId);
+    List<AccountEntity> findByEconomy(long economyId);
+
+    void save(AccountEntity account);
+
+    void deleteById(long id);
+
+    boolean exists(String nameId, long economyId);
 
 }
