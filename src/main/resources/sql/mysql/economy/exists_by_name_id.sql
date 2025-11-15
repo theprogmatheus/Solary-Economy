@@ -1,1 +1,1 @@
-SELECT 1 FROM %prefix%_economy WHERE name_id = ? LIMIT 1;
+SELECT 1 FROM %table_prefix%_economy WHERE name_id = ? LIMIT 1;

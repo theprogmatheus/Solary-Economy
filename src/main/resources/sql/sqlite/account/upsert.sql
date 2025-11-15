@@ -1,4 +1,4 @@
-INSERT INTO %prefix%_account (
+INSERT INTO %table_prefix%_account (
     id, name_id, name, owner_id, balance, economy_id, flags
 )
 VALUES (?, ?, ?, ?, ?, ?, ?)

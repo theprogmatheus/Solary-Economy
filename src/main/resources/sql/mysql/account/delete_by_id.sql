@@ -1,1 +1,1 @@
-DELETE FROM %prefix%_account WHERE id = ?;
+DELETE FROM %table_prefix%_account WHERE id = ?;

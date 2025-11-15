@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS %prefix%_account (
+CREATE TABLE IF NOT EXISTS %table_prefix%_account (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name_id TEXT NOT NULL,
     name TEXT NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS %prefix%_account (
     UNIQUE (name_id, economy_id),
 
     FOREIGN KEY (economy_id)
-        REFERENCES %prefix%_economy(id)
+        REFERENCES %table_prefix%_economy(id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS %prefix%_account (
+CREATE TABLE IF NOT EXISTS %table_prefix%_account (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     name_id VARCHAR(64) NOT NULL,
     name VARCHAR(128) NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS %prefix%_account (
 
     CONSTRAINT fk_account_economy
         FOREIGN KEY (economy_id)
-        REFERENCES %prefix%_economy(id)
+        REFERENCES %table_prefix%_economy(id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

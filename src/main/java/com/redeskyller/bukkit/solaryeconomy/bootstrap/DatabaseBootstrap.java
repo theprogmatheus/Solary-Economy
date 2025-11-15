@@ -1,5 +1,10 @@
 package com.redeskyller.bukkit.solaryeconomy.bootstrap;
 
+import com.redeskyller.bukkit.solaryeconomy.database.SqlQueryLoader;
+import com.redeskyller.bukkit.solaryeconomy.database.repository.AccountRepository;
+import com.redeskyller.bukkit.solaryeconomy.database.repository.EconomyRepository;
+import com.redeskyller.bukkit.solaryeconomy.database.repository.impl.AccountRepositoryImpl;
+import com.redeskyller.bukkit.solaryeconomy.database.repository.impl.EconomyRepositoryImpl;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
@@ -7,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.redeskyller.bukkit.solaryeconomy.config.env.Config.*;
 
@@ -18,10 +24,16 @@ public class DatabaseBootstrap {
 
     private HikariConfig hikariConfig;
     private HikariDataSource hikariDataSource;
+    private SqlQueryLoader sqlQueryLoader;
+    private EconomyRepository economyRepository;
+    private AccountRepository accountRepository;
 
     public void initializeDatabase() {
         this.hikariConfig = loadHikariConfig();
         this.hikariDataSource = new HikariDataSource(this.hikariConfig);
+        this.sqlQueryLoader = loadQueryLoader();
+        this.economyRepository = new EconomyRepositoryImpl(this.hikariDataSource, this.sqlQueryLoader, this.plugin.getLogger());
+        this.accountRepository = new AccountRepositoryImpl(this.hikariDataSource, this.sqlQueryLoader, this.plugin.getLogger());
     }
 
     public void shutdownDatabase() {
@@ -39,6 +51,14 @@ public class DatabaseBootstrap {
             default:
                 return getSQLiteHikariConfig();
         }
+    }
+
+    private SqlQueryLoader loadQueryLoader() {
+        return new SqlQueryLoader(
+                DATABASE_TYPE.getValue().toLowerCase().replace("mariadb", "mysql"),
+                DATABASE_MYSQL_TABLE_PREFIX.getValue(),
+                new ConcurrentHashMap<>()
+        );
     }
 
     private HikariConfig getMySQLHikariConfig() {

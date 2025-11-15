@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS %prefix%_economy (
+CREATE TABLE IF NOT EXISTS %table_prefix%_economy (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name_id TEXT NOT NULL UNIQUE,
     name TEXT NOT NULL,

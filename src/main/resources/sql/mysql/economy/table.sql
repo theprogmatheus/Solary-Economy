@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS %prefix%_economy (
+CREATE TABLE IF NOT EXISTS %table_prefix%_economy (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     name_id VARCHAR(64) NOT NULL,
     name VARCHAR(128) NOT NULL,

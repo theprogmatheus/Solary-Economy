@@ -1,5 +1,20 @@
-# pt_BR language file
+#########################[ Solary-Economy ]#########################
+##                                                                ##
+##                 Encontrou algum bug? Reporte!                  ##
+##                                                                ##
+##                Email: theprog.matheus@gmail.com                ##
+##                     Discord: sr_edition                        ##
+##                                                                ##
+####################################################################
 
+
+
+#/------------------------------------------------------------------/
+#     Autor: ${project.author}
+#     Versão: ${project.version}
+#/------------------------------------------------------------------/
+
+# pt_BR language file
 prefix: "&6[Solary-Economy] &f"
 command:
   template: "&aVocê executou o comando com sucesso. Plugin: {plugin}"

@@ -44,4 +44,4 @@ database:
     database: "solaryeconomy"
     username: "root"
     password: "senha"
-    table-prefix: "seco_"
+    table-prefix: "seco"
