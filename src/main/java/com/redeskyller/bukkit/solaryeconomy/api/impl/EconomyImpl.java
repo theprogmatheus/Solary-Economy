@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class EconomyImpl implements Economy {
 
+    private long id;
     private final String nameId;
     private final String name;
     private final String description;

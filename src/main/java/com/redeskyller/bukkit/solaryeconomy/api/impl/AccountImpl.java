@@ -11,6 +11,7 @@ import java.util.UUID;
 @Data
 public class AccountImpl implements Account {
 
+    private long id;
     private final Economy economy;
     private final String nameId;
     private final UUID ownerId;
